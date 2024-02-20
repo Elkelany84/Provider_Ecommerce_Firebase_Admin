@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/theme_provider.dart';
@@ -15,13 +17,20 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Hello World",
-              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+            const SubtitleTextWidget(
+              label: "Hello",
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+              textDecoration: TextDecoration.underline,
+              fontStyle: FontStyle.italic,
+            ),
+            TitleTextWidget(
+              label: "Hello Title" * 10,
             ),
             ElevatedButton(
               onPressed: () {
-                print("Theme is ${themeProvider.getIsDarkTheme}");
+                // print("Theme is ${themeProvider.getIsDarkTheme}");
               },
               child: const Text("Change Theme"),
             ),
