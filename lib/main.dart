@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -24,15 +25,16 @@ class MyApp extends StatelessWidget {
           return ThemeProvider();
         })
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'ShopSmart',
-        theme: ThemeData(
-            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            primarySwatch: Colors.green,
-            useMaterial3: true,
-            scaffoldBackgroundColor: Colors.white),
-        home: const HomeScreen(),
+      child: Consumer<ThemeProvider>(
+        builder: (builder, themeProvider, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'ShopSmart',
+            theme: Styles.themeData(
+                isDarkTheme: themeProvider.getIsDarkTheme, context: context),
+            home: const HomeScreen(),
+          );
+        },
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/theme_provider.dart';
@@ -11,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: AppColors.lightScaffoldColor,
+      // backgroundColor: AppColors.lightScaffoldColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -5,7 +5,9 @@ class ThemeProvider extends ChangeNotifier {
   static const String isDarkMode = "isDarkMode";
   bool _darkTheme = false;
   bool get getIsDarkTheme => _darkTheme;
-
+  ThemeProvider() {
+    getTheme();
+  }
   setDarkTheme(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("isDarkMode", value);
