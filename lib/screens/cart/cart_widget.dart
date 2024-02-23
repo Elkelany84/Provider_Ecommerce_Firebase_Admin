@@ -22,7 +22,7 @@ class CartWidget extends StatelessWidget {
                 child: FancyShimmerImage(
                   imageUrl:
                       "https://images.unsplash.com/photo-1465572089651-8fde36c892dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-                  height: size.height * 0.18,
+                  height: size.height * 0.17,
                   width: size.width * 0.3,
                 ),
               ),

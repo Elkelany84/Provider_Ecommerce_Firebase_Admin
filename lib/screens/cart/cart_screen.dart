@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/cart/bottom_checkout.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
@@ -21,6 +22,7 @@ class CartScreen extends StatelessWidget {
             ),
           )
         : Scaffold(
+            bottomSheet: CartBottomSheetWidget(),
             appBar: AppBar(
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
