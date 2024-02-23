@@ -1,6 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/cart/quantity_btm_sheet.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
@@ -70,7 +71,21 @@ class CartWidget extends StatelessWidget {
                         ),
                         OutlinedButton.icon(
                           icon: Icon(IconlyLight.arrowDown2),
-                          onPressed: () {},
+                          onPressed: () async {
+                            await showModalBottomSheet(
+                                backgroundColor:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(12),
+                                    topLeft: Radius.circular(12),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  return QuantityBottomSheetWidget();
+                                });
+                          },
                           label: Text("Qty: 2"),
                           style: OutlinedButton.styleFrom(
                               side: BorderSide(width: 2),

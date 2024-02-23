@@ -33,7 +33,18 @@ class CartBottomSheetWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              ElevatedButton(onPressed: () {}, child: Text("Checkout"))
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  "Checkout",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
             ],
           ),
         ),
