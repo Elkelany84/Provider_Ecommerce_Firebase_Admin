@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/cart_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/home_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/profile_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
