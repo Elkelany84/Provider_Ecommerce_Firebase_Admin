@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/home_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             title: 'ShopSmart',
             theme: Styles.themeData(
                 isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-            home: const HomeScreen(),
+            home: const RootScreen(),
           );
         },
       ),
