@@ -1,6 +1,8 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/products/product_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -65,7 +67,21 @@ class _SearchScreenState extends State<SearchScreen> {
                 onSubmitted: (value) {
                   controller.text = value;
                 },
-              )
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: DynamicHeightGridView(
+                  // mainAxisSpacing: 12,
+                  // crossAxisSpacing: 12,
+                  builder: (context, index) {
+                    return ProductWidget();
+                  },
+                  itemCount: 10,
+                  crossAxisCount: 2,
+                ),
+              ),
             ],
           ),
         ),
