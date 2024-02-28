@@ -1,49 +1,76 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // backgroundColor: AppColors.lightScaffoldColor,
-      body: Center(
+      appBar: AppBar(
+        leading: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Image.asset(AssetsManager.shoppingCart),
+        ),
+        title: AppNameTextWidget(
+          label: "Shop Smart",
+          fontSize: 40,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SubtitleTextWidget(
-              label: "Hello",
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-              color: Colors.red,
-              textDecoration: TextDecoration.underline,
-              fontStyle: FontStyle.italic,
+            SizedBox(
+              height: 15,
             ),
-            TitleTextWidget(
-              label: "Hello Title" * 10,
+            SizedBox(
+              height: size.height * 0.25,
+              child: ClipRRect(
+                // borderRadius: BorderRadius.circular(20),
+                child: Swiper(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Image.asset(
+                      AppConstants.bannerImages[index],
+                      fit: BoxFit.fill,
+                    );
+                  },
+                  itemCount: AppConstants.bannerImages.length,
+                  pagination: SwiperPagination(
+                    builder: DotSwiperPaginationBuilder(
+                        activeColor: Colors.red, color: Colors.white),
+                  ),
+                  // control: SwiperControl(),
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // print("Theme is ${themeProvider.getIsDarkTheme}");
-              },
-              child: const Text("Change Theme"),
+            SizedBox(
+              height: 10,
             ),
-            SwitchListTile(
-                title: Text(
-                    themeProvider.getIsDarkTheme ? "DarkMode" : "LightMode"),
-                value: themeProvider.getIsDarkTheme,
-                onChanged: (value) {
-                  themeProvider.setDarkTheme(value);
-                })
+            TitleTextWidget(label: "Latest Arrivals"),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: size.height * 0.2,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return LatestArrivalProductWidgets();
+                  }),
+            )
           ],
         ),
       ),
+      // backgroundColor: AppColors.lightScaffoldColor,
     );
   }
 }
