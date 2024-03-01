@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 
 class LatestArrivalProductWidgets extends StatelessWidget {
@@ -13,7 +14,9 @@ class LatestArrivalProductWidgets extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () async {
+          await Navigator.pushNamed(context, ProductDetails.routeName);
+        },
         child: SizedBox(
           width: size.width * 0.45,
           child: Row(
