@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/quantity_btm_sheet.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
@@ -51,13 +52,7 @@ class CartWidget extends StatelessWidget {
                                 color: Colors.red,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                IconlyLight.heart,
-                                // color: Colors.red,
-                              ),
-                            ),
+                            HeartButtonWidget(),
                           ],
                         ),
                       ],

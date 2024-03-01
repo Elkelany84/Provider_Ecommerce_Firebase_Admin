@@ -1,8 +1,8 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 
 class LatestArrivalProductWidgets extends StatelessWidget {
@@ -53,10 +53,7 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(IconlyLight.heart),
-                          ),
+                          HeartButtonWidget(),
                           IconButton(
                             onPressed: () {},
                             icon: Icon(Icons.add_shopping_cart),
