@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
@@ -104,7 +107,9 @@ class ProfileScreen extends StatelessWidget {
             CustomListTile(
               label: "WishList",
               imagePath: AssetsManager.wishlistSvg,
-              onTab: () {},
+              onTab: () async {
+                await Navigator.pushNamed(context, WishListScreen.routeName);
+              },
             ),
             SizedBox(
               height: 10,
@@ -112,7 +117,10 @@ class ProfileScreen extends StatelessWidget {
             CustomListTile(
               label: "Viewed Recently",
               imagePath: AssetsManager.recent,
-              onTab: () {},
+              onTab: () async {
+                await Navigator.pushNamed(
+                    context, ViewedRecentlyScreen.routeName);
+              },
             ),
             SizedBox(
               height: 10,
@@ -157,7 +165,13 @@ class ProfileScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await MyAppFunctions.showErrorOrWarningDialog(
+                      context: context,
+                      subTitle: "Are You Sure You Want To SignOut?",
+                      fct: () {},
+                      isError: false);
+                },
                 label: Text(
                   "Log Out",
                   style: TextStyle(fontSize: 20),

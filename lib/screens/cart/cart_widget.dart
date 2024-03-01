@@ -72,8 +72,8 @@ class CartWidget extends StatelessWidget {
                                     Theme.of(context).scaffoldBackgroundColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12),
-                                    topLeft: Radius.circular(12),
+                                    topRight: Radius.circular(30),
+                                    topLeft: Radius.circular(30),
                                   ),
                                 ),
                                 context: context,
@@ -83,9 +83,11 @@ class CartWidget extends StatelessWidget {
                           },
                           label: Text("Qty: 2"),
                           style: OutlinedButton.styleFrom(
-                              side: BorderSide(width: 2),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12))),
+                            side: BorderSide(width: 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
                         )
                       ],
                     )

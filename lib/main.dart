@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +38,9 @@ class MyApp extends StatelessWidget {
             home: const RootScreen(),
             routes: {
               ProductDetails.routeName: (context) => ProductDetails(),
+              ViewedRecentlyScreen.routeName: (context) =>
+                  const ViewedRecentlyScreen(),
+              WishListScreen.routeName: (context) => const WishListScreen(),
             },
           );
         },

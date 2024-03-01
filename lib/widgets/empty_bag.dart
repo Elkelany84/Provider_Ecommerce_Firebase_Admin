@@ -8,7 +8,7 @@ class EmptyBag extends StatelessWidget {
       required this.imagePath,
       required this.title,
       required this.subtile,
-      required this.details,
+      this.details = "",
       required this.buttonText});
   final String title, subtile, details, buttonText, imagePath;
 
@@ -20,7 +20,7 @@ class EmptyBag extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 30,
+            height: 50,
           ),
           Image.asset(
             imagePath,
@@ -32,7 +32,7 @@ class EmptyBag extends StatelessWidget {
           ),
           TitleTextWidget(
             label: title,
-            fontSize: 40,
+            fontSize: 30,
             color: Colors.red,
           ),
           SizedBox(

@@ -22,24 +22,20 @@ class QuantityBottomSheetWidget extends StatelessWidget {
           height: 20,
         ),
         Expanded(
-          child: Column(
-            children: [
-              ListView.builder(
-                  // physics: NeverScrollableScrollPhysics(),
-                  // shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {},
-                      child: Center(
-                          child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: SubtitleTextWidget(label: "${index + 1}"),
-                      )),
-                    );
-                  }),
-            ],
-          ),
+          child: ListView.builder(
+              // physics: NeverScrollableScrollPhysics(),
+              // shrinkWrap: true,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {},
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: SubtitleTextWidget(label: "${index + 1}"),
+                  )),
+                );
+              }),
         ),
       ],
     );
