@@ -43,6 +43,9 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
                     FittedBox(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -57,6 +60,9 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     FittedBox(
                       child: SubtitleTextWidget(

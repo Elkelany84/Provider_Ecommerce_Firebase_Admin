@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/products/category_runded_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
@@ -25,49 +26,71 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              height: size.height * 0.25,
-              child: ClipRRect(
-                // borderRadius: BorderRadius.circular(20),
-                child: Swiper(
-                  itemBuilder: (BuildContext context, int index) {
-                    return Image.asset(
-                      AppConstants.bannerImages[index],
-                      fit: BoxFit.fill,
-                    );
-                  },
-                  itemCount: AppConstants.bannerImages.length,
-                  pagination: SwiperPagination(
-                    builder: DotSwiperPaginationBuilder(
-                        activeColor: Colors.red, color: Colors.white),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: size.height * 0.25,
+                child: ClipRRect(
+                  // borderRadius: BorderRadius.circular(20),
+                  child: Swiper(
+                    autoplay: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Image.asset(
+                        AppConstants.bannerImages[index],
+                        fit: BoxFit.fill,
+                      );
+                    },
+                    itemCount: AppConstants.bannerImages.length,
+                    pagination: SwiperPagination(
+                      builder: DotSwiperPaginationBuilder(
+                          activeColor: Colors.red, color: Colors.white),
+                    ),
+                    // control: SwiperControl(),
                   ),
-                  // control: SwiperControl(),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TitleTextWidget(label: "Latest Arrivals"),
-            SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: size.height * 0.2,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return LatestArrivalProductWidgets();
-                  }),
-            )
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              TitleTextWidget(label: "Latest Arrivals"),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: size.height * 0.2,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return LatestArrivalProductWidgets();
+                    }),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TitleTextWidget(label: "Categories"),
+              SizedBox(
+                height: 10,
+              ),
+              GridView.count(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 4,
+                children:
+                    List.generate(AppConstants.categoriesList.length, (index) {
+                  return CategoryRoundedWidget(
+                    name: AppConstants.categoriesList[index].name,
+                    image: AppConstants.categoriesList[index].image,
+                  );
+                }),
+              )
+            ],
+          ),
         ),
       ),
       // backgroundColor: AppColors.lightScaffoldColor,
