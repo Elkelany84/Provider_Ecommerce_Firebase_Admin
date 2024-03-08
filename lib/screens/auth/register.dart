@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/image_picker_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -86,7 +87,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: size.width * 0.3,
                     width: size.width * 0.3,
                     child: ImagePickerWidget(
-                        function: () {}, pickedImage: pickedImage)),
+                        function: () async {
+                          await MyAppFunctions.imagePickerDialog(
+                              context: context,
+                              cameraFct: () {},
+                              galleryFct: () {},
+                              removeFct: () {});
+                        },
+                        pickedImage: pickedImage)),
                 SizedBox(
                   height: 20,
                 ),
