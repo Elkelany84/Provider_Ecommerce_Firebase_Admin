@@ -3,8 +3,10 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/auth/image_picker_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -25,6 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final FocusNode _passwordFocusNode;
   late final FocusNode _repeatPasswordFocusNode;
   final _formKey = GlobalKey<FormState>();
+  XFile? pickedImage;
 
   @override
   void initState() {
@@ -58,6 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -76,7 +80,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     alignment: Alignment.centerLeft,
                     child: TitleTextWidget(label: "Welcome Back!")),
                 SizedBox(
-                  height: 16,
+                  height: 20,
+                ),
+                SizedBox(
+                    height: size.width * 0.3,
+                    width: size.width * 0.3,
+                    child: ImagePickerWidget(
+                        function: () {}, pickedImage: pickedImage)),
+                SizedBox(
+                  height: 20,
                 ),
                 Form(
                   key: _formKey,

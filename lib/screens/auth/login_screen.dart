@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SubtitleTextWidget(label: "Or Connect Using"),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       SizedBox(
                         height: kBottomNavigationBarHeight,
@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 30,
                             ),
                           ],
                         ),
