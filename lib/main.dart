@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
@@ -35,13 +36,14 @@ class MyApp extends StatelessWidget {
             title: 'ShopSmart',
             theme: Styles.themeData(
                 isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-            home: const LoginScreen(),
+            home: const RegisterScreen(),
             routes: {
               ProductDetails.routeName: (context) => ProductDetails(),
               ViewedRecentlyScreen.routeName: (context) =>
                   const ViewedRecentlyScreen(),
               WishListScreen.routeName: (context) => const WishListScreen(),
               LoginScreen.routeName: (context) => const LoginScreen(),
+              RegisterScreen.routeName: (context) => const RegisterScreen(),
             },
           );
         },
