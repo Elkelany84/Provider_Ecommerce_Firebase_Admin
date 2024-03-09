@@ -32,7 +32,7 @@ class EmptyBag extends StatelessWidget {
           ),
           TitleTextWidget(
             label: title,
-            fontSize: 30,
+            fontSize: 25,
             color: Colors.red,
           ),
           SizedBox(

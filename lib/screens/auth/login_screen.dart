@@ -4,6 +4,7 @@ import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/google_btn.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
@@ -190,7 +191,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                  onPressed: () async {},
+                                  onPressed: () async {
+                                    Navigator.of(context)
+                                        .pushNamed(RootScreen.routeName);
+                                  },
                                   child: Text(
                                     "Guest",
                                     style: TextStyle(fontSize: 20),

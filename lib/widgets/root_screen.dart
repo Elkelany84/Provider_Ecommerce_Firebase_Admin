@@ -7,6 +7,7 @@ import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
+  static const String routeName = "RootScreen";
 
   @override
   State<RootScreen> createState() => _RootScreenState();

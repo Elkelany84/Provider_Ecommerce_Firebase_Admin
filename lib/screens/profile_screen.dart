@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +101,9 @@ class ProfileScreen extends StatelessWidget {
             CustomListTile(
               label: "All Orders",
               imagePath: AssetsManager.orderSvg,
-              onTab: () {},
+              onTab: () {
+                Navigator.of(context).pushNamed(OrdersScreenFree.routeName);
+              },
             ),
             SizedBox(
               height: 10,
@@ -169,7 +173,9 @@ class ProfileScreen extends StatelessWidget {
                   await MyAppFunctions.showErrorOrWarningDialog(
                       context: context,
                       subTitle: "Are You Sure You Want To SignOut?",
-                      fct: () {},
+                      fct: () {
+                        Navigator.of(context).pushNamed(RootScreen.routeName);
+                      },
                       isError: false);
                 },
                 label: Text(
