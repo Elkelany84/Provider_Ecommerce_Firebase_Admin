@@ -60,6 +60,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
     FocusScope.of(context).unfocus();
   }
 
+  Future<void> localImagePicker() async {
+    final ImagePicker imagePicker = ImagePicker();
+
+    await MyAppFunctions.imagePickerDialog(
+        context: context,
+        cameraFct: () async {
+          pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
+          setState(() {});
+        },
+        galleryFct: () async {
+          pickedImage =
+              await imagePicker.pickImage(source: ImageSource.gallery);
+          setState(() {});
+        },
+        removeFct: () {
+          setState(() {
+            pickedImage = null;
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -88,11 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: size.width * 0.3,
                     child: ImagePickerWidget(
                         function: () async {
-                          await MyAppFunctions.imagePickerDialog(
-                              context: context,
-                              cameraFct: () {},
-                              galleryFct: () {},
-                              removeFct: () {});
+                          await localImagePicker();
                         },
                         pickedImage: pickedImage)),
                 SizedBox(
