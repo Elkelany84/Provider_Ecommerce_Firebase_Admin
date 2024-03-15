@@ -7,7 +7,8 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
 class ProductWidget extends StatefulWidget {
-  const ProductWidget({super.key});
+  const ProductWidget({super.key, this.image, this.title, this.price});
+  final String? image, title, price;
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -28,7 +29,7 @@ class _ProductWidgetState extends State<ProductWidget> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: FancyShimmerImage(
-                imageUrl: AppConstants.imageUrl,
+                imageUrl: widget.image ?? AppConstants.imageUrl,
                 height: size.height * 0.22,
                 width: double.infinity,
               ),
@@ -42,7 +43,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 Flexible(
                   flex: 5,
                   child: TitleTextWidget(
-                    label: "title" * 10,
+                    label: widget.title ?? "title" * 10,
                     maxLines: 2,
                   ),
                 ),
@@ -57,7 +58,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                 Flexible(
                   flex: 4,
                   child: SubtitleTextWidget(
-                    label: "\$ 16.0", color: Colors.blue,
+                    label: "\$ ${widget.price}" ?? "\$ 16.0",
+                    color: Colors.blue,
                     fontWeight: FontWeight.w600,
                     // maxLines: 2,
                   ),

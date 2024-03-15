@@ -1,5 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/product_widget.dart';
@@ -76,9 +77,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   // mainAxisSpacing: 12,
                   // crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return ProductWidget();
+                    return ProductWidget(
+                      image: ProductModel.products[index].productImage,
+                      title: ProductModel.products[index].productTitle,
+                      price: ProductModel.products[index].productPrice,
+                    );
                   },
-                  itemCount: 10,
+                  itemCount: ProductModel.products.length,
                   crossAxisCount: 2,
                 ),
               ),
