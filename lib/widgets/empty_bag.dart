@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
@@ -20,7 +21,7 @@ class EmptyBag extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 50,
+            height: 60,
           ),
           Image.asset(
             imagePath,
@@ -59,7 +60,9 @@ class EmptyBag extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(RootScreen.routeName);
+              },
               child: Text(buttonText))
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/auth/forgot_password.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/google_btn.dart';
@@ -129,7 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(ForgotPasswordScreen.routeName);
+                          },
                           child: SubtitleTextWidget(
                             label: "Forgot Password?",
                             fontStyle: FontStyle.italic,
