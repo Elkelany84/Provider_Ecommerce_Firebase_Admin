@@ -42,7 +42,9 @@ class WishListScreen extends StatelessWidget {
               // mainAxisSpacing: 12,
               // crossAxisSpacing: 12,
               builder: (context, index) {
-                return ProductWidget();
+                return ProductWidget(
+                  productId: "",
+                );
               },
               itemCount: 10,
               crossAxisCount: 2,

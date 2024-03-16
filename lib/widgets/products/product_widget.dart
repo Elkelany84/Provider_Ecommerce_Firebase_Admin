@@ -1,6 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 class ProductWidget extends StatefulWidget {
   const ProductWidget({
     super.key,
+    required this.productId,
   });
-
+  final String productId;
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
 }
@@ -19,66 +20,71 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
-    final productModelProvider = Provider.of<ProductModel>(context);
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    final getCurrentProduct = productsProvider.findByProdId(widget.productId);
+
     Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: GestureDetector(
-        onTap: () async {
-          await Navigator.pushNamed(context, ProductDetails.routeName);
-        },
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: FancyShimmerImage(
-                imageUrl: productModelProvider.productImage,
-                height: size.height * 0.22,
-                width: double.infinity,
+    return getCurrentProduct == null
+        ? SizedBox.shrink()
+        : Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: GestureDetector(
+              onTap: () async {
+                await Navigator.pushNamed(context, ProductDetails.routeName,
+                    arguments: getCurrentProduct.productId);
+              },
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: FancyShimmerImage(
+                      imageUrl: getCurrentProduct.productImage,
+                      height: size.height * 0.22,
+                      width: double.infinity,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        flex: 5,
+                        child: TitleTextWidget(
+                          label: getCurrentProduct.productTitle,
+                          maxLines: 2,
+                        ),
+                      ),
+                      Flexible(
+                        child: HeartButtonWidget(),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        flex: 4,
+                        child: SubtitleTextWidget(
+                          label: getCurrentProduct.productPrice,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          // maxLines: 2,
+                        ),
+                      ),
+                      Flexible(
+                        child: InkWell(
+                          splashColor: Colors.lightBlue,
+                          onTap: () {},
+                          child: Icon(Icons.add_shopping_cart_rounded),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 12,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  flex: 5,
-                  child: TitleTextWidget(
-                    label: productModelProvider.productTitle,
-                    maxLines: 2,
-                  ),
-                ),
-                Flexible(
-                  child: HeartButtonWidget(),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  flex: 4,
-                  child: SubtitleTextWidget(
-                    label: productModelProvider.productPrice,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w600,
-                    // maxLines: 2,
-                  ),
-                ),
-                Flexible(
-                  child: InkWell(
-                    splashColor: Colors.lightBlue,
-                    onTap: () {},
-                    child: Icon(Icons.add_shopping_cart_rounded),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

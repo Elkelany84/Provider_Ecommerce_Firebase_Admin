@@ -79,9 +79,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   // mainAxisSpacing: 12,
                   // crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return ChangeNotifierProvider.value(
-                        value: productsProvider.getProducts[index],
-                        child: ProductWidget());
+                    return ProductWidget(
+                      productId: productsProvider.getProducts[index].productId,
+                    );
                   },
                   itemCount: productsProvider.getProducts.length,
                   crossAxisCount: 2,
