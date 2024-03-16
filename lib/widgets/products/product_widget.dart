@@ -1,14 +1,16 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
+import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:provider/provider.dart';
 
 class ProductWidget extends StatefulWidget {
-  const ProductWidget({super.key, this.image, this.title, this.price});
-  final String? image, title, price;
+  const ProductWidget({
+    super.key,
+  });
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -17,6 +19,7 @@ class ProductWidget extends StatefulWidget {
 class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
+    final productModelProvider = Provider.of<ProductModel>(context);
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(6.0),
@@ -29,7 +32,7 @@ class _ProductWidgetState extends State<ProductWidget> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: FancyShimmerImage(
-                imageUrl: widget.image ?? AppConstants.imageUrl,
+                imageUrl: productModelProvider.productImage,
                 height: size.height * 0.22,
                 width: double.infinity,
               ),
@@ -43,7 +46,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 Flexible(
                   flex: 5,
                   child: TitleTextWidget(
-                    label: widget.title ?? "title" * 10,
+                    label: productModelProvider.productTitle,
                     maxLines: 2,
                   ),
                 ),
@@ -58,7 +61,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 Flexible(
                   flex: 4,
                   child: SubtitleTextWidget(
-                    label: "\$ ${widget.price}" ?? "\$ 16.0",
+                    label: productModelProvider.productPrice,
                     color: Colors.blue,
                     fontWeight: FontWeight.w600,
                     // maxLines: 2,

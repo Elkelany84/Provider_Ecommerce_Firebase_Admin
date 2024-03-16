@@ -1,9 +1,10 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/product_widget.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -29,6 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final productsProvider = Provider.of<ProductsProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -77,13 +79,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   // mainAxisSpacing: 12,
                   // crossAxisSpacing: 12,
                   builder: (context, index) {
-                    return ProductWidget(
-                      image: ProductModel.products[index].productImage,
-                      title: ProductModel.products[index].productTitle,
-                      price: ProductModel.products[index].productPrice,
-                    );
+                    return ChangeNotifierProvider.value(
+                        value: productsProvider.getProducts[index],
+                        child: ProductWidget());
                   },
-                  itemCount: ProductModel.products.length,
+                  itemCount: productsProvider.getProducts.length,
                   crossAxisCount: 2,
                 ),
               ),
