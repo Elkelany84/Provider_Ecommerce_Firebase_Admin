@@ -9,11 +9,22 @@ class ProductsProvider extends ChangeNotifier {
     return products;
   }
 
+  //Show Product and Product Details
   ProductModel? findByProdId(String productId) {
     if (products.where((element) => element.productId == productId).isEmpty) {
       return null;
     }
     return products.firstWhere((element) => element.productId == productId);
+  }
+
+  //Search Products By Category
+  List<ProductModel> findByCategory({required String categoryName}) {
+    List<ProductModel> categoryList = products
+        .where((element) => element.productCategory
+            .toLowerCase()
+            .contains(categoryName.toLowerCase()))
+        .toList();
+    return categoryList;
   }
 
   List<ProductModel> products = [

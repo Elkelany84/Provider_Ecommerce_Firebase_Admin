@@ -10,6 +10,7 @@ import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/order
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
             routes: {
               RootScreen.routeName: (context) => const RootScreen(),
               ProductDetails.routeName: (context) => ProductDetails(),
+              SearchScreen.routeName: (context) => const SearchScreen(),
               ViewedRecentlyScreen.routeName: (context) =>
                   const ViewedRecentlyScreen(),
               OrdersScreenFree.routeName: (context) => const OrdersScreenFree(),
