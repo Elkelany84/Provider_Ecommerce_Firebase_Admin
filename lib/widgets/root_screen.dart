@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/home_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/profile_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
+import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -32,6 +34,7 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: PageView(
         physics: NeverScrollableScrollPhysics(), //DISABLE SCROLL  OR SWIPE
@@ -49,7 +52,7 @@ class _RootScreenState extends State<RootScreen> {
           });
           controller.jumpToPage(currentScreen);
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
             selectedIcon: Icon(IconlyBold.home),
             icon: Icon(IconlyLight.home),
@@ -65,7 +68,7 @@ class _RootScreenState extends State<RootScreen> {
             icon: Badge(
                 backgroundColor: Colors.blue,
                 textColor: Colors.white,
-                label: Text("5"),
+                label: Text("${cartProvider.cartItems.length}"),
                 child: Icon(IconlyLight.bag2)),
             label: "Cart",
           ),

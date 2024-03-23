@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
@@ -21,6 +22,7 @@ class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final getCurrentProduct = productsProvider.findByProdId(widget.productId);
 
     Size size = MediaQuery.of(context).size;
@@ -74,10 +76,32 @@ class _ProductWidgetState extends State<ProductWidget> {
                         ),
                       ),
                       Flexible(
-                        child: InkWell(
-                          splashColor: Colors.lightBlue,
-                          onTap: () {},
-                          child: Icon(Icons.add_shopping_cart_rounded),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.lightBlue,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(12),
+                            splashColor: Colors.red,
+                            onTap: () {
+                              if (cartProvider.isProductInCart(
+                                  productId: getCurrentProduct.productId)) {
+                                return;
+                              }
+                              cartProvider.addToCart(
+                                  productId: getCurrentProduct.productId);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(6.0),
+                              child: Icon(
+                                cartProvider.isProductInCart(
+                                        productId: getCurrentProduct.productId)
+                                    ? Icons.check
+                                    : Icons.add_shopping_cart_outlined,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       )
                     ],

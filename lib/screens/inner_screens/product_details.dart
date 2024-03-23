@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
@@ -21,6 +22,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final productId = ModalRoute.of(context)?.settings.arguments as String;
     final getCurrentProduct = productsProvider.findByProdId(productId);
 
@@ -105,12 +107,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (cartProvider.isProductInCart(
+                                  productId: getCurrentProduct.productId)) {
+                                return;
+                              }
+                              cartProvider.addToCart(
+                                  productId: getCurrentProduct.productId);
+                            },
                             label: Text(
-                              "Add To Cart",
+                              cartProvider.isProductInCart(
+                                      productId: getCurrentProduct.productId)
+                                  ? "Added Already"
+                                  : "Add To Cart",
                               style: TextStyle(fontSize: 20),
                             ),
-                            icon: Icon(Icons.add_shopping_cart),
+                            icon: Icon(cartProvider.isProductInCart(
+                                    productId: getCurrentProduct.productId)
+                                ? Icons.check
+                                : Icons.add_shopping_cart),
                           ),
                         )
                       ],
