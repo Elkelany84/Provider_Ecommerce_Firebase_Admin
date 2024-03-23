@@ -31,6 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
+  List<ProductModel> productListSearch = [];
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
@@ -65,6 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     TextField(
                       controller: controller,
                       decoration: InputDecoration(
+                        hintText: "Search",
                         prefixIcon: Icon(
                           Icons.search,
                         ),
@@ -79,23 +81,41 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                       ),
+                      //Decrease The Performance a little bit
+                      onChanged: (value) {
+                        setState(() {
+                          productListSearch = productsProvider.searchQuery(
+                              searchText: controller.text);
+                        });
+                      },
                       onSubmitted: (value) {
-                        controller.text = value;
+                        setState(() {
+                          productListSearch = productsProvider.searchQuery(
+                              searchText: controller.text);
+                        });
                       },
                     ),
                     SizedBox(
                       height: 15,
                     ),
+                    if (controller.text.isNotEmpty &&
+                        productListSearch.isEmpty) ...[
+                      Center(child: TitleTextWidget(label: "No Products Found"))
+                    ],
                     Expanded(
                       child: DynamicHeightGridView(
                         // mainAxisSpacing: 12,
                         // crossAxisSpacing: 12,
                         builder: (context, index) {
                           return ProductWidget(
-                            productId: productList[index].productId,
+                            productId: controller.text.isEmpty
+                                ? productList[index].productId
+                                : productListSearch[index].productId,
                           );
                         },
-                        itemCount: productList.length,
+                        itemCount: controller.text.isEmpty
+                            ? productList.length
+                            : productListSearch.length,
                         crossAxisCount: 2,
                       ),
                     ),
