@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ class CartBottomSheetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productsProvider = Provider.of<ProductsProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     return Container(
       decoration: BoxDecoration(
@@ -30,10 +32,11 @@ class CartBottomSheetWidget extends StatelessWidget {
                   children: [
                     TitleTextWidget(
                         label:
-                            "Total (${cartProvider.cartItems.length} Products / 9 Items)" *
+                            "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)" *
                                 10),
                     SubtitleTextWidget(
-                      label: "\$ 160.0",
+                      label:
+                          "\$ ${cartProvider.getTotal(productsProvider: productsProvider).toStringAsFixed(2)}",
                       color: Colors.blue,
                     )
                   ],

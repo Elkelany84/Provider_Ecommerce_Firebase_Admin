@@ -34,7 +34,7 @@ class CartScreen extends StatelessWidget {
                 child: Image.asset(AssetsManager.shoppingCart),
               ),
               title: AppNameTextWidget(
-                label: "Cart Screen",
+                label: "Cart (${cartProvider.cartItems.length})",
                 fontSize: 22,
               ),
               actions: [
@@ -44,11 +44,23 @@ class CartScreen extends StatelessWidget {
                 )
               ],
             ),
-            body: ListView.builder(
-                itemCount: cartProvider.cartItems.length,
-                itemBuilder: (context, index) {
-                  return CartWidget();
-                }),
+            body: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: cartProvider.cartItems.length,
+                      itemBuilder: (context, index) {
+                        return ChangeNotifierProvider.value(
+                            value:
+                                cartProvider.cartItems.values.toList()[index],
+                            child: CartWidget());
+                      }),
+                ),
+                SizedBox(
+                  height: kBottomNavigationBarHeight + 10,
+                )
+              ],
+            ),
           );
   }
 }

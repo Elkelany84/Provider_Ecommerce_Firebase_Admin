@@ -5,7 +5,7 @@ var uuid = Uuid();
 
 class CartModel with ChangeNotifier {
   final String productId, cartId;
-  final int quantity;
+  late final int quantity;
 
   CartModel({
     required this.productId,
