@@ -8,10 +8,10 @@ class EmptyBag extends StatelessWidget {
       {super.key,
       required this.imagePath,
       required this.title,
-      required this.subtile,
+      this.subtitle = "",
       this.details = "",
       required this.buttonText});
-  final String title, subtile, details, buttonText, imagePath;
+  final String title, subtitle, details, buttonText, imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,11 @@ class EmptyBag extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          SubtitleTextWidget(
-            label: subtile,
-            fontWeight: FontWeight.w600,
+          Center(
+            child: SubtitleTextWidget(
+              label: subtitle,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           SizedBox(
             height: 20,

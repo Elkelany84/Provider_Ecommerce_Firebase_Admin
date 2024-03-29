@@ -23,7 +23,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
       body: isEmptyOrders
           ? EmptyBag(
               title: "No Orders Have Been Placed Yet",
-              subtile: "",
+              subtitle: "",
               imagePath: AssetsManager.orderBag,
               buttonText: "Shop Now",
             )

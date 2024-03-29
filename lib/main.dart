@@ -15,6 +15,8 @@ import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/wishlist_provider.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (_) {
           return CartProvider();
+        }),
+        ChangeNotifierProvider(create: (_) {
+          return WishlistProvider();
         }),
       ],
       child: Consumer<ThemeProvider>(

@@ -22,7 +22,7 @@ class CartScreen extends StatelessWidget {
             body: EmptyBag(
               imagePath: AssetsManager.shoppingBasket,
               title: "Whoops",
-              subtile: "Your Cart Is Empty!",
+              subtitle: "Your Cart Is Empty!",
               details: "Looks Like Your Cart is Empty,Start Shopping!",
               buttonText: "Shop now",
             ),

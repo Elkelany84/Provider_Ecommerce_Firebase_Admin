@@ -17,7 +17,7 @@ class ViewedRecentlyScreen extends StatelessWidget {
             body: EmptyBag(
               imagePath: AssetsManager.orderBag,
               title: "No Viewed Products Yet",
-              subtile: "Looks Like Your Cart is Empty,Start Shopping!",
+              subtitle: "Looks Like Your Cart is Empty,Start Shopping!",
               details: "Looks Like Your Cart is Empty,Start Shopping!",
               buttonText: "Shop now",
             ),

@@ -96,6 +96,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         HeartButtonWidget(
+                          productId: getCurrentProduct.productId,
                           bgColor: Colors.blue.shade100,
                         ),
                         SizedBox(
