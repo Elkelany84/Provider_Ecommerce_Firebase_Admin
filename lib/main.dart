@@ -15,6 +15,7 @@ import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/viewed_recently_provider.dart';
 import 'providers/wishlist_provider.dart';
 
 void main() {
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (_) {
           return WishlistProvider();
+        }),
+        ChangeNotifierProvider(create: (_) {
+          return ViewedProdProvider();
         }),
       ],
       child: Consumer<ThemeProvider>(

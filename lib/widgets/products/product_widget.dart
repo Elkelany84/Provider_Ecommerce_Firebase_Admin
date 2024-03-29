@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -23,6 +24,8 @@ class _ProductWidgetState extends State<ProductWidget> {
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+
     final getCurrentProduct = productsProvider.findByProdId(widget.productId);
 
     Size size = MediaQuery.of(context).size;
@@ -32,6 +35,8 @@ class _ProductWidgetState extends State<ProductWidget> {
             padding: const EdgeInsets.all(6.0),
             child: GestureDetector(
               onTap: () async {
+                viewedProdProvider.addViewedProd(
+                    productId: getCurrentProduct.productId);
                 await Navigator.pushNamed(context, ProductDetails.routeName,
                     arguments: getCurrentProduct.productId);
               },
