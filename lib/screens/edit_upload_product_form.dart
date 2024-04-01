@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/app_constants.dart';
@@ -165,6 +166,68 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                   height: 20,
                 ),
 
+                //Image Picker
+                _pickedImage == null
+                    ? SizedBox(
+                        width: size.width * 0.4 + 10,
+                        height: size.width * 0.4,
+                        child: DottedBorder(
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image_outlined,
+                                  size: 80,
+                                  color: Colors.blue,
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    localImagePicker();
+                                  },
+                                  child: Text("Pick Product Image"),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.file(
+                          File(
+                            _pickedImage!.path,
+                          ),
+                          height: size.width * 0.4,
+                          alignment: Alignment.center,
+                        ),
+                      ),
+                _pickedImage != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              localImagePicker();
+                            },
+                            child: Text("Pick another Image"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              removePickedImage();
+                            },
+                            child: Text(
+                              "Remove Image",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                const SizedBox(
+                  height: 10,
+                ),
                 //DropDown Widget
                 DropdownButton(
                     items: AppConstants.categoriesDropDownList,
