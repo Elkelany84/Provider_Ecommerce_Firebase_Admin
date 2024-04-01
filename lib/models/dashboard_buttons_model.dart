@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/assets_manager.dart';
@@ -16,7 +17,9 @@ class DashboardButtonsModel {
         DashboardButtonsModel(
             text: "Add a New Product",
             imagePath: AssetsManager.cloud,
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.pushNamed(context, EditOrUploadProductForm.routeName);
+            }),
         DashboardButtonsModel(
             text: "Inspect All Products",
             imagePath: AssetsManager.shoppingCart,
