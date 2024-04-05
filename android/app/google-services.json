@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "493433453225",
+    "project_id": "hadishopsmarprovideradminpanel",
+    "storage_bucket": "hadishopsmarprovideradminpanel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493433453225:android:3c381866aa7848ca6207b8",
+        "android_client_info": {
+          "package_name": "com.example.hadi_ecommerce_firebase_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493433453225:android:3b221b58cbaa93116207b8",
+        "android_client_info": {
+          "package_name": "com.example.hadi_ecommerce_firebase_adminpanel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
