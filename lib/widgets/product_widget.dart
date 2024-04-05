@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products_provider.dart';
@@ -29,7 +30,13 @@ class _ProductWidgetState extends State<ProductWidget> {
         : Padding(
             padding: const EdgeInsets.all(0.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditOrUploadProductForm(
+                    productModel: getCurrProduct,
+                  );
+                }));
+              },
               child: Column(
                 children: [
                   ClipRRect(
