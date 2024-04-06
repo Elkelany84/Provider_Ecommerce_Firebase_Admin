@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/forgot_password.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/google_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
@@ -19,11 +22,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isObscureText = true;
+  bool isLoading = false;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late final FocusNode _emailFocusNode;
   late final FocusNode _passwordFocusNode;
   final _formKey = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -46,6 +51,33 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> loginFct() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
+    if (isValid) {
+      try {
+        setState(() {
+          isLoading = true;
+        });
+        await auth.signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim());
+        Fluttertoast.showToast(
+            msg: "Welcome Back!",
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, RootScreen.routeName);
+      } on FirebaseException catch (error) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+            context: context, fct: () {}, subTitle: error.message.toString());
+      } catch (error) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+            context: context, fct: () {}, subTitle: error.toString());
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override

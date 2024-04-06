@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
@@ -18,8 +21,18 @@ import 'package:provider/provider.dart';
 import 'providers/viewed_recently_provider.dart';
 import 'providers/wishlist_provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+            apiKey: "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0",
+            appId: "1:493433453225:android:3c381866aa7848ca6207b8",
+            messagingSenderId: "493433453225",
+            projectId: "hadishopsmarprovideradminpanel",
+          ),
+        )
+      : await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(const MyApp());
@@ -57,7 +70,7 @@ class MyApp extends StatelessWidget {
             title: 'ShopSmart',
             theme: Styles.themeData(
                 isDarkTheme: themeProvider.getIsDarkTheme, context: context),
-            home: const RootScreen(),
+            home: const LoginScreen(),
             routes: {
               RootScreen.routeName: (context) => const RootScreen(),
               ProductDetails.routeName: (context) => ProductDetails(),

@@ -12,7 +12,20 @@
           "package_name": "com.example.hadi_ecommerce_firebase_admin"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "493433453225-ufhj5s42072e3tmda1momsce991dtojk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hadi_ecommerce_firebase_admin",
+            "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
+          }
+        },
+        {
+          "client_id": "493433453225-74hd85gongg5tpgqgh2utiibopj15ofd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493433453225-74hd85gongg5tpgqgh2utiibopj15ofd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +49,20 @@
           "package_name": "com.example.hadi_ecommerce_firebase_adminpanel"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "493433453225-60s5h9vuj8qhjohtu297g0jon2qheqru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hadi_ecommerce_firebase_adminpanel",
+            "certificate_hash": "01ed1f91f197900d22ae68d840d5170752a32cd4"
+          }
+        },
+        {
+          "client_id": "493433453225-74hd85gongg5tpgqgh2utiibopj15ofd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0"
@@ -39,7 +70,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493433453225-74hd85gongg5tpgqgh2utiibopj15ofd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

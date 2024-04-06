@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
@@ -12,9 +14,16 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -170,19 +179,25 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  await MyAppFunctions.showErrorOrWarningDialog(
+                  if (user == null) {
+                    Navigator.of(context).pushNamed(LoginScreen.routeName);
+                  } else {
+                    await MyAppFunctions.showErrorOrWarningDialog(
+                      isError: false,
                       context: context,
                       subTitle: "Are You Sure You Want To SignOut?",
                       fct: () {
-                        Navigator.of(context).pushNamed(RootScreen.routeName);
+                        auth.signOut().then((value) => Navigator.of(context)
+                            .pushNamed(RootScreen.routeName));
                       },
-                      isError: false);
+                    );
+                  }
                 },
                 label: Text(
-                  "Log Out",
+                  user != null ? "Sign Out" : "Log In",
                   style: TextStyle(fontSize: 20),
                 ),
-                icon: Icon(Icons.logout),
+                icon: Icon(user != null ? Icons.logout : Icons.login),
               ),
             ),
           ],
