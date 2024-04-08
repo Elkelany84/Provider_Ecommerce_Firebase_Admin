@@ -46,7 +46,7 @@ dependencies:
   image_picker: ^1.0.7
   uuid: ^4.3.3
   firebase_core: ^2.27.0
-  firebase_auth:
+  firebase_auth: ^4.17.6
   cloud_firestore:
   firebase_storage:
   google_sign_in: ^6.2.1

@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/image_picker_widget.dart';
@@ -122,84 +123,117 @@ class _RegisterScreenState extends State<RegisterScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 60,
-                ),
-                AppNameTextWidget(label: "Shop Smart", fontSize: 30),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: TitleTextWidget(label: "Welcome Back!")),
-                SizedBox(
-                  height: 20,
-                ),
-                SizedBox(
-                    height: size.width * 0.3,
-                    width: size.width * 0.3,
-                    child: ImagePickerWidget(
-                        function: () async {
-                          await localImagePicker();
-                        },
-                        pickedImage: pickedImage)),
-                SizedBox(
-                  height: 20,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFormField(
-                        controller: _nameController,
-                        focusNode: _nameFocusNode,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,
-                        decoration: InputDecoration(
-                          hintText: "Enter Your Name",
-                          prefixIcon: Icon(Icons.person),
+        body: LoadingManager(
+          isLoading: isLoading,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 60,
+                  ),
+                  AppNameTextWidget(label: "Shop Smart", fontSize: 30),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: TitleTextWidget(label: "Welcome Back!")),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                      height: size.width * 0.3,
+                      width: size.width * 0.3,
+                      child: ImagePickerWidget(
+                          function: () async {
+                            await localImagePicker();
+                          },
+                          pickedImage: pickedImage)),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          controller: _nameController,
+                          focusNode: _nameFocusNode,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecoration(
+                            hintText: "Enter Your Name",
+                            prefixIcon: Icon(Icons.person),
+                          ),
+                          onFieldSubmitted: (value) {
+                            FocusScope.of(context)
+                                .requestFocus(_emailFocusNode);
+                          },
+                          validator: (value) {
+                            return MyValidators.displayNamevalidator(value);
+                          },
                         ),
-                        onFieldSubmitted: (value) {
-                          FocusScope.of(context).requestFocus(_emailFocusNode);
-                        },
-                        validator: (value) {
-                          return MyValidators.displayNamevalidator(value);
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        controller: _emailController,
-                        focusNode: _emailFocusNode,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: "Email Address",
-                          prefixIcon: Icon(IconlyLight.message),
+                        SizedBox(
+                          height: 16,
                         ),
-                        onFieldSubmitted: (value) {
-                          FocusScope.of(context)
-                              .requestFocus(_passwordFocusNode);
-                        },
-                        validator: (value) {
-                          return MyValidators.emailValidator(value);
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        obscureText: isObscureText,
-                        controller: _passwordController,
-                        focusNode: _passwordFocusNode,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                            hintText: "Password",
+                        TextFormField(
+                          controller: _emailController,
+                          focusNode: _emailFocusNode,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            hintText: "Email Address",
+                            prefixIcon: Icon(IconlyLight.message),
+                          ),
+                          onFieldSubmitted: (value) {
+                            FocusScope.of(context)
+                                .requestFocus(_passwordFocusNode);
+                          },
+                          validator: (value) {
+                            return MyValidators.emailValidator(value);
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        TextFormField(
+                          obscureText: isObscureText,
+                          controller: _passwordController,
+                          focusNode: _passwordFocusNode,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: InputDecoration(
+                              hintText: "Password",
+                              prefixIcon: Icon(IconlyLight.lock),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isObscureText = !isObscureText;
+                                  });
+                                },
+                                icon: Icon(isObscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                              )),
+                          onFieldSubmitted: (value) {
+                            FocusScope.of(context)
+                                .requestFocus(_repeatPasswordFocusNode);
+                          },
+                          validator: (value) {
+                            return MyValidators.passwordValidator(value);
+                          },
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        TextFormField(
+                          obscureText: isObscureText,
+                          controller: _repeatPasswordController,
+                          focusNode: _repeatPasswordFocusNode,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: InputDecoration(
+                            hintText: "Repeat Password",
                             prefixIcon: Icon(IconlyLight.lock),
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -210,97 +244,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               icon: Icon(isObscureText
                                   ? Icons.visibility
                                   : Icons.visibility_off),
-                            )),
-                        onFieldSubmitted: (value) {
-                          FocusScope.of(context)
-                              .requestFocus(_repeatPasswordFocusNode);
-                        },
-                        validator: (value) {
-                          return MyValidators.passwordValidator(value);
-                        },
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        obscureText: isObscureText,
-                        controller: _repeatPasswordController,
-                        focusNode: _repeatPasswordFocusNode,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          hintText: "Repeat Password",
-                          prefixIcon: Icon(IconlyLight.lock),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isObscureText = !isObscureText;
-                              });
-                            },
-                            icon: Icon(isObscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
-                        ),
-                        onFieldSubmitted: (value) async {
-                          await registerFct();
-                        },
-                        validator: (value) {
-                          return MyValidators.repeatPasswordValidator(
-                              value: value, password: _passwordController.text);
-                        },
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.all(12),
-                            backgroundColor: Colors.purpleAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: () async {
+                          onFieldSubmitted: (value) async {
                             await registerFct();
                           },
-                          label: Text(
-                            "SignUp",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          icon: Icon(IconlyLight.addUser),
+                          validator: (value) {
+                            return MyValidators.repeatPasswordValidator(
+                                value: value,
+                                password: _passwordController.text);
+                          },
                         ),
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      SubtitleTextWidget(label: "Or Connect Using"),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SubtitleTextWidget(label: "Already User?"),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed(LoginScreen.routeName);
-                            },
-                            child: SubtitleTextWidget(
-                              label: "SignIn?",
-                              fontStyle: FontStyle.italic,
-                              textDecoration: TextDecoration.underline,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.all(12),
+                              backgroundColor: Colors.purpleAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
+                            onPressed: () async {
+                              await registerFct();
+                            },
+                            label: Text(
+                              "SignUp",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            icon: Icon(IconlyLight.addUser),
                           ),
-                        ],
-                      )
-                    ],
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        SubtitleTextWidget(label: "Or Connect Using"),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SubtitleTextWidget(label: "Already User?"),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(LoginScreen.routeName);
+                              },
+                              child: SubtitleTextWidget(
+                                label: "SignIn?",
+                                fontStyle: FontStyle.italic,
+                                textDecoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

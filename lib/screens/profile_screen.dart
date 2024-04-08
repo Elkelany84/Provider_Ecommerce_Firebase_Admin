@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/google_auth_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_screen.dart';
@@ -171,34 +172,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 30,
             ),
             Center(
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+              child: Consumer<GoogleProvider>(
+                  builder: (builder, google, child) {
+                return ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                onPressed: () async {
-                  if (user == null) {
-                    Navigator.of(context).pushNamed(LoginScreen.routeName);
-                  } else {
-                    await MyAppFunctions.showErrorOrWarningDialog(
-                      isError: false,
-                      context: context,
-                      subTitle: "Are You Sure You Want To SignOut?",
-                      fct: () {
-                        auth.signOut().then((value) => Navigator.of(context)
-                            .pushNamed(RootScreen.routeName));
-                      },
-                    );
-                  }
-                },
-                label: Text(
-                  user != null ? "Sign Out" : "Log In",
-                  style: TextStyle(fontSize: 20),
-                ),
-                icon: Icon(user != null ? Icons.logout : Icons.login),
-              ),
+                  onPressed: () async {
+                    if (user == null) {
+                      Navigator.of(context).pushNamed(LoginScreen.routeName);
+                    } else {
+                      await MyAppFunctions.showErrorOrWarningDialog(
+                        isError: false,
+                        context: context,
+                        subTitle: "Are You Sure You Want To SignOut?",
+                        fct: () {
+                          auth.signOut().then((value) => Navigator.of(context)
+                              .pushNamed(RootScreen.routeName));
+                        },
+                      );
+                    }
+                  },
+                  label: Text(
+                    user == null ? "Login" : "Logout",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  icon: Icon(user == null ? Icons.login : Icons.logout),
+                );
+              }
+                  // child: ElevatedButton.icon(
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: Colors.red,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //   ),
+                  //   onPressed: () async {
+                  //     if (user == null) {
+                  //       Navigator.of(context).pushNamed(LoginScreen.routeName);
+                  //     } else {
+                  //       await MyAppFunctions.showErrorOrWarningDialog(
+                  //         isError: false,
+                  //         context: context,
+                  //         subTitle: "Are You Sure You Want To SignOut?",
+                  //         fct: () {
+                  //           auth.signOut().then((value) => Navigator.of(context)
+                  //               .pushNamed(RootScreen.routeName));
+                  //         },
+                  //       );
+                  //     }
+                  //   },
+                  //   label: Text(
+                  //     user == null ? "Login" : "Logout",
+                  //     style: TextStyle(fontSize: 20),
+                  //   ),
+                  //   icon: Icon(user == null ? Icons.login : Icons.logout),
+                  // ),
+                  ),
             ),
           ],
         ),
