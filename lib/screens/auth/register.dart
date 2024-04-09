@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -73,6 +74,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await auth.createUserWithEmailAndPassword(
             email: _emailController.text.trim(),
             password: _passwordController.text.trim());
+
+        //Register user in FirebaseFirestore
+        final User user = auth.currentUser!;
+        final String uid = user.uid;
+        await FirebaseFirestore.instance.collection("users").doc(uid).set({
+          "userId": uid,
+          "userName": _nameController.text.trim(),
+          "userEmail": _emailController.text.trim().toLowerCase(),
+          "userImage": "",
+          "createdAt": Timestamp.now(),
+          "userCart": [],
+          "userWish": []
+        });
+
+        //SToast Message
         Fluttertoast.showToast(
             msg: "An Account Has been Created!",
             backgroundColor: Colors.red,
