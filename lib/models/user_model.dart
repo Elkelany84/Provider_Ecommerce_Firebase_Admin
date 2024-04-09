@@ -5,8 +5,11 @@ class UserModel extends ChangeNotifier {
   final String userId, userName, userEmail, userImage;
   final Timestamp createdAt;
   final List userCart, userWish;
-  UserModel(this.createdAt, this.userCart, this.userWish,
-      {required this.userId,
+  UserModel(
+      {required this.createdAt,
+      required this.userCart,
+      required this.userWish,
+      required this.userId,
       required this.userName,
       required this.userEmail,
       required this.userImage});

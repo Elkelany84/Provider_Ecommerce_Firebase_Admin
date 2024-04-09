@@ -8,6 +8,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/google_auth_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/forgot_password.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
@@ -62,6 +63,9 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (_) {
           return ViewedProdProvider();
+        }),
+        ChangeNotifierProvider(create: (_) {
+          return UserProvider();
         }),
         ChangeNotifierProvider(create: (_) {
           return GoogleProvider();

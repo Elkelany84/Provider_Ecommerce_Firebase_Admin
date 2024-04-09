@@ -268,7 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           validator: (value) {
                             return MyValidators.repeatPasswordValidator(
                                 value: value,
-                                password: _passwordController.text);
+                                password: _repeatPasswordController.text);
                           },
                         ),
                         SizedBox(
