@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -9,8 +13,23 @@ import 'screens/edit_upload_product_form.dart';
 import 'screens/inner_screen/orders/orders_screen.dart';
 import 'screens/search_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: FirebaseOptions(
+            apiKey: "AIzaSyCUfPySK2s6fR87-DmhzkNTTyEwbHvjK-0",
+            appId: "1:493433453225:android:3b221b58cbaa93116207b8",
+            messagingSenderId: "493433453225",
+            projectId: "hadishopsmarprovideradminpanel",
+            storageBucket: "hadishopsmarprovideradminpanel.appspot.com",
+          ),
+        )
+      : await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
