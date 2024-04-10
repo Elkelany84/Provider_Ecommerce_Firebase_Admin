@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -65,7 +68,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> registerFct() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-
+//check if he choose image or not
+    if (pickedImage == null) {
+      MyAppFunctions.showErrorOrWarningDialog(
+          context: context, fct: () {}, subTitle: "Please Choose an Image");
+      return;
+    }
     if (isValid) {
       try {
         setState(() {
@@ -75,14 +83,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             email: _emailController.text.trim(),
             password: _passwordController.text.trim());
 
-        //Register user in FirebaseFirestore
         final User user = auth.currentUser!;
         final String uid = user.uid;
+
+        //store picked image to firebase storage
+        final ref = FirebaseStorage.instance.ref();
+        final imageRef =
+            ref.child("usersImages").child(auth.currentUser!.uid + ".jpg");
+        await imageRef.putFile(File(pickedImage!.path));
+        final imageUrl = await imageRef.getDownloadURL();
+
+        //Register user in FirebaseFirestore
         await FirebaseFirestore.instance.collection("users").doc(uid).set({
           "userId": uid,
           "userName": _nameController.text.trim(),
           "userEmail": _emailController.text.trim().toLowerCase(),
-          "userImage": "",
+          "userImage": imageUrl,
           "createdAt": Timestamp.now(),
           "userCart": [],
           "userWish": []
