@@ -61,20 +61,27 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              TitleTextWidget(label: "Latest Arrivals"),
+              Visibility(
+                  visible: productsProvider.getProducts.isNotEmpty,
+                  child: TitleTextWidget(label: "Latest Arrivals")),
               SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: size.height * 0.2,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return ChangeNotifierProvider.value(
-                          value: productsProvider.getProducts[index],
-                          child: LatestArrivalProductWidgets());
-                    }),
+              Visibility(
+                visible: productsProvider.getProducts.isNotEmpty,
+                child: SizedBox(
+                  height: size.height * 0.2,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: productsProvider.getProducts.length < 10
+                          ? productsProvider.getProducts.length
+                          : 10,
+                      itemBuilder: (context, index) {
+                        return ChangeNotifierProvider.value(
+                            value: productsProvider.getProducts[index],
+                            child: LatestArrivalProductWidgets());
+                      }),
+                ),
               ),
               SizedBox(
                 height: 10,

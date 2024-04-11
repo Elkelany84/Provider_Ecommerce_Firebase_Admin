@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/home_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/profile_screen.dart';
@@ -19,6 +22,7 @@ class _RootScreenState extends State<RootScreen> {
   late PageController controller;
   late List<Widget> screens;
   int currentScreen = 0;
+  bool isLoadingProd = true;
 
   @override
   void initState() {
@@ -30,6 +34,27 @@ class _RootScreenState extends State<RootScreen> {
     ];
     controller = PageController(initialPage: currentScreen);
     super.initState();
+  }
+
+  //fetch products from firebase function
+  Future<void> fetchFct() async {
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    try {
+      //fetch many future functions
+      // Future.wait({productsProvider.fetchProducts()});
+      await productsProvider.fetchProducts();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (isLoadingProd) {
+      fetchFct();
+    }
+    super.didChangeDependencies();
   }
 
   @override
