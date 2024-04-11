@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/dashboard_buttons_model.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/dashboard_btn.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +19,29 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class DashboardScreenState extends State<DashboardScreen> {
+  bool isLoadingProd = true;
+
+  //very important to fetch products and make stream function to work
+  Future<void> fetchFct() async {
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    try {
+      //fetch many future functions
+      // Future.wait({productsProvider.fetchProducts()});
+      await productsProvider.fetchProducts();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (isLoadingProd) {
+      fetchFct();
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);

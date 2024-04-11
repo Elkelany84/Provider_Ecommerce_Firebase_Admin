@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:uuid/uuid.dart';
 
-class ProductModel with ChangeNotifier {
+var uuid = Uuid();
+
+class ProductModel extends ChangeNotifier {
   final String productId,
       productTitle,
       productPrice,
@@ -9,6 +12,7 @@ class ProductModel with ChangeNotifier {
       productDescription,
       productImage,
       productQuantity;
+
   Timestamp? createdAt;
 
   ProductModel({
@@ -21,4 +25,19 @@ class ProductModel with ChangeNotifier {
     required this.productQuantity,
     this.createdAt,
   });
+
+  factory ProductModel.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
+    // data.containsKey("")
+    return ProductModel(
+      //doc.get(field),
+      productId: data['productId'],
+      productTitle: data['productTitle'],
+      productPrice: data['productPrice'],
+      productCategory: data['productCategory'],
+      productDescription: data['productDescription'],
+      productImage: data['productImage'],
+      productQuantity: data['productQuantity'], createdAt: data['createdAt'],
+    );
+  }
 }

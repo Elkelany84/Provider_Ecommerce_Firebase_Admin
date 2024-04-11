@@ -37,6 +37,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
   bool isEditing = false;
   String? productNetworkImage;
   bool isLoading = false;
+  String? productImageUrl;
 
   @override
   void initState() {
@@ -102,15 +103,14 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         });
 
         //store picked image to firebase storage
+        final productId = Uuid().v4();
         final ref = FirebaseStorage.instance.ref();
-        final imageRef = ref
-            .child("productsImages")
-            .child('${_titleController.text} + ".jpg"');
+        final imageRef = ref.child("productsImages").child('$productId.jpg');
         await imageRef.putFile(File(_pickedImage!.path));
         final imageUrl = await imageRef.getDownloadURL();
 
         //Register user in FirebaseFirestore
-        final productId = Uuid().v4();
+
         await FirebaseFirestore.instance
             .collection("products")
             .doc(productId)
@@ -118,8 +118,9 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           "productId": productId,
           "productTitle": _titleController.text.trim(),
           "productCategory": _categoryValue,
+          "productPrice": _priceController.text,
           "productDescription": _descriptionController.text,
-          "userImage": imageUrl,
+          "productImage": imageUrl,
           "createdAt": Timestamp.now(),
           "productQuantity": _quantityController.text,
         });
@@ -153,14 +154,72 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
   }
 
   Future<void> _editProduct() async {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+//check if he choose image or not
     if (_pickedImage == null && productNetworkImage == null) {
       MyAppFunctions.showErrorOrWarningDialog(
           context: context, subtitle: "Please Pick an Image", fct: () {});
       return;
     }
-    final isValid = _formKey.currentState!.validate();
-    FocusScope.of(context).unfocus();
-    if (!isValid) {}
+    if (isValid) {
+      try {
+        setState(() {
+          isLoading = true;
+        });
+
+        //store picked image to firebase storage
+        if (_pickedImage != null) {
+          final ref = FirebaseStorage.instance.ref();
+          final imageRef = ref
+              .child("productsImages")
+              .child('${widget.productModel!.productId}.jpg');
+          await imageRef.putFile(File(_pickedImage!.path));
+          productImageUrl = await imageRef.getDownloadURL();
+        }
+
+        //Register user in FirebaseFirestore
+        // final productId = Uuid().v4();
+        await FirebaseFirestore.instance
+            .collection("products")
+            .doc(widget.productModel!.productId)
+            .update({
+          "productId": widget.productModel!.productId,
+          "productTitle": _titleController.text.trim(),
+          "productCategory": _categoryValue,
+          "productPrice": _priceController.text,
+          "productDescription": _descriptionController.text,
+          "productImage": productImageUrl ?? productNetworkImage,
+          "createdAt": widget.productModel!.createdAt,
+          "productQuantity": _quantityController.text,
+        });
+
+        //SToast Message
+        Fluttertoast.showToast(
+            msg: "A Product has been edited!",
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        if (!mounted) return;
+        MyAppFunctions.showErrorOrWarningDialog(
+            isError: false,
+            context: context,
+            subtitle: "Clear Form",
+            fct: () {
+              _clearForm();
+            });
+      } on FirebaseException catch (error) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+            context: context, fct: () {}, subtitle: error.message.toString());
+      } catch (error) {
+        await MyAppFunctions.showErrorOrWarningDialog(
+            context: context, fct: () {}, subtitle: error.toString());
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   Future<void> localImagePicker() async {
@@ -169,11 +228,15 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         context: context,
         cameraFCT: () async {
           _pickedImage = await picker.pickImage(source: ImageSource.camera);
-          setState(() {});
+          setState(() {
+            productNetworkImage = null;
+          });
         },
         galleryFCT: () async {
           _pickedImage = await picker.pickImage(source: ImageSource.gallery);
-          setState(() {});
+          setState(() {
+            productNetworkImage = null;
+          });
         },
         removeFCT: () async {
           setState(() {
@@ -212,13 +275,14 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                     icon: const Icon(Icons.clear),
                     label: const Text(
                       "Clear",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
+                        // textStyle: TextStyle(color: Colors.white),
                         padding: const EdgeInsets.all(12),
-                        // backgroundColor: Colors.red,
+                        backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         )),
@@ -233,7 +297,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                     label: isEditing
                         ? const Text(
                             "Edit Product",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           )
                         : Text(
                             "Upload Product",
@@ -362,7 +426,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                               decoration:
                                   InputDecoration(hintText: "Product Name"),
                               validator: (value) {
-                                MyValidators.uploadProdTexts(
+                                return MyValidators.uploadProdTexts(
                                     value: value,
                                     toBeReturnedString:
                                         "Please Enter Valid Product Name");
@@ -396,7 +460,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                       ),
                                     ),
                                     validator: (value) {
-                                      MyValidators.uploadProdTexts(
+                                      return MyValidators.uploadProdTexts(
                                           value: value,
                                           toBeReturnedString:
                                               "Price is Missing");
@@ -420,7 +484,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                     decoration:
                                         InputDecoration(hintText: "Quantity"),
                                     validator: (value) {
-                                      MyValidators.uploadProdTexts(
+                                      return MyValidators.uploadProdTexts(
                                           value: value,
                                           toBeReturnedString:
                                               "Quantity is Missing");
@@ -444,7 +508,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                               decoration:
                                   InputDecoration(hintText: "Description"),
                               validator: (value) {
-                                MyValidators.uploadProdTexts(
+                                return MyValidators.uploadProdTexts(
                                     value: value,
                                     toBeReturnedString:
                                         "Description is Missing");
