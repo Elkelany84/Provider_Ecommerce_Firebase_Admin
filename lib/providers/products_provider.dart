@@ -44,7 +44,10 @@ class ProductsProvider with ChangeNotifier {
   final productDb = FirebaseFirestore.instance.collection("products");
   Future<List<ProductModel>> fetchProducts() async {
     try {
-      await productDb.get().then((productSnapshot) {
+      await productDb
+          .orderBy("createdAt", descending: false)
+          .get()
+          .then((productSnapshot) {
         products.clear();
         for (var element in productSnapshot.docs) {
           products.insert(0, ProductModel.fromFirestore(element)
