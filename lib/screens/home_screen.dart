@@ -75,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: productsProvider.getProducts.length < 10
                           ? productsProvider.getProducts.length
-                          : 10,
+                          : 3,
                       itemBuilder: (context, index) {
                         return ChangeNotifierProvider.value(
                             value: productsProvider.getProducts[index],

@@ -4,6 +4,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
@@ -89,13 +90,24 @@ class _ProductWidgetState extends State<ProductWidget> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(12),
                             splashColor: Colors.red,
-                            onTap: () {
-                              if (cartProvider.isProductInCart(
-                                  productId: getCurrentProduct.productId)) {
-                                return;
+                            onTap: () async {
+                              try {
+                                await cartProvider.addToCartFirebase(
+                                    productId: getCurrentProduct.productId,
+                                    quantity: 1,
+                                    context: context);
+                              } catch (error) {
+                                MyAppFunctions.showErrorOrWarningDialog(
+                                    context: context,
+                                    fct: () {},
+                                    subTitle: error.toString());
                               }
-                              cartProvider.addToCart(
-                                  productId: getCurrentProduct.productId);
+                              // if (cartProvider.isProductInCart(
+                              //     productId: getCurrentProduct.productId)) {
+                              //   return;
+                              // }
+                              // cartProvider.addToCart(
+                              //     productId: getCurrentProduct.productId);
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(6.0),

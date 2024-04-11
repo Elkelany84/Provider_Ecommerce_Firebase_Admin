@@ -4,6 +4,7 @@ import 'package:hadi_ecommerce_firebase_admin/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/viewed_recently_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
+import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/heart_btn.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
@@ -66,13 +67,25 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                             productId: productModel.productId,
                           ),
                           IconButton(
-                            onPressed: () {
-                              if (cartProvider.isProductInCart(
-                                  productId: productModel.productId)) {
-                                return;
+                            onPressed: () async {
+                              try {
+                                await cartProvider.addToCartFirebase(
+                                    productId: productModel.productId,
+                                    quantity: 1,
+                                    context: context);
+                              } catch (error) {
+                                MyAppFunctions.showErrorOrWarningDialog(
+                                    context: context,
+                                    fct: () {},
+                                    subTitle: error.toString());
                               }
-                              cartProvider.addToCart(
-                                  productId: productModel.productId);
+
+                              // if (cartProvider.isProductInCart(
+                              //     productId: productModel.productId)) {
+                              //   return;
+                              // }
+                              // cartProvider.addToCart(
+                              //     productId: productModel.productId);
                             },
                             icon: Icon(
                               cartProvider.isProductInCart(

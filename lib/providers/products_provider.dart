@@ -45,7 +45,7 @@ class ProductsProvider with ChangeNotifier {
   Future<List<ProductModel>> fetchProducts() async {
     try {
       await productDb
-          .orderBy("createdAt", descending: false)
+          .orderBy("createdAt", descending: true)
           .get()
           .then((productSnapshot) {
         products.clear();
