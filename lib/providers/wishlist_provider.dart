@@ -60,8 +60,6 @@ class WishlistProvider with ChangeNotifier {
           }
         ]),
       });
-      //get the WishList items from firebase and show it in WishList screen
-      await getWishListItemsFromFirebase();
       _wishlistItems.remove(productId);
       Fluttertoast.showToast(msg: "Item Deleted From WishList");
     } catch (error) {

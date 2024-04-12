@@ -23,12 +23,8 @@ class HeartButtonWidget extends StatefulWidget {
 class _HeartButtonWidgetState extends State<HeartButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    final wishlistProvider = Provider.of<WishlistProvider>(
-      context,
-    );
-    // final wishlistModel = Provider.of<WishListModel>(
-    //   context,
-    // );
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+
     return Container(
       decoration: BoxDecoration(color: widget.bgColor, shape: BoxShape.circle),
       child: IconButton(
