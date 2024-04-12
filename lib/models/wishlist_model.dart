@@ -4,10 +4,10 @@ import 'package:uuid/uuid.dart';
 var uuid = Uuid();
 
 class WishListModel with ChangeNotifier {
-  final String wishlistId, productId;
+  final String wishListId, productId;
 
   WishListModel({
-    required this.wishlistId,
+    required this.wishListId,
     required this.productId,
   });
 }

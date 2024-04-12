@@ -26,12 +26,27 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
     final wishlistProvider = Provider.of<WishlistProvider>(
       context,
     );
+    // final wishlistModel = Provider.of<WishListModel>(
+    //   context,
+    // );
     return Container(
       decoration: BoxDecoration(color: widget.bgColor, shape: BoxShape.circle),
       child: IconButton(
         style: IconButton.styleFrom(elevation: 10),
-        onPressed: () {
-          wishlistProvider.addOrRemoveFromWishlist(productId: widget.productId);
+        onPressed: () async {
+          // wishlistProvider.addOrRemoveFromWishlist(
+          //   productId: widget.productId,
+          // );
+          if (wishlistProvider.wishlistItems.containsKey(widget.productId)) {
+            await wishlistProvider.deleteProductFromWishListFirebase(
+                wishListId: wishlistProvider
+                    .wishlistItems[widget.productId]!.wishListId,
+                productId: widget.productId);
+          } else {
+            await wishlistProvider.addToWishListFirebase(
+                productId: widget.productId, context: context);
+          }
+          await wishlistProvider.getWishListItemsFromFirebase();
         },
         icon: Icon(
           wishlistProvider.isProductInWishlist(productId: widget.productId)

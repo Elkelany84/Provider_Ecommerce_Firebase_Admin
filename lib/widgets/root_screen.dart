@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/wishlist_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/home_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/profile_screen.dart';
@@ -41,11 +42,15 @@ class _RootScreenState extends State<RootScreen> {
     final productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final wishlistProvider =
+        Provider.of<WishlistProvider>(context, listen: false);
+
     try {
       //fetch many future functions
       // Future.wait({productsProvider.fetchProducts()});
       await productsProvider.fetchProducts();
       await cartProvider.getCartItemsFromFirebase();
+      await wishlistProvider.getWishListItemsFromFirebase();
     } catch (e) {
       log(e.toString());
     }
