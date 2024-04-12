@@ -91,6 +91,11 @@ class _ProductWidgetState extends State<ProductWidget> {
                             borderRadius: BorderRadius.circular(12),
                             splashColor: Colors.red,
                             onTap: () async {
+                              //check if already in cart
+                              if (cartProvider.isProductInCart(
+                                  productId: getCurrentProduct.productId)) {
+                                return;
+                              }
                               try {
                                 await cartProvider.addToCartFirebase(
                                     productId: getCurrentProduct.productId,

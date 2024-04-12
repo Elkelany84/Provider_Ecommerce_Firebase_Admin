@@ -18,7 +18,9 @@ class CartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(
+      context,
+    );
     final cartModel = Provider.of<CartModel>(context);
     final getCurrentProduct =
         productsProvider.findByProdId(cartModel.productId);
@@ -59,9 +61,15 @@ class CartWidget extends StatelessWidget {
                               Column(
                                 children: [
                                   IconButton(
-                                    onPressed: () {
-                                      cartProvider.removeFromCart(
-                                          getCurrentProduct.productId);
+                                    onPressed: () async {
+                                      await cartProvider
+                                          .deleteProductFromCartFirebase(
+                                              cartId: cartModel.cartId,
+                                              productId:
+                                                  getCurrentProduct.productId,
+                                              quantity: cartModel.quantity);
+                                      // cartProvider.removeFromCart(
+                                      //     getCurrentProduct.productId);
                                     },
                                     icon: Icon(
                                       Icons.clear,

@@ -35,8 +35,81 @@ class CartProvider with ChangeNotifier {
           {"cartId": cartId, "productId": productId, "quantity": quantity}
         ]),
       });
+      //get the cart items from firebase and show it in cart screen
+      await getCartItemsFromFirebase();
       Fluttertoast.showToast(msg: "Item Added To Cart");
-    } catch (error) {}
+    } catch (error) {
+      rethrow;
+    }
+    notifyListeners();
+  }
+
+  //Get Cart Items From Firebase
+  Future<void> getCartItemsFromFirebase() async {
+    final User? user = auth.currentUser;
+    if (user == null) {
+      _cartItems.clear();
+      return;
+    }
+    try {
+      final userDoc = await usersDb.doc(user.uid).get();
+      final data = userDoc.data();
+      if (data == null || !data.containsKey("userCart")) {
+        return;
+      }
+      final length = userDoc.get("userCart").length;
+      for (int index = 0; index < length; index++) {
+        _cartItems.putIfAbsent(
+            userDoc.get("userCart")[index]["productId"],
+            () => CartModel(
+                productId: userDoc.get("userCart")[index]["productId"],
+                cartId: userDoc.get("userCart")[index]["cartId"],
+                quantity: userDoc.get("userCart")[index]["quantity"]));
+      }
+    } catch (error) {
+      rethrow;
+    }
+    notifyListeners();
+  }
+
+  //delete product from cart in firebase
+  Future<void> deleteProductFromCartFirebase(
+      {required String cartId,
+      required String productId,
+      required int quantity}) async {
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+    try {
+      await usersDb.doc(uid).update({
+        "userCart": FieldValue.arrayRemove([
+          {"cartId": cartId, "productId": productId, "quantity": quantity}
+        ]),
+      });
+      //get the cart items from firebase and show it in cart screen
+      await getCartItemsFromFirebase();
+      cartItems.remove(productId);
+      Fluttertoast.showToast(msg: "Item Deleted To Cart");
+    } catch (error) {
+      rethrow;
+    }
+    notifyListeners();
+  }
+
+  //clear the whole cart from firebase
+  Future<void> clearCartFirebase() async {
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+    try {
+      await usersDb.doc(uid).update({
+        "userCart": [],
+      });
+      //get the cart items from firebase and show it in cart screen
+      await getCartItemsFromFirebase();
+      cartItems.clear();
+      Fluttertoast.showToast(msg: "Cart Cleared");
+    } catch (error) {
+      rethrow;
+    }
     notifyListeners();
   }
 
@@ -54,7 +127,7 @@ class CartProvider with ChangeNotifier {
   }
 
   //Remove Item From Cart
-  void removeFromCart(String productId) {
+  void removeFromCart({required String productId}) {
     _cartItems.remove(productId);
     notifyListeners();
   }
@@ -93,11 +166,6 @@ class CartProvider with ChangeNotifier {
 
   void clearCart() {
     _cartItems.clear();
-    notifyListeners();
-  }
-
-  void removeOneItem({required String productId}) {
-    _cartItems.remove(productId);
     notifyListeners();
   }
 }

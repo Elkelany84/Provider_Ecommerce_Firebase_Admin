@@ -44,8 +44,10 @@ class CartScreen extends StatelessWidget {
                     MyAppFunctions.showErrorOrWarningDialog(
                         isError: false,
                         context: context,
-                        fct: () {
-                          cartProvider.clearCart();
+                        fct: () async {
+                          await cartProvider.clearCartFirebase();
+                          await cartProvider.getCartItemsFromFirebase();
+                          // cartProvider.clearCart();
                         },
                         subTitle: "Clear Cart?");
                   },

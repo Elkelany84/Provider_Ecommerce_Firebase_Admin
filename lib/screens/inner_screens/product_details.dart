@@ -110,6 +110,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                             onPressed: () async {
+                              //check if already in cart
+                              if (cartProvider.isProductInCart(
+                                  productId: getCurrentProduct.productId)) {
+                                return;
+                              }
                               try {
                                 await cartProvider.addToCartFirebase(
                                     productId: getCurrentProduct.productId,

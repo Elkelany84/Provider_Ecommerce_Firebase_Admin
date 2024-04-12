@@ -68,6 +68,11 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () async {
+                              //check if already in cart
+                              if (cartProvider.isProductInCart(
+                                  productId: productModel.productId)) {
+                                return;
+                              }
                               try {
                                 await cartProvider.addToCartFirebase(
                                     productId: productModel.productId,
