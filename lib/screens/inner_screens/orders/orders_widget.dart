@@ -1,11 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
+import 'package:hadi_ecommerce_firebase_admin/models/order_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
 class OrdersWidgetFree extends StatefulWidget {
-  const OrdersWidgetFree({super.key});
+  const OrdersWidgetFree({super.key, required this.ordersModelAdvanced});
+  final OrdersModelAdvanced ordersModelAdvanced;
 
   @override
   State<OrdersWidgetFree> createState() => _OrdersWidgetFreeState();
@@ -22,7 +23,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: FancyShimmerImage(
-              imageUrl: AppConstants.imageUrl,
+              imageUrl: widget.ordersModelAdvanced.imageUrl,
               height: size.width * 0.25,
               width: size.width * 0.25,
             ),
@@ -38,7 +39,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                     children: [
                       Flexible(
                         child: TitleTextWidget(
-                          label: "Product Title",
+                          label: widget.ordersModelAdvanced.productTitle,
                           maxLines: 2,
                           fontSize: 15,
                         ),
@@ -63,7 +64,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                       ),
                       Flexible(
                         child: SubtitleTextWidget(
-                          label: "\$ 11.99",
+                          label: "\$ ${widget.ordersModelAdvanced.price}",
                           fontSize: 15,
                           color: Colors.blue,
                         ),
@@ -84,7 +85,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                       ),
                       Flexible(
                         child: SubtitleTextWidget(
-                          label: "10",
+                          label: widget.ordersModelAdvanced.quantity,
                           fontSize: 15,
                           color: Colors.blue,
                         ),

@@ -19,6 +19,7 @@ import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/order_provider.dart';
 import 'providers/viewed_recently_provider.dart';
 import 'providers/wishlist_provider.dart';
 
@@ -66,6 +67,9 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (_) {
           return UserProvider();
+        }),
+        ChangeNotifierProvider(create: (_) {
+          return OrderProvider();
         }),
         // ChangeNotifierProvider(create: (_) {
         //   return GoogleProvider();

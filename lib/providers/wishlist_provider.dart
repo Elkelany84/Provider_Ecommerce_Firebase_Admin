@@ -52,6 +52,7 @@ class WishlistProvider with ChangeNotifier {
     final User? user = auth.currentUser;
     final uid = user!.uid;
     try {
+      _wishlistItems.remove(productId);
       await usersDb.doc(uid).update({
         "userWish": FieldValue.arrayRemove([
           {
@@ -60,7 +61,7 @@ class WishlistProvider with ChangeNotifier {
           }
         ]),
       });
-      _wishlistItems.remove(productId);
+
       Fluttertoast.showToast(msg: "Item Deleted From WishList");
     } catch (error) {
       rethrow;
