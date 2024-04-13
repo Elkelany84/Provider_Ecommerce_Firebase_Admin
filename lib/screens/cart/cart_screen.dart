@@ -23,7 +23,49 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool isLoading = false;
+  String? _sessionId;
 
+  Future<void> createSession() async {
+    final auth = FirebaseAuth.instance;
+    final User user = auth.currentUser!;
+    final String uid = user.uid;
+    //Register user in FirebaseFirestore
+    await FirebaseFirestore.instance
+        .collection("ordersAdvanced")
+        .doc(_sessionId)
+        .set({
+      "userId": uid,
+      "userName": user.displayName,
+      "userEmail": user.email,
+      "createdAt": Timestamp.now(),
+      "userOrder": [],
+    });
+  }
+
+  @override
+  void initState() {
+    _sessionId = Uuid().v4();
+    print(_sessionId);
+    super.initState();
+  }
+
+  // storeSessionID(String sessionId) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final sessionId = Uuid().v4();
+  //   prefs.setString("sessionId", sessionId);
+  //   print(_sessionId);
+  //   setState(() {
+  //     _sessionId = sessionId;
+  //   });
+  // }
+  //
+  //
+  // getSessionId() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   _sessionId = prefs.getString("sessionId");
+  //   print(_sessionId);
+  //   return _sessionId;
+  // }
   @override
   Widget build(BuildContext context) {
     final productProvider =
@@ -44,9 +86,10 @@ class _CartScreenState extends State<CartScreen> {
         : Scaffold(
             bottomSheet: CartBottomSheetWidget(function: () async {
               await placeOrderAdvanced(
-                  cartProvider: cartProvider,
-                  productProvider: productProvider,
-                  userProvider: userProvider);
+                cartProvider: cartProvider,
+                productProvider: productProvider,
+                userProvider: userProvider,
+              );
             }),
             appBar: AppBar(
               leading: Padding(
@@ -97,6 +140,7 @@ class _CartScreenState extends State<CartScreen> {
           );
   }
 
+  //customized function
   Future<void> placeOrderAdvanced({
     required UserProvider userProvider,
     required ProductsProvider productProvider,
@@ -117,18 +161,24 @@ class _CartScreenState extends State<CartScreen> {
       cartProvider.cartItems.forEach((key, value) async {
         final getCurrProd = productProvider.findByProdId(value.productId);
         final orderId = Uuid().v4();
-        await ordersDb.doc(orderId).set({
-          "orderId": orderId,
-          "userId": uid,
-          "userName": userProvider.getUserModel!.userName,
-          "productId": value.productId,
-          "productTitle": getCurrProd!.productTitle,
-          "imageUrl": getCurrProd.productImage,
-          "price": double.parse(getCurrProd.productPrice) * value.quantity,
-          "totalPrice":
-              cartProvider.getTotal(productsProvider: productProvider),
-          "quantity": value.quantity,
-          "orderDate": Timestamp.now(),
+        // print(orderId);
+        await createSession();
+        await ordersDb.doc(_sessionId).update({
+          "userOrder": FieldValue.arrayUnion([
+            {
+              "orderId": orderId,
+              "userId": uid,
+              "userName": userProvider.getUserModel!.userName,
+              "productId": value.productId,
+              "productTitle": getCurrProd!.productTitle,
+              "imageUrl": getCurrProd.productImage,
+              "price": double.parse(getCurrProd.productPrice) * value.quantity,
+              "totalPrice":
+                  cartProvider.getTotal(productsProvider: productProvider),
+              "quantity": value.quantity,
+              "orderDate": Timestamp.now(),
+            }
+          ])
         });
       });
       await cartProvider.clearCartFirebase();
@@ -142,4 +192,51 @@ class _CartScreenState extends State<CartScreen> {
       });
     }
   }
+
+  //original function
+  // Future<void> placeOrderAdvanced({
+  //   required UserProvider userProvider,
+  //   required ProductsProvider productProvider,
+  //   required CartProvider cartProvider,
+  // }) async {
+  //   final auth = FirebaseAuth.instance;
+  //   final User? user = auth.currentUser;
+  //   final ordersDb = FirebaseFirestore.instance.collection("ordersAdvanced");
+  //
+  //   if (user == null) {
+  //     return;
+  //   }
+  //   final uid = user.uid;
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //     });
+  //     cartProvider.cartItems.forEach((key, value) async {
+  //       final getCurrProd = productProvider.findByProdId(value.productId);
+  //       final orderId = Uuid().v4();
+  //       await ordersDb.doc(orderId).set({
+  //         "orderId": orderId,
+  //         "userId": uid,
+  //         "userName": userProvider.getUserModel!.userName,
+  //         "productId": value.productId,
+  //         "productTitle": getCurrProd!.productTitle,
+  //         "imageUrl": getCurrProd.productImage,
+  //         "price": double.parse(getCurrProd.productPrice) * value.quantity,
+  //         "totalPrice":
+  //             cartProvider.getTotal(productsProvider: productProvider),
+  //         "quantity": value.quantity,
+  //         "orderDate": Timestamp.now(),
+  //       });
+  //     });
+  //     await cartProvider.clearCartFirebase();
+  //     cartProvider.clearCart();
+  //   } catch (error) {
+  //     MyAppFunctions.showErrorOrWarningDialog(
+  //         context: context, fct: () {}, subTitle: error.toString());
+  //   } finally {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 }

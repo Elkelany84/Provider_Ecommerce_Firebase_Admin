@@ -88,7 +88,7 @@ class CartProvider with ChangeNotifier {
       //get the cart items from firebase and show it in cart screen
       await getCartItemsFromFirebase();
       cartItems.remove(productId);
-      Fluttertoast.showToast(msg: "Item Deleted To Cart");
+      Fluttertoast.showToast(msg: "Item Deleted From Cart");
     } catch (error) {
       rethrow;
     }

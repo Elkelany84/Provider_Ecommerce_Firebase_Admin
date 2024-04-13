@@ -7,7 +7,7 @@ class OrderProvider extends ChangeNotifier {
   final List<OrdersModelAdvanced> orders = [];
   List<OrdersModelAdvanced> get getOrders => orders;
 
-  //fetch orders from firebase
+  //fetch orders from firebase original way in course
   Future<List<OrdersModelAdvanced>> fetchOrders() async {
     final auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
