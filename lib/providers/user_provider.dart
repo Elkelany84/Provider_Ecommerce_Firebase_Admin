@@ -33,6 +33,8 @@ class UserProvider with ChangeNotifier {
         userEmail: userDoc.get("userEmail"),
         userImage: userDoc.get("userImage"),
         createdAt: userDoc.get("createdAt"),
+        userAddress: userDoc.get("userAddress"),
+        userPhone: userDoc.get("userPhone"),
         userCart:
             userDocDic.containsKey("userCart") ? userDoc.get("userCart") : [],
         userWish:
@@ -46,4 +48,6 @@ class UserProvider with ChangeNotifier {
       rethrow;
     }
   }
+
+  //customized user profile fetch data for personal profile
 }

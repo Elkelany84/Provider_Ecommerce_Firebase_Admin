@@ -100,6 +100,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "userEmail": _emailController.text.trim().toLowerCase(),
           "userImage": imageUrl,
           "createdAt": Timestamp.now(),
+          "userAddress": "",
+          "userPhone": "",
           "userCart": [],
           "userWish": []
         });
@@ -167,8 +169,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   AppNameTextWidget(label: "Shop Smart", fontSize: 30),
                   Align(
-                      alignment: Alignment.centerLeft,
-                      child: TitleTextWidget(label: "Welcome Back!")),
+                    alignment: Alignment.centerLeft,
+                    child: TitleTextWidget(label: "Welcome Back!"),
+                  ),
                   SizedBox(
                     height: 20,
                   ),

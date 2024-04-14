@@ -1,25 +1,59 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/bottom_checkout.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class PaymentScreen extends StatefulWidget {
-  PaymentScreen({super.key});
+  const PaymentScreen({super.key});
+
+  static const routeName = "/payment-screen";
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
-class _PaymentScreenState extends State<PaymentScreen> {
+class _PaymentScreenState extends State<PaymentScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   bool isLoading = false;
   String? _sessionId;
+  User? user = FirebaseAuth.instance.currentUser;
+  OrderUserModel? orderUserModel;
+  bool _isLoading = true;
+
+  Future<void> fetchUserInfo() async {
+    final userProvider = Provider.of<OrderProvider>(context, listen: false);
+    final orderUserProvider =
+        Provider.of<OrderProvider>(context, listen: false);
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      orderUserModel = await orderUserProvider.fetchUserInfo();
+    } catch (error) {
+      await MyAppFunctions.showErrorOrWarningDialog(
+        context: context,
+        subTitle: error.toString(),
+        fct: () {},
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   Future<void> createSession() async {
     final auth = FirebaseAuth.instance;
@@ -42,6 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     _sessionId = Uuid().v4();
     print(_sessionId);
+    fetchUserInfo();
     super.initState();
   }
 
@@ -51,6 +86,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Provider.of<ProductsProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     return Scaffold(
       bottomSheet: CartBottomSheetWidget(function: () async {
         await placeOrderAdvanced(
@@ -64,61 +100,77 @@ class _PaymentScreenState extends State<PaymentScreen> {
         title: Text("Payment"),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TitleTextWidget(
-                label: "Shipping to",
-                fontSize: 24,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              // DeliveryContainerWidget(),
-              SizedBox(
-                height: 20,
-              ),
+      body: orderUserModel == null
+          ? SizedBox.shrink()
+          : SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TitleTextWidget(
+                      label: "Shipping to",
+                      fontSize: 24,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
-              TitleTextWidget(
-                label: "Payment Method",
-                fontSize: 24,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              //Total Button
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 50,
-                  width: 150,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    SubtitleTextWidget(
+                      label: orderUserModel!.userAddress,
+                      fontSize: 22,
+                      textDecoration: TextDecoration.underline,
+                    ),
+                    // DeliveryContainerWidget(),
+                    SizedBox(
+                      height: 30,
+                    ),
+
+                    TitleTextWidget(
+                      label: "Payment Method",
+                      fontSize: 24,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TitleTextWidget(
+                      label: "Payment On Delivery",
+                      fontSize: 24,
+                    ),
+                    //Total Button
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 50,
+                        width: 150,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: Text(
+                            "Buy Now",
+                            style: TextStyle(
+                                fontSize: 22,
+                                // fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      "Buy Now",
-                      style: TextStyle(
-                          fontSize: 22,
-                          // fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 

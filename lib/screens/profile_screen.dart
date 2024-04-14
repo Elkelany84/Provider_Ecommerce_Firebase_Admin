@@ -6,6 +6,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/personal_profile.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/loading_manager.dart';
@@ -181,10 +182,15 @@ class _ProfileScreenState extends State<ProfileScreen>
               SizedBox(
                 height: 10,
               ),
-              CustomListTile(
-                label: "Address",
-                imagePath: AssetsManager.address,
-                onTab: () {},
+              Visibility(
+                visible: userModel == null ? false : true,
+                child: CustomListTile(
+                  label: "Personal Profile",
+                  imagePath: AssetsManager.profile,
+                  onTab: () {
+                    Navigator.pushNamed(context, PersonalProfile.routeName);
+                  },
+                ),
               ),
               SizedBox(
                 height: 10,

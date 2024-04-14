@@ -6,6 +6,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/bottom_checkout.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_widget.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/cart/payment_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
@@ -84,12 +85,13 @@ class _CartScreenState extends State<CartScreen> {
             ),
           )
         : Scaffold(
-            bottomSheet: CartBottomSheetWidget(function: () async {
-              await placeOrderAdvanced(
-                cartProvider: cartProvider,
-                productProvider: productProvider,
-                userProvider: userProvider,
-              );
+            bottomSheet: CartBottomSheetWidget(function: () {
+              Navigator.pushNamed(context, PaymentScreen.routeName);
+              // await placeOrderAdvanced(
+              //   cartProvider: cartProvider,
+              //   productProvider: productProvider,
+              //   userProvider: userProvider,
+              // );
             }),
             appBar: AppBar(
               leading: Padding(

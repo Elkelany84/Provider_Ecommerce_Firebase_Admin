@@ -22,6 +22,8 @@ import 'package:provider/provider.dart';
 import 'providers/order_provider.dart';
 import 'providers/viewed_recently_provider.dart';
 import 'providers/wishlist_provider.dart';
+import 'screens/cart/payment_screen.dart';
+import 'screens/inner_screens/orders/personal_profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -96,6 +98,8 @@ class MyApp extends StatelessWidget {
               RegisterScreen.routeName: (context) => const RegisterScreen(),
               ForgotPasswordScreen.routeName: (context) =>
                   const ForgotPasswordScreen(),
+              PaymentScreen.routeName: (context) => const PaymentScreen(),
+              PersonalProfile.routeName: (context) => const PersonalProfile(),
             },
           );
         },

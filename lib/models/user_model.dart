@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserModel extends ChangeNotifier {
-  final String userId, userName, userEmail, userImage;
+  final String userId, userName, userEmail, userImage, userAddress, userPhone;
   final Timestamp createdAt;
   final List userCart, userWish;
   UserModel(
@@ -12,5 +12,7 @@ class UserModel extends ChangeNotifier {
       required this.userId,
       required this.userName,
       required this.userEmail,
+      required this.userAddress,
+      required this.userPhone,
       required this.userImage});
 }
