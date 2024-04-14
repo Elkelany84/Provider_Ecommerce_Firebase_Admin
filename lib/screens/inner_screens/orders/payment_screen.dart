@@ -6,8 +6,11 @@ import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/cart/bottom_checkout.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_bottom_checkout.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/personal_profile.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/payment/payment_radio_option_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +91,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
     return Scaffold(
-      bottomSheet: CartBottomSheetWidget(function: () async {
+      bottomSheet: PaymentBottomSheetWidget(function: () async {
         await placeOrderAdvanced(
           cartProvider: cartProvider,
           productProvider: productProvider,
@@ -97,8 +100,24 @@ class _PaymentScreenState extends State<PaymentScreen>
       }),
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Payment"),
-        elevation: 0,
+        // automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+          ),
+        ),
+        // leading: Padding(
+        //   padding: EdgeInsets.all(8.0),
+        //   child: Image.asset(AssetsManager.shoppingCart),
+        // ),
+        title: AppNameTextWidget(
+          label: "CheckOut",
+          fontSize: 30,
+        ),
       ),
       body: orderUserModel == null
           ? SizedBox.shrink()
@@ -113,17 +132,50 @@ class _PaymentScreenState extends State<PaymentScreen>
                       height: 20,
                     ),
                     TitleTextWidget(
-                      label: "Shipping to",
+                      label: "Shipping to : ",
                       fontSize: 24,
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 18,
                     ),
 
-                    SubtitleTextWidget(
-                      label: orderUserModel!.userAddress,
-                      fontSize: 22,
-                      textDecoration: TextDecoration.underline,
+                    Container(
+                      width: double.infinity,
+                      height: 160,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.grey.shade100),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, right: 8, left: 8, bottom: 6),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SubtitleTextWidget(
+                              label: orderUserModel!.userAddress * 3,
+                              fontSize: 20, color: Colors.black,
+                              // textDecoration: TextDecoration.underline,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed(PersonalProfile.routeName);
+                                },
+                                child: SubtitleTextWidget(
+                                  label: "Edit Address",
+                                  fontStyle: FontStyle.italic,
+                                  textDecoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     // DeliveryContainerWidget(),
                     SizedBox(
@@ -131,42 +183,63 @@ class _PaymentScreenState extends State<PaymentScreen>
                     ),
 
                     TitleTextWidget(
-                      label: "Payment Method",
+                      label: "Payment Method : ",
                       fontSize: 24,
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    TitleTextWidget(
-                      label: "Payment On Delivery",
-                      fontSize: 24,
-                    ),
-                    //Total Button
                     SizedBox(
                       height: 20,
                     ),
-                    Center(
-                      child: SizedBox(
-                        height: 50,
-                        width: 150,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Buy Now",
-                            style: TextStyle(
-                                fontSize: 22,
-                                // fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    )
+                    PaymentMethodWidget(),
+                    // TitleTextWidget(
+                    //   label: "Payment On Delivery",
+                    //   fontSize: 24,
+                    // ),
+                    //Total Button
+                    SizedBox(
+                      height: 40,
+                    ),
+                    // Center(
+                    //   child: SizedBox(
+                    //     height: 50,
+                    //     width: 150,
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         elevation: 0,
+                    //         backgroundColor: Colors.blue,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(10),
+                    //         ),
+                    //       ),
+                    //       onPressed: () {},
+                    //       child: Text(
+                    //         "Buy Now",
+                    //         style: TextStyle(
+                    //             fontSize: 22,
+                    //             // fontWeight: FontWeight.bold,
+                    //             color: Colors.white),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    TitleTextWidget(
+                      label: "Order Summary : ",
+                      fontSize: 24,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TitleTextWidget(
+                      label:
+                          "\$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                      fontSize: 18,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    TitleTextWidget(
+                      label: "Delivery Fees : \$ 10 ",
+                      fontSize: 18,
+                    ),
                   ],
                 ),
               ),

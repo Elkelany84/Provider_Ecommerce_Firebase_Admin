@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
-
+    // UserModel? userModel;
+    // User? user = FirebaseAuth.instance.currentUser;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -37,8 +38,14 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
+              // Visibility(
+              //   visible: user == null ? false : true,
+              //   child: SubtitleTextWidget(
+              //     label: "Delivery to :${userModel!.userName}",
+              //   ),
+              // ),
               SizedBox(
-                height: size.height * 0.25,
+                height: size.height * 0.22,
                 child: ClipRRect(
                   // borderRadius: BorderRadius.circular(20),
                   child: Swiper(
@@ -84,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TitleTextWidget(label: "Categories"),
               SizedBox(

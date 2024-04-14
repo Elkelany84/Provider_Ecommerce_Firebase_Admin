@@ -132,7 +132,7 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //Get Total Price
+  //Get Total Price for cart
   double getTotal({required ProductsProvider productsProvider}) {
     var total = 0.0;
     _cartItems.forEach((key, value) {
@@ -141,6 +141,21 @@ class CartProvider with ChangeNotifier {
         total += 0;
       } else {
         total += double.parse(getCurrentProduct.productPrice) * value.quantity;
+      }
+    });
+    return total;
+  }
+
+  //Get Total Price for cart
+  double getTotalForPayment({required ProductsProvider productsProvider}) {
+    var total = 0.0;
+    _cartItems.forEach((key, value) {
+      final getCurrentProduct = productsProvider.findByProdId(value.productId);
+      if (getCurrentProduct == null) {
+        total += 0;
+      } else {
+        total +=
+            double.parse(getCurrentProduct.productPrice) * value.quantity + 10;
       }
     });
     return total;
