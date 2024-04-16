@@ -6,6 +6,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_bottom_checkout.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/personal_profile.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
@@ -230,7 +231,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                     ),
                     TitleTextWidget(
                       label:
-                          "\$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                          "\$ ${cartProvider.getTotalForPayment(productsProvider: productProvider).toStringAsFixed(2)}",
                       fontSize: 18,
                     ),
                     SizedBox(
@@ -280,8 +281,8 @@ class _PaymentScreenState extends State<PaymentScreen>
               "productTitle": getCurrProd!.productTitle,
               "imageUrl": getCurrProd.productImage,
               "price": double.parse(getCurrProd.productPrice) * value.quantity,
-              "totalPrice":
-                  cartProvider.getTotal(productsProvider: productProvider),
+              "totalPrice": cartProvider.getTotalForPayment(
+                  productsProvider: productProvider),
               "quantity": value.quantity,
               "orderDate": Timestamp.now(),
             }
@@ -290,6 +291,7 @@ class _PaymentScreenState extends State<PaymentScreen>
       });
       await cartProvider.clearCartFirebase();
       cartProvider.clearCart();
+      Navigator.pushNamed(context, CartScreen.routeName);
     } catch (error) {
       MyAppFunctions.showErrorOrWarningDialog(
           context: context, fct: () {}, subTitle: error.toString());

@@ -24,6 +24,7 @@ class OrderProvider extends ChangeNotifier {
           .orderBy("orderDate");
       await ordersDb.get().then((orderSnapshot) {
         orders.clear();
+        // original function
         for (var element in orderSnapshot.docs) {
           orders.insert(
             0,

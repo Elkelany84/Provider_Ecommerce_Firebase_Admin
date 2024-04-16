@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/models/order_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
@@ -28,7 +27,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
         appBar: AppBar(
           title: TitleTextWidget(label: "Placed Orders"),
         ),
-        body: FutureBuilder<List<OrdersModelAdvanced>>(
+        body: FutureBuilder(
           future: orderProvider.fetchOrders(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,6 +48,8 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                     padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
                     child: OrdersWidgetFree(
                       ordersModelAdvanced: orderProvider.getOrders[index],
+                      // ordersModelAdvanced:
+                      // orderProvider.getOrdersMap.values.toList()[index],
                     ),
                   );
                 },
@@ -57,6 +58,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                     thickness: 6,
                   );
                 },
+                // itemCount: orderProvider.getOrdersMap.length
                 itemCount: snapshot.data!.length);
           },
         ));

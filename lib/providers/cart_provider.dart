@@ -106,7 +106,7 @@ class CartProvider with ChangeNotifier {
       //get the cart items from firebase and show it in cart screen
       await getCartItemsFromFirebase();
       cartItems.clear();
-      Fluttertoast.showToast(msg: "Cart Cleared");
+      Fluttertoast.showToast(msg: "Thank You For Shopping With Us");
     } catch (error) {
       rethrow;
     }
@@ -146,19 +146,23 @@ class CartProvider with ChangeNotifier {
     return total;
   }
 
-  //Get Total Price for cart
+  //Get Total Price for payment screen
   double getTotalForPayment({required ProductsProvider productsProvider}) {
     var total = 0.0;
+    var fees = 10.0;
     _cartItems.forEach((key, value) {
       final getCurrentProduct = productsProvider.findByProdId(value.productId);
       if (getCurrentProduct == null) {
         total += 0;
       } else {
-        total +=
-            double.parse(getCurrentProduct.productPrice) * value.quantity + 10;
+        total += double.parse(getCurrentProduct.productPrice) * value.quantity;
+        // total = total + fees;
+
+        // total += 10;
+        // print(total);
       }
     });
-    return total;
+    return total + fees;
   }
 
   //Get Whole Quantity
