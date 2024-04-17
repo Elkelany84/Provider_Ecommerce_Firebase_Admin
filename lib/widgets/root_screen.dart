@@ -53,13 +53,15 @@ class _RootScreenState extends State<RootScreen> {
       Future.wait({
         productsProvider.fetchProducts(),
         userProvider.fetchUserInfo(),
-        orderProvider.fetchOrders(),
         // orderProvider.getFirebase()
+        orderProvider.fetchOrders()
       });
       Future.wait({
         cartProvider.getCartItemsFromFirebase(),
         wishlistProvider.getWishListItemsFromFirebase(),
+        // orderProvider.fetchOrders()
       });
+      // orderProvider.fetchOrders();
     } catch (error) {
       log(error.toString());
     }

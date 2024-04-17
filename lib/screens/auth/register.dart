@@ -106,6 +106,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "userWish": []
         });
 
+        //Customize create userOrderProfile in orderAdvanced in FirebaseFirestore
+        await FirebaseFirestore.instance
+            .collection("ordersAdvanced")
+            .doc(uid)
+            .set({"userId": uid, "userOrder": [], "orderSummary": []});
+
         //SToast Message
         Fluttertoast.showToast(
             msg: "An Account Has been Created!",
@@ -170,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   AppNameTextWidget(label: "Shop Smart", fontSize: 30),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: TitleTextWidget(label: "Welcome Back!"),
+                    child: TitleTextWidget(label: "Welcome !"),
                   ),
                   SizedBox(
                     height: 20,

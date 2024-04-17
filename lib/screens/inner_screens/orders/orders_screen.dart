@@ -19,9 +19,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
 
   @override
   Widget build(BuildContext context) {
-    final orderProvider = Provider.of<OrderProvider>(
-      context,
-    );
+    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(
@@ -31,7 +29,10 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
           future: orderProvider.fetchOrders(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Colors.red,
+              ));
             } else if (snapshot.hasError) {
               return Center(child: SelectableText(snapshot.error.toString()));
             } else if (!snapshot.hasData || orderProvider.getOrders.isEmpty) {
@@ -49,7 +50,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                     child: OrdersWidgetFree(
                       ordersModelAdvanced: orderProvider.getOrders[index],
                       // ordersModelAdvanced:
-                      // orderProvider.getOrdersMap.values.toList()[index],
+                      //     orderProvider.newOrders.values.toList()[index],
                     ),
                   );
                 },
@@ -58,8 +59,9 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                     thickness: 6,
                   );
                 },
-                // itemCount: orderProvider.getOrdersMap.length
-                itemCount: snapshot.data!.length);
+                itemCount: orderProvider.getOrders.length
+                // itemCount: snapshot.data!.length
+                );
           },
         ));
   }

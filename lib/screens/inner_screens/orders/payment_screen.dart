@@ -63,17 +63,18 @@ class _PaymentScreenState extends State<PaymentScreen>
     final auth = FirebaseAuth.instance;
     final User user = auth.currentUser!;
     final String uid = user.uid;
+
     //Register user in FirebaseFirestore
-    await FirebaseFirestore.instance
-        .collection("ordersAdvanced")
-        .doc(_sessionId)
-        .set({
-      "userId": uid,
-      "userName": user.displayName,
-      "userEmail": user.email,
-      "createdAt": Timestamp.now(),
-      "userOrder": [],
-    });
+    // await FirebaseFirestore.instance
+    //     .collection("ordersAdvanced")
+    //     .doc(_sessionId)
+    //     .set({
+    //   "userId": uid,
+    //   "userName": user.displayName,
+    //   "userEmail": user.email,
+    //   "createdAt": Timestamp.now(),
+    //   "userOrder": [],
+    // });
   }
 
   @override
@@ -271,11 +272,18 @@ class _PaymentScreenState extends State<PaymentScreen>
         final orderId = Uuid().v4();
         // print(orderId);
         await createSession();
-        await ordersDb.doc(_sessionId).update({
+        await ordersDb.doc(uid).update({
+          // await ordersDb.doc(_sessionId).update({
+          "userId": uid,
+          "orderDate": Timestamp.now(),
+          "sessionId": _sessionId,
+          "totalPrice": cartProvider.getTotalForPayment(
+              productsProvider: productProvider),
           "userOrder": FieldValue.arrayUnion([
             {
               "orderId": orderId,
               "userId": uid,
+              "sessionId": _sessionId,
               "userName": userProvider.getUserModel!.userName,
               "productId": value.productId,
               "productTitle": getCurrProd!.productTitle,
