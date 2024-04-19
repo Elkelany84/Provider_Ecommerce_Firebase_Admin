@@ -5,11 +5,11 @@ import 'package:hadi_ecommerce_firebase_admin/models/order_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
 
 class OrderProvider extends ChangeNotifier {
-  final List<OrdersModelAdvanced> orders = [];
-  List<OrdersModelAdvanced> get getOrders => orders;
+  final List<OrderSummary> orders = [];
+  List<OrderSummary> get getOrders => orders;
 
-  final Map<String, OrdersModelAdvanced> _orders = {};
-  Map<String, OrdersModelAdvanced> get newOrders => _orders;
+  // final Map<String, OrdersModelAdvanced> _orders = {};
+  // Map<String, OrdersModelAdvanced> get newOrders => _orders;
 
   OrderUserModel? _orderUserModel;
   //getters
@@ -91,7 +91,7 @@ class OrderProvider extends ChangeNotifier {
 //   }
 
   // fetch orders from firebase advanced way
-  Future<List<OrdersModelAdvanced>> fetchOrders() async {
+  Future<List<OrderSummary>> fetchOrders() async {
     final auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     if (user == null) {
@@ -102,26 +102,38 @@ class OrderProvider extends ChangeNotifier {
 
       final userDoc = await usersDb.doc(user!.uid).get();
       final data = userDoc.data();
-      if (data == null || !data.containsKey("userOrder")) return [];
+      if (data == null || !data.containsKey("orderSummary")) return [];
 
-      final length = userDoc.get("userOrder").length;
+      final length = userDoc.get("orderSummary").length;
       orders.clear();
       for (int index = 0; index < length; index++) {
         orders.insert(
             0,
-            OrdersModelAdvanced(
-                productId: userDoc.get("userOrder")[index]["productId"],
-                orderId: userDoc.get("userOrder")[index]["orderId"],
-                userId: userDoc.get("userOrder")[index]["userId"],
-                productTitle: userDoc.get("userOrder")[index]["productTitle"],
-                userName: userDoc.get("userOrder")[index]["userName"],
+            //Original working one
+            //     OrdersModelAdvanced(
+            //         productId: userDoc.get("userOrder")[index]["productId"],
+            //         orderId: userDoc.get("userOrder")[index]["orderId"],
+            //         userId: userDoc.get("userOrder")[index]["userId"],
+            //         productTitle: userDoc.get("userOrder")[index]["productTitle"],
+            //         userName: userDoc.get("userOrder")[index]["userName"],
+            //         totalPrice:
+            //             userDoc.get("userOrder")[index]["totalPrice"].toString(),
+            //         imageUrl: userDoc.get("userOrder")[index]["imageUrl"],
+            //         quantity:
+            //             userDoc.get("userOrder")[index]["quantity"].toString(),
+            //         sessionId: userDoc.get("userOrder")[index]["sessionId"],
+            //         orderDate: userDoc.get("userOrder")[index]["orderDate"])
+            OrderSummary(
+                // orderId: userDoc.get("orderSummary")[index]["orderId"],
+                userId: userDoc.get("orderSummary")[index]["userId"],
                 totalPrice:
-                    userDoc.get("userOrder")[index]["totalPrice"].toString(),
-                imageUrl: userDoc.get("userOrder")[index]["imageUrl"],
-                quantity:
-                    userDoc.get("userOrder")[index]["quantity"].toString(),
-                sessionId: userDoc.get("userOrder")[index]["sessionId"],
-                orderDate: userDoc.get("userOrder")[index]["orderDate"]));
+                    userDoc.get("orderSummary")[index]["totalPrice"].toString(),
+                totalProducts: userDoc
+                    .get("orderSummary")[index]["totalProducts"]
+                    .toString(),
+                sessionId: userDoc.get("orderSummary")[index]["sessionId"],
+                orderDate: userDoc.get("orderSummary")[index]["orderDate"]));
+        // );
       }
     } catch (e) {
       rethrow;
@@ -129,6 +141,33 @@ class OrderProvider extends ChangeNotifier {
     notifyListeners();
     return orders;
   }
+
+  //get whole quantity from firebase
+  // Future<int> getWholeQuantity() async {
+  //   final auth = FirebaseAuth.instance;
+  //   final User? user = auth.currentUser;
+  //   if (user == null) {
+  //     return 0;
+  //   }
+  //   try {
+  //     final usersDb = FirebaseFirestore.instance.collection("ordersAdvanced");
+  //
+  //     final userDoc = await usersDb.doc(user.uid).get();
+  //     final data = userDoc.data();
+  //     if (data == null || !data.containsKey("orderSummary")) return 0;
+  //
+  //     final length = userDoc.get("orderSummary").length;
+  //     int totalQuantity = 0;
+  //     for (int index = 0; index < length; index++) {
+  //       totalQuantity += int.parse(
+  //           userDoc.get("orderSummary")[index]["quantity"].toString());
+  //     }
+  //     notifyListeners();
+  //     return totalQuantity;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
   //customized fetch user address and phone from firestore
   Future<OrderUserModel?> fetchUserInfo() async {

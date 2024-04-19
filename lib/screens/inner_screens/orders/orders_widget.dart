@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_model.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
+import 'package:provider/provider.dart';
 
 class OrdersWidgetFree extends StatefulWidget {
-  const OrdersWidgetFree({super.key, required this.ordersModelAdvanced});
-  final OrdersModelAdvanced ordersModelAdvanced;
+  const OrdersWidgetFree({super.key, required this.orderSummary});
+  // final OrdersModelAdvanced ordersModelAdvanced;
+  final OrderSummary orderSummary;
 
   @override
   State<OrdersWidgetFree> createState() => _OrdersWidgetFreeState();
@@ -15,12 +18,14 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final orderUserProvider =
+        Provider.of<OrderProvider>(context, listen: false);
     // final f = DateFormat(' dd-MM-yyyy', 'ar');
     // var v = widget.ordersModelAdvanced.orderDate;
     // var myValue = v;
     // var end = f.format(DateTime.fromMillisecondsSinceEpoch(myValue as int));
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
       child: Row(
         children: [
           // ClipRRect(
@@ -33,57 +38,76 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
           // ),
           Flexible(
             child: Padding(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Flexible(
-                      //   child: TitleTextWidget(
-                      //     label:
-                      //         "OrderId: ${widget.ordersModelAdvanced.orderId}",
-                      //     // label: widget.ordersModelAdvanced.productTitle,
-                      //     maxLines: 2,
-                      //     fontSize: 15,
-                      //   ),
-                      // ),
-                      // IconButton(
-                      //   onPressed: () {},
-                      //   icon: Icon(
-                      //     Icons.clear,
-                      //     color: Colors.red,
-                      //   ),
-                      // ),
+                      Flexible(
+                        child: TitleTextWidget(
+                          label: "OrderId: ${widget.orderSummary.sessionId}",
+                          // label: widget.ordersModelAdvanced.productTitle,
+                          maxLines: 2,
+                          fontSize: 15,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.clear,
+                          color: Colors.red,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
                     children: [
-                      TitleTextWidget(
+                      const TitleTextWidget(
                         label: "Total Price: ",
                         fontSize: 15,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Flexible(
                         child: SubtitleTextWidget(
                           label:
                               // "",
-                              "\$ ${widget.ordersModelAdvanced.productTitle}",
+                              "\$ ${widget.orderSummary.totalPrice}",
                           fontSize: 15,
                           color: Colors.blue,
                         ),
-                      )
+                      ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
+                  Row(
+                    children: [
+                      const TitleTextWidget(
+                        label: "Total Products: ",
+                        fontSize: 15,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SubtitleTextWidget(
+                        label: "${widget.orderSummary.totalProducts}",
+                        fontSize: 15,
+                        color: Colors.blue,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+
                   // Row(
                   //   children: [
                   //     TitleTextWidget(

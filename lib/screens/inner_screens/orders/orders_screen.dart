@@ -23,13 +23,13 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
 
     return Scaffold(
         appBar: AppBar(
-          title: TitleTextWidget(label: "Placed Orders"),
+          title: const TitleTextWidget(label: "Placed Orders"),
         ),
         body: FutureBuilder(
           future: orderProvider.fetchOrders(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                   child: CircularProgressIndicator(
                 color: Colors.red,
               ));
@@ -46,16 +46,17 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
             return ListView.separated(
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
                     child: OrdersWidgetFree(
-                      ordersModelAdvanced: orderProvider.getOrders[index],
+                      orderSummary: orderProvider.getOrders[index],
                       // ordersModelAdvanced:
                       //     orderProvider.newOrders.values.toList()[index],
                     ),
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return Divider(
+                  return const Divider(
                     thickness: 6,
                   );
                 },

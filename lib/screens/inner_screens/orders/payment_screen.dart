@@ -6,8 +6,8 @@ import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_bottom_checkout.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_success.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/personal_profile.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
@@ -79,7 +79,7 @@ class _PaymentScreenState extends State<PaymentScreen>
 
   @override
   void initState() {
-    _sessionId = Uuid().v4();
+    _sessionId = const Uuid().v4();
     print(_sessionId);
     fetchUserInfo();
     super.initState();
@@ -107,7 +107,7 @@ class _PaymentScreenState extends State<PaymentScreen>
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             size: 20,
           ),
@@ -116,28 +116,28 @@ class _PaymentScreenState extends State<PaymentScreen>
         //   padding: EdgeInsets.all(8.0),
         //   child: Image.asset(AssetsManager.shoppingCart),
         // ),
-        title: AppNameTextWidget(
+        title: const AppNameTextWidget(
           label: "CheckOut",
           fontSize: 30,
         ),
       ),
       body: orderUserModel == null
-          ? SizedBox.shrink()
+          ? const SizedBox.shrink()
           : SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    TitleTextWidget(
+                    const TitleTextWidget(
                       label: "Shipping to : ",
                       fontSize: 24,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 18,
                     ),
 
@@ -158,7 +158,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                               fontSize: 20, color: Colors.black,
                               // textDecoration: TextDecoration.underline,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Align(
@@ -168,7 +168,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   Navigator.of(context)
                                       .pushNamed(PersonalProfile.routeName);
                                 },
-                                child: SubtitleTextWidget(
+                                child: const SubtitleTextWidget(
                                   label: "Edit Address",
                                   fontStyle: FontStyle.italic,
                                   textDecoration: TextDecoration.underline,
@@ -180,24 +180,24 @@ class _PaymentScreenState extends State<PaymentScreen>
                       ),
                     ),
                     // DeliveryContainerWidget(),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
 
-                    TitleTextWidget(
+                    const TitleTextWidget(
                       label: "Payment Method : ",
                       fontSize: 24,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    PaymentMethodWidget(),
+                    const PaymentMethodWidget(),
                     // TitleTextWidget(
                     //   label: "Payment On Delivery",
                     //   fontSize: 24,
                     // ),
                     //Total Button
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     // Center(
@@ -223,22 +223,22 @@ class _PaymentScreenState extends State<PaymentScreen>
                     //     ),
                     //   ),
                     // ),
-                    TitleTextWidget(
+                    const TitleTextWidget(
                       label: "Order Summary : ",
                       fontSize: 24,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TitleTextWidget(
                       label:
-                          "\$ ${cartProvider.getTotalForPayment(productsProvider: productProvider).toStringAsFixed(2)}",
+                          "\$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
                       fontSize: 18,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    TitleTextWidget(
+                    const TitleTextWidget(
                       label: "Delivery Fees : \$ 10 ",
                       fontSize: 18,
                     ),
@@ -267,9 +267,57 @@ class _PaymentScreenState extends State<PaymentScreen>
       setState(() {
         isLoading = true;
       });
+      //Original working one
+      // cartProvider.cartItems.forEach((key, value) async {
+      //   final getCurrProd = productProvider.findByProdId(value.productId);
+      //   final orderId = const Uuid().v4();
+      //   // print(orderId);
+      //   await createSession();
+      //   await ordersDb.doc(uid).update({
+      //     // await ordersDb.doc(_sessionId).update({
+      //     "userId": uid,
+      //     "orderDate": Timestamp.now(),
+      //     "sessionId": _sessionId,
+      //     "totalPrice": cartProvider.getTotalForPayment(
+      //         productsProvider: productProvider),
+      //     "orderSummary": FieldValue.arrayUnion([
+      //       {
+      //         "orderId": orderId,
+      //         "userId": uid,
+      //         "sessionId": _sessionId,
+      //         // "userName": userProvider.getUserModel!.userName,
+      //         // "productId": value.productId,
+      //         // "productTitle": getCurrProd!.productTitle,
+      //         // "price": double.parse(getCurrProd.productPrice) * value.quantity,
+      //         "totalPrice": cartProvider.getTotalForPayment(
+      //             productsProvider: productProvider),
+      //         "totalProducts": cartProvider.getQty(),
+      //         "orderDate": Timestamp.now(),
+      //       }
+      //     ]),
+      //     "userOrder": FieldValue.arrayUnion([
+      //       {
+      //         "orderId": orderId,
+      //         "userId": uid,
+      //         "sessionId": _sessionId,
+      //         "userName": userProvider.getUserModel!.userName,
+      //         "productId": value.productId,
+      //         "productTitle": getCurrProd!.productTitle,
+      //         "imageUrl": getCurrProd.productImage,
+      //         "price": double.parse(getCurrProd.productPrice) * value.quantity,
+      //         "totalPrice": cartProvider.getTotalForPayment(
+      //             productsProvider: productProvider),
+      //         "quantity": value.quantity,
+      //         "orderDate": Timestamp.now(),
+      //       }
+      //     ])
+      //   });
+      // });
+
+//customized one
       cartProvider.cartItems.forEach((key, value) async {
         final getCurrProd = productProvider.findByProdId(value.productId);
-        final orderId = Uuid().v4();
+        final orderId = const Uuid().v4();
         // print(orderId);
         await createSession();
         await ordersDb.doc(uid).update({
@@ -279,6 +327,7 @@ class _PaymentScreenState extends State<PaymentScreen>
           "sessionId": _sessionId,
           "totalPrice": cartProvider.getTotalForPayment(
               productsProvider: productProvider),
+          // "totalProducts": cartProvider.getQty(),
           "userOrder": FieldValue.arrayUnion([
             {
               "orderId": orderId,
@@ -297,9 +346,25 @@ class _PaymentScreenState extends State<PaymentScreen>
           ])
         });
       });
+      await ordersDb.doc(uid).update({
+        "orderSummary": FieldValue.arrayUnion([
+          {
+            "userId": uid,
+            "sessionId": _sessionId,
+            // "userName": userProvider.getUserModel!.userName,
+            // "productId": value.productId,
+            // "productTitle": getCurrProd!.productTitle,
+            // "price": double.parse(getCurrProd.productPrice) * value.quantity,
+            "totalPrice": cartProvider.getTotalForPayment(
+                productsProvider: productProvider),
+            "totalProducts": cartProvider.getQty(),
+            "orderDate": Timestamp.now(),
+          }
+        ])
+      });
       await cartProvider.clearCartFirebase();
       cartProvider.clearCart();
-      Navigator.pushNamed(context, CartScreen.routeName);
+      Navigator.pushNamed(context, PaymentSuccess.routeName);
     } catch (error) {
       MyAppFunctions.showErrorOrWarningDialog(
           context: context, fct: () {}, subTitle: error.toString());

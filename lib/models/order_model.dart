@@ -25,3 +25,23 @@ class OrdersModelAdvanced with ChangeNotifier {
       required this.sessionId,
       required this.orderDate});
 }
+
+class OrderSummary with ChangeNotifier {
+  // final String orderId;
+  final String userId;
+
+  final String totalPrice;
+
+  final String totalProducts;
+  final String sessionId;
+  final Timestamp orderDate;
+
+  OrderSummary(
+      {
+      // required this.orderId,
+      required this.userId,
+      required this.totalPrice,
+      required this.totalProducts,
+      required this.sessionId,
+      required this.orderDate});
+}

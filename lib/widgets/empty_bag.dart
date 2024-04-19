@@ -21,7 +21,7 @@ class EmptyBag extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 60,
+            height: 70,
           ),
           Image.asset(
             imagePath,

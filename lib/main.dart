@@ -13,6 +13,7 @@ import 'package:hadi_ecommerce_firebase_admin/screens/auth/login_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/cart/cart_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payment_success.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
@@ -102,6 +103,7 @@ class MyApp extends StatelessWidget {
               PaymentScreen.routeName: (context) => const PaymentScreen(),
               PersonalProfile.routeName: (context) => const PersonalProfile(),
               CartScreen.routeName: (context) => const CartScreen(),
+              PaymentSuccess.routeName: (context) => const PaymentSuccess(),
             },
           );
         },
