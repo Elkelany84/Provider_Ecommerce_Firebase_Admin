@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
 import 'providers/products_provider.dart';
 import 'providers/theme_provider.dart';
+import 'screens/categories_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/edit_upload_product_form.dart';
 import 'screens/inner_screen/orders/orders_screen.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
             SearchScreen.routeName: (context) => const SearchScreen(),
             EditOrUploadProductForm.routeName: (context) =>
                 const EditOrUploadProductForm(),
+            CategoriesScreen.routeName: (context) => const CategoriesScreen(),
           },
         );
       }),

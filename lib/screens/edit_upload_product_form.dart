@@ -292,7 +292,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                         )),
                     onPressed: () {
                       if (isEditing) {
-                        categoryProvider.fetchCategories();
+                        categoryProvider.fetchCategoryStream();
                         _editProduct();
                       } else {
                         _uploadProduct();

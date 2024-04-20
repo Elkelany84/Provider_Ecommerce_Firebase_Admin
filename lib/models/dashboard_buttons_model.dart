@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/search_screen.dart';
@@ -46,6 +47,12 @@ class DashboardButtonsModel {
             imagePath: AssetsManager.order,
             onPressed: () {
               Navigator.pushNamed(context, OrdersScreenFree.routeName);
+            }),
+        DashboardButtonsModel(
+            text: "View Categories",
+            imagePath: AssetsManager.categories,
+            onPressed: () {
+              Navigator.pushNamed(context, CategoriesScreen.routeName);
             }),
       ];
 }

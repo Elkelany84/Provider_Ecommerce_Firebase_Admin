@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
-class CategoriesModel {
+class CategoriesModel extends ChangeNotifier {
   final String categoryId, categoryName
       // categoryImage
       ;

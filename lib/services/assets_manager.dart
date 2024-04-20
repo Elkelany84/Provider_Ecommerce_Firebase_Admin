@@ -10,6 +10,7 @@ class AssetsManager {
   static String shoppingCart = "$imagesPath/shopping_cart.png";
 
   // Categories path
+  static String categories = "$categoriesImagesPath/categories.png";
   static String mobiles = "$categoriesImagesPath/mobiles.png";
   static String fashion = "$categoriesImagesPath/fashion.png";
   static String watch = "$categoriesImagesPath/watch.png";

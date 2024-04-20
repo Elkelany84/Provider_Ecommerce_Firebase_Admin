@@ -8,22 +8,65 @@ class CategoriesProvider extends ChangeNotifier {
     return categories;
   }
 
-  // Fetch Categories from firebase
+  // Fetch products from firebase
   final productDb = FirebaseFirestore.instance.collection("categories");
   Future<List<CategoriesModel>> fetchCategories() async {
     try {
       await productDb.get().then((productSnapshot) {
         categories.clear();
         for (var element in productSnapshot.docs) {
-          categories.insert(0, CategoriesModel.fromFirestore(element));
+          categories.insert(0, CategoriesModel.fromFirestore(element)
+              // ProductModel(
+              //     productId: element.get("productId"),
+              //     productTitle: element.get("productTitle"),
+              //     productPrice: element.get("productPrice"),
+              //     productCategory: element.get("productCategory"),
+              //     productDescription: element.get("productDescription"),
+              //     productImage: element.get("productImage"),
+              //     productQuantity: "productQuantity")
+              );
         }
       });
-      print(categories);
       notifyListeners();
-
+      // print(products);
       return categories;
     } catch (e) {
       rethrow;
     }
+  }
+
+  final categoriesDb = FirebaseFirestore.instance.collection("categories");
+  Stream<List<CategoriesModel>> fetchCategoryStream() {
+    try {
+      return categoriesDb.snapshots().map((snapshot) {
+        categories.clear();
+        for (var element in snapshot.docs) {
+          categories.insert(0, CategoriesModel.fromFirestore(element)
+              // ProductModel(
+              //     productId: element.get("productId"),
+              //     productTitle: element.get("productTitle"),
+              //     productPrice: element.get("productPrice"),
+              //     productCategory: element.get("productCategory"),
+              //     productDescription: element.get("productDescription"),
+              //     productImage: element.get("productImage"),
+              //     productQuantity: "productQuantity")
+              );
+        }
+        return categories;
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //count products in firebase
+  final CollectionReference<Map<String, dynamic>> categoryList =
+      FirebaseFirestore.instance.collection('categories');
+  int? quer;
+  Future<int?> countCategories() async {
+    AggregateQuerySnapshot query = await categoryList.count().get();
+    debugPrint('The number of products: ${query.count}');
+    quer = query.count;
+    return query.count;
   }
 }

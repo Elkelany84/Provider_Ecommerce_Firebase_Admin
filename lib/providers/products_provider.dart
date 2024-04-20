@@ -90,6 +90,7 @@ class ProductsProvider with ChangeNotifier {
     }
   }
 
+  //count products in firebase
   final CollectionReference<Map<String, dynamic>> productList =
       FirebaseFirestore.instance.collection('products');
   int? quer;
