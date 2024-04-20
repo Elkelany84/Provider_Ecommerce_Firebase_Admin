@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +19,22 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   late TextEditingController searchTextController;
 
+  final CollectionReference<Map<String, dynamic>> productList =
+      FirebaseFirestore.instance.collection('products');
+
   @override
   void initState() {
     searchTextController = TextEditingController();
+
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   countProducts();
+  //
+  //   super.didChangeDependencies();
+  // }
 
   @override
   void dispose() {
@@ -51,7 +63,9 @@ class _SearchScreenState extends State<SearchScreen> {
           //     AssetsManager.shoppingCart,
           //   ),
           // ),
-          title: TitlesTextWidget(label: passedCategory ?? "Search products"),
+          title: TitlesTextWidget(
+              label: passedCategory ??
+                  "Search products ( ${productsProvider.quer} )"),
         ),
         body: productList.isEmpty
             ? Center(
@@ -100,11 +114,11 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           //Decrease The Performance a little bit
                           onChanged: (value) {
-                            setState(() {
-                              productListSearch = productsProvider.searchQuery(
-                                  searchText: searchTextController.text,
-                                  passedList: productList);
-                            });
+                            // setState(() {
+                            productListSearch = productsProvider.searchQuery(
+                                searchText: searchTextController.text,
+                                passedList: productList);
+                            // });
                           },
                           onSubmitted: (value) {
                             setState(() {

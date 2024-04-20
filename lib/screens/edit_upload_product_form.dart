@@ -9,11 +9,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/app_constants.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/product_model.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class EditOrUploadProductForm extends StatefulWidget {
@@ -60,6 +62,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
         text: widget.productModel == null
             ? ""
             : widget.productModel!.productQuantity);
+
     super.initState();
   }
 
@@ -248,6 +251,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final categoryProvider = Provider.of<CategoriesProvider>(context);
     return LoadingManager(
       isLoading: isLoading,
       child: GestureDetector(
@@ -288,6 +292,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                         )),
                     onPressed: () {
                       if (isEditing) {
+                        categoryProvider.fetchCategories();
                         _editProduct();
                       } else {
                         _uploadProduct();
@@ -396,6 +401,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                   ),
                   //DropDown Widget
                   DropdownButton(
+                      // items: categoryProvider.categories,
                       items: AppConstants.categoriesDropDownList,
                       value: _categoryValue,
                       hint: Text("Choose a Category"),
@@ -404,6 +410,52 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                           _categoryValue = value;
                         });
                       }),
+                  //
+                  // StreamBuilder<QuerySnapshot>(
+                  //     stream: FirebaseFirestore.instance
+                  //         .collection("categories")
+                  //         .snapshots(),
+                  //     builder: (context, snapshot) {
+                  //       List<DropdownMenuItem> categoriesDropDownList = [];
+                  //       if (!snapshot.hasData) {
+                  //         return CircularProgressIndicator();
+                  //       } else {
+                  //         categoriesDropDownList.clear();
+                  //         final categoriesList =
+                  //             snapshot.data!.docs.reversed.toList();
+                  //
+                  //         for (var category in categoriesList) {
+                  //           categoriesDropDownList.clear();
+                  //           categoriesDropDownList.add(
+                  //             DropdownMenuItem(
+                  //               value: category.id,
+                  //               child: Text("$_categoryValue"),
+                  //             ),
+                  //           );
+                  //           //clients
+                  //           // final categoryName = category.get("categoryName");
+                  //           // final categoryId = category.get("categoryId");
+                  //           // final categoryImage = category.get("categoryImage");
+                  //           categoriesDropDownList.add(
+                  //             DropdownMenuItem(
+                  //               value: category.id,
+                  //               child: Text(category["categoryName"]),
+                  //             ),
+                  //           );
+                  //         }
+                  //         return DropdownButton(
+                  //           items: categoriesDropDownList,
+                  //           value: _categoryValue,
+                  //           isExpanded: false,
+                  //           hint: Text("Choose a Category"),
+                  //           onChanged: (value) {
+                  //             setState(() {
+                  //               _categoryValue = value;
+                  //             });
+                  //           },
+                  //         );
+                  //       }
+                  //     }),
                   const SizedBox(
                     height: 25,
                   ),

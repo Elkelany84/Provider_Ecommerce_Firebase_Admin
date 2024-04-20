@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/dashboard_buttons_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/products_provider.dart';
@@ -25,19 +26,34 @@ class DashboardScreenState extends State<DashboardScreen> {
   Future<void> fetchFct() async {
     final productsProvider =
         Provider.of<ProductsProvider>(context, listen: false);
+    // final categoryProvider =
+    //     Provider.of<CategoriesProvider>(context, listen: false);
     try {
       //fetch many future functions
       // Future.wait({productsProvider.fetchProducts()});
       await productsProvider.fetchProducts();
+      await productsProvider.countProducts();
+      // await categoryProvider.fetchCategories();
     } catch (e) {
       log(e.toString());
     }
+  }
+
+  final CollectionReference<Map<String, dynamic>> productList =
+      FirebaseFirestore.instance.collection('products');
+  int? quer;
+  Future<int?> countProducts() async {
+    AggregateQuerySnapshot query = await productList.count().get();
+    // debugPrint('The number of products: ${query.count}');
+    quer = query.count;
+    return query.count;
   }
 
   @override
   void didChangeDependencies() {
     if (isLoadingProd) {
       fetchFct();
+      countProducts();
     }
     super.didChangeDependencies();
   }

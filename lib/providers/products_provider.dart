@@ -60,6 +60,7 @@ class ProductsProvider with ChangeNotifier {
         }
       });
       notifyListeners();
+      // print(products);
       return products;
     } catch (e) {
       rethrow;
@@ -87,6 +88,16 @@ class ProductsProvider with ChangeNotifier {
     } catch (e) {
       rethrow;
     }
+  }
+
+  final CollectionReference<Map<String, dynamic>> productList =
+      FirebaseFirestore.instance.collection('products');
+  int? quer;
+  Future<int?> countProducts() async {
+    AggregateQuerySnapshot query = await productList.count().get();
+    debugPrint('The number of products: ${query.count}');
+    quer = query.count;
+    return query.count;
   }
 
 // List<ProductModel> products = [

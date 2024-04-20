@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AppConstants {
@@ -15,6 +16,7 @@ class AppConstants {
     'Cosmetics',
     "Accessories",
   ];
+  List catList = [];
 
   static List<DropdownMenuItem<String>>? get categoriesDropDownList {
     List<DropdownMenuItem<String>>? menuItem =
@@ -26,5 +28,25 @@ class AppConstants {
       ),
     );
     return menuItem;
+  }
+
+  StreamBuilder<QuerySnapshot>? getStreams() {
+    StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("categories").snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data.docs;
+
+            return ListView.builder(
+                itemCount: snap.length,
+                itemBuilder: (context, index) {
+                  catList.add(snap[index]['categoryName']);
+                  return catList[index];
+                });
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
+    return null;
   }
 }
