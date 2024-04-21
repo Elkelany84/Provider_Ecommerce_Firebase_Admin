@@ -65,8 +65,23 @@ class CategoriesProvider extends ChangeNotifier {
   int? quer;
   Future<int?> countCategories() async {
     AggregateQuerySnapshot query = await categoryList.count().get();
-    debugPrint('The number of products: ${query.count}');
+    // debugPrint('The number of products: ${query.count}');
     quer = query.count;
     return query.count;
+  }
+
+//create function to delete category from firebase
+  Future<void> deleteCategory(String categoryId) {
+    return categoryList.doc(categoryId).delete();
+  }
+
+//create function to add category to firebase
+  Future<void> addCategory(
+      String categoryId, String categoryName, String categoryImage) {
+    return categoryList.doc(categoryId).set({
+      'categoryId': categoryId,
+      'categoryName': categoryName,
+      "categoryImage": categoryImage
+    });
   }
 }

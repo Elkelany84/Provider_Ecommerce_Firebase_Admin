@@ -2,14 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class CategoriesModel extends ChangeNotifier {
-  final String categoryId, categoryName
-      // categoryImage
-      ;
+  final String categoryId, categoryName, categoryImage;
 
   CategoriesModel({
     required this.categoryId,
     required this.categoryName,
-    // required this.categoryImage,
+    required this.categoryImage,
   });
 
   factory CategoriesModel.fromFirestore(DocumentSnapshot doc) {
@@ -18,7 +16,7 @@ class CategoriesModel extends ChangeNotifier {
     return CategoriesModel(
       categoryId: data['categoryId'],
       categoryName: data['categoryName'],
-      // categoryImage: data['categoryImage'],
+      categoryImage: data['categoryImage'],
     );
   }
 }

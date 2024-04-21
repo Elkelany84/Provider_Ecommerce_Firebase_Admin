@@ -96,7 +96,7 @@ class ProductsProvider with ChangeNotifier {
   int? quer;
   Future<int?> countProducts() async {
     AggregateQuerySnapshot query = await productList.count().get();
-    debugPrint('The number of products: ${query.count}');
+    // debugPrint('The number of products: ${query.count}');
     quer = query.count;
     return query.count;
   }

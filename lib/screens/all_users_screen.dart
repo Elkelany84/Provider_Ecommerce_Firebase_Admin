@@ -9,15 +9,15 @@ import 'package:provider/provider.dart';
 import '../models/product_model.dart';
 import '../widgets/title_text.dart';
 
-class CategoriesScreen extends StatefulWidget {
+class AllUsersScreen extends StatefulWidget {
   static const routeName = '/CategoriesScreen';
-  const CategoriesScreen({super.key});
+  const AllUsersScreen({super.key});
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  State<AllUsersScreen> createState() => _AllUsersScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _AllUsersScreenState extends State<AllUsersScreen> {
   @override
   void initState() {
     super.initState();

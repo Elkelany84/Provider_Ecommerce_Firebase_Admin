@@ -19,6 +19,7 @@ class CategoryWidget extends StatelessWidget {
             children: [
               Image.asset(categoryImage),
               TitlesTextWidget(label: categoryName),
+              IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
               IconButton(onPressed: () {}, icon: Icon(Icons.delete))
             ],
           ),
