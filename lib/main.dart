@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
             EditOrUploadProductForm.routeName: (context) =>
                 const EditOrUploadProductForm(),
             CategoriesScreen.routeName: (context) => const CategoriesScreen(),
+            AllUsersScreen.routeName: (context) => const AllUsersScreen(),
           },
         );
       }),

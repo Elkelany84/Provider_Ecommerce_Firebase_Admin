@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_modelsheet.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +9,7 @@ import '../models/product_model.dart';
 import '../widgets/title_text.dart';
 
 class AllUsersScreen extends StatefulWidget {
-  static const routeName = '/CategoriesScreen';
+  static const routeName = '/allUsersScreen';
   const AllUsersScreen({super.key});
 
   @override
@@ -40,30 +39,30 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
 
-    List<CategoriesModel> categoriesList = categoriesProvider.categories;
+    List<CategoryModel> categoriesList = categoriesProvider.categories;
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.purpleAccent,
-            onPressed: () {
-              //create modelbottomsheet to add category
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (builder) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: AddCategoryBottomSheet(),
-                    );
-                  });
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add, color: Colors.white, size: 28),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   backgroundColor: Colors.purpleAccent,
+          //   onPressed: () {
+          //     //create modelbottomsheet to add category
+          //     showModalBottomSheet(
+          //         isScrollControlled: true,
+          //         context: context,
+          //         builder: (builder) {
+          //           return Padding(
+          //             padding: EdgeInsets.only(
+          //                 bottom: MediaQuery.of(context).viewInsets.bottom),
+          //             child: AddCategoryBottomSheet(),
+          //           );
+          //         });
+          //   },
+          //   tooltip: 'Increment',
+          //   child: const Icon(Icons.add, color: Colors.white, size: 28),
+          // ),
           appBar: AppBar(
             // leading: Padding(
             //   padding: const EdgeInsets.all(8.0),
@@ -72,17 +71,17 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
             //   ),
             // ),
             title: TitlesTextWidget(
-                label: "All Categories ( ${categoriesProvider.quer} )"),
+                label: "All Users ( ${categoriesProvider.quer} )"),
           ),
           body: categoriesList.isEmpty
               ? Center(
-                  child: TitlesTextWidget(label: "No Categories Found!"),
+                  child: TitlesTextWidget(label: "No Users Found!"),
                 )
               : //create streambuilder to fetch categories from firebase
               StreamBuilder<QuerySnapshot>(
                   // Step 2: Create a Stream
                   stream: FirebaseFirestore.instance
-                      .collection('categories')
+                      .collection('users')
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
@@ -108,13 +107,12 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       children: [
-                                        Image.network(
-                                            document['categoryImage']),
+                                        Image.network(document['userImage']),
                                         SizedBox(
                                           width: 20,
                                         ),
                                         Text(
-                                          document['categoryName'],
+                                          document['userName'],
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 18,

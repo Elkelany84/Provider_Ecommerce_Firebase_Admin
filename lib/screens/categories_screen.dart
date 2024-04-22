@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_modelsheet.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/category_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
@@ -11,7 +10,13 @@ import '../widgets/title_text.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static const routeName = '/CategoriesScreen';
-  const CategoriesScreen({super.key});
+
+  const CategoriesScreen({
+    super.key,
+    // required this.categoryId,
+  });
+
+  // final String categoryId;
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -39,8 +44,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
+    // List<ProductModel> productList =
+    //      categoriesProvider.categories
+    //     : categoriesProvider.findByCategory(categoryName: passedCategory);
+    final String categoryId;
+    // final getCurrCategory =
+    //     categoriesProvider.findByCategoryId(widget.categoryId);
 
-    List<CategoriesModel> categoriesList = categoriesProvider.categories;
+    List<CategoryModel> categoriesList = categoriesProvider.categories;
     return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -79,91 +90,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: TitlesTextWidget(label: "No Categories Found!"),
                 )
               : //create streambuilder to fetch categories from firebase
-              StreamBuilder<QuerySnapshot>(
-                  // Step 2: Create a Stream
-                  stream: FirebaseFirestore.instance
-                      .collection('categories')
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return CircularProgressIndicator();
-                      default:
-                        // Step 3: Build UI based on the stream
-                        return ListView(
-                          children: snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                height: 90,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all()),
-                                child: Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Image.network(
-                                            document['categoryImage']),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(
-                                          document['categoryName'],
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Spacer(),
-                                        IconButton(
-                                          onPressed: () {
-                                            // categoriesProvider
-                                            //     .deleteCategory(document.id);
-                                          },
-                                          icon: Icon(
-                                            Icons.edit,
-                                            color: Colors.purpleAccent,
-                                            size: 30,
-                                          ),
-                                        ),
-                                        //create icon to delete category from firebase
-                                        IconButton(
-                                          onPressed: () {
-                                            MyAppFunctions
-                                                .showErrorOrWarningDialog(
-                                                    isError: false,
-                                                    context: context,
-                                                    subtitle: "Delete Category",
-                                                    fct: () {
-                                                      categoriesProvider
-                                                          .deleteCategory(
-                                                              document.id);
-                                                    });
-                                            // categoriesProvider
-                                            //     .deleteCategory(document.id);
-                                          },
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                            size: 30,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        );
-                    }
-                  },
+              category_widget(
+                  categoriesProvider: categoriesProvider,
                 ),
           // : StreamBuilder<List<ProductModel>>(
           //     stream: categoriesProvider.fetchCategoryStream(),
@@ -256,3 +184,111 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ));
   }
 }
+
+// class category_widget extends StatelessWidget {
+//   const category_widget({
+//     super.key,
+//     required this.categoriesProvider,
+//   });
+//
+//   final CategoriesProvider categoriesProvider;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<QuerySnapshot>(
+//       // Step 2: Create a Stream
+//       stream: FirebaseFirestore.instance.collection('categories').snapshots(),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasError) {
+//           return Text('Error: ${snapshot.error}');
+//         }
+//         switch (snapshot.connectionState) {
+//           case ConnectionState.waiting:
+//             return CircularProgressIndicator();
+//           default:
+//             // Step 3: Build UI based on the stream
+//             return ListView(
+//               children: snapshot.data!.docs.map((DocumentSnapshot document) {
+//                 return Padding(
+//                   padding: const EdgeInsets.all(10.0),
+//                   child: Container(
+//                     height: 90,
+//                     decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(12),
+//                         border: Border.all()),
+//                     child: Card(
+//                       child: Padding(
+//                         padding: const EdgeInsets.all(8.0),
+//                         child: Row(
+//                           children: [
+//                             Image.network(document['categoryImage']),
+//                             SizedBox(
+//                               width: 20,
+//                             ),
+//                             Text(
+//                               document['categoryName'],
+//                               style: TextStyle(
+//                                   color: Colors.black,
+//                                   fontSize: 18,
+//                                   fontWeight: FontWeight.bold),
+//                             ),
+//                             Spacer(),
+//                             IconButton(
+//                               onPressed: () {
+//                                 showModalBottomSheet(
+//                                     isScrollControlled: true,
+//                                     context: context,
+//                                     builder: (builder) {
+//                                       return Padding(
+//                                         padding: EdgeInsets.only(
+//                                             bottom: MediaQuery.of(context)
+//                                                 .viewInsets
+//                                                 .bottom),
+//                                         child: EditCategoryBottomSheet(
+//                                             // categoryModel:
+//                                             //     getCurrCategory,
+//                                             ),
+//                                       );
+//                                     });
+//                                 // categoriesProvider
+//                                 //     .deleteCategory(document.id);
+//                               },
+//                               icon: Icon(
+//                                 Icons.edit,
+//                                 color: Colors.purpleAccent,
+//                                 size: 30,
+//                               ),
+//                             ),
+//                             //create icon to delete category from firebase
+//                             IconButton(
+//                               onPressed: () {
+//                                 MyAppFunctions.showErrorOrWarningDialog(
+//                                     isError: false,
+//                                     context: context,
+//                                     subtitle: "Delete Category",
+//                                     fct: () {
+//                                       categoriesProvider
+//                                           .deleteCategory(document.id);
+//                                     });
+//                                 // categoriesProvider
+//                                 //     .deleteCategory(document.id);
+//                               },
+//                               icon: Icon(
+//                                 Icons.delete,
+//                                 color: Colors.red,
+//                                 size: 30,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//               }).toList(),
+//             );
+//         }
+//       },
+//     );
+//   }
+// }
