@@ -48,6 +48,8 @@ dependencies:
   google_sign_in: ^6.2.1
   fluttertoast: ^8.2.4
   uuid: ^4.4.0
+  timeago: ^3.6.1
+  flutter_iconly: ^1.0.2
 
 dev_dependencies:
   flutter_test:

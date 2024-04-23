@@ -12,6 +12,7 @@ class UserProvider with ChangeNotifier {
   Future<UserModel?> fetchUserInfo() async {
     final auth = FirebaseAuth.instance;
 
+    // final User? user = auth.currentUser;
     final User? user = auth.currentUser;
 
     if (user == null) {
@@ -60,4 +61,37 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
     return query.count;
   }
+
+  //delete user from firebase based on userId
+  Future<void> deleteUser(String userId) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).delete();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  //fetch info for specific user from firebase
+//   Future<UserModel?> fetchUserInfoById(String userId) async {
+//     final auth = FirebaseAuth.instance;
+//
+//     // final User? user = auth.currentUser;
+//     final User? user = auth.currentUser;
+//
+//     if (user == null) {
+//       return null;
+//     }
+//     String uid = user.uid;
+//     try {
+//       //get user info
+//       final userDoc =
+//           await FirebaseFirestore.instance.collection('users').doc(uid).get();
+// //to get the userCart and userWish
+//       final userDocDic = userDoc.data() as Map<String, dynamic>;
+//     } catch (e) {
+//       rethrow;
+//     }
+//
+//     return _userModel;
+//   }
 }

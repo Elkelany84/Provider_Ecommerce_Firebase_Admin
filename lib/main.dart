@@ -71,6 +71,7 @@ class MyApp extends StatelessWidget {
                 const EditOrUploadProductForm(),
             CategoriesScreen.routeName: (context) => const CategoriesScreen(),
             AllUsersScreen.routeName: (context) => const AllUsersScreen(),
+            // PersonalProfile.routeName: (context) => const PersonalProfile(),
           },
         );
       }),

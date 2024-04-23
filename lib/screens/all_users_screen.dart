@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/personal_profile.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:provider/provider.dart';
 
@@ -99,69 +100,85 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                               .map((DocumentSnapshot document) {
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                height: 90,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all()),
-                                child: Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Image.network(
-                                          document['userImage'],
-                                          // width: 40,
-                                          // height: 40,
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            document['userName'],
-                                            style: TextStyle(
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Navigator.pushNamed(
+                                  //   context,
+                                  //   PersonalProfile.routeName,
+                                  //   arguments: document["userId"],
+                                  // );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PersonalProfile(
+                                              uid: document['userId'],
+                                            )),
+                                  );
+                                },
+                                child: Container(
+                                  height: 90,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all()),
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Image.network(
+                                            document['userImage'],
+                                            // width: 40,
+                                            // height: 40,
                                           ),
-                                        ),
-                                        Spacer(),
-                                        IconButton(
-                                          onPressed: () {
-                                            // categoriesProvider
-                                            //     .deleteCategory(document.id);
-                                          },
-                                          icon: Icon(
-                                            Icons.edit,
-                                            color: Colors.purpleAccent,
-                                            size: 30,
+                                          SizedBox(
+                                            width: 20,
                                           ),
-                                        ),
-                                        //create icon to delete category from firebase
-                                        IconButton(
-                                          onPressed: () {
-                                            MyAppFunctions
-                                                .showErrorOrWarningDialog(
-                                                    isError: false,
-                                                    context: context,
-                                                    subtitle: "Delete Category",
-                                                    fct: () {
-                                                      categoriesProvider
-                                                          .deleteCategory(
-                                                              document.id);
-                                                    });
-                                            // categoriesProvider
-                                            //     .deleteCategory(document.id);
-                                          },
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                            size: 30,
+                                          Expanded(
+                                            child: Text(
+                                              document['userName'],
+                                              style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  color: Colors.black,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          // Spacer(),
+                                          // IconButton(
+                                          //   onPressed: () {
+                                          //     // categoriesProvider
+                                          //     //     .deleteCategory(document.id);
+                                          //   },
+                                          //   icon: Icon(
+                                          //     Icons.edit,
+                                          //     color: Colors.purpleAccent,
+                                          //     size: 30,
+                                          //   ),
+                                          // ),
+                                          // create icon to delete category from firebase
+                                          IconButton(
+                                            onPressed: () {
+                                              MyAppFunctions
+                                                  .showErrorOrWarningDialog(
+                                                      isError: false,
+                                                      context: context,
+                                                      subtitle: "Delete User",
+                                                      fct: () {
+                                                        userProvider.deleteUser(
+                                                            document['userId']);
+                                                      });
+                                              // categoriesProvider
+                                              //     .deleteCategory(document.id);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                              size: 30,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
