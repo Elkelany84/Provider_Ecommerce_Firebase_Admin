@@ -6,9 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/loading_manager.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class AddCategoryBottomSheet extends StatefulWidget {
@@ -76,8 +79,13 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
           "categoryName": _titleController.text.trim(),
           "categoryImage": imageUrl,
           "createdAt": Timestamp.now(),
-        }).then((value) => Navigator.pop(context));
-
+        }).then((value) => Navigator.pushReplacement<void, void>(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const CategoriesScreen(),
+                  ),
+                ));
+        // await categoriesProvider.countCategories();
         //SToast Message
         Fluttertoast.showToast(
             msg: "A Category has been added!",
@@ -85,6 +93,7 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
             textColor: Colors.white,
             fontSize: 16.0);
         if (!mounted) return;
+
         // MyAppFunctions.showErrorOrWarningDialog(
         //     isError: false,
         //     context: context,
@@ -131,6 +140,9 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final categoriesProvider = Provider.of<CategoriesProvider>(
+      context,
+    );
     Size size = MediaQuery.of(context).size;
     return LoadingManager(
       isLoading: isLoading,
@@ -269,8 +281,9 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
-                            onPressed: () {
-                              _uploadCategory();
+                            onPressed: () async {
+                              await _uploadCategory();
+                              await categoriesProvider.countCategories();
                             },
                             child: const Text(
                               "Add Category",

@@ -26,14 +26,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     super.initState();
+    // countCategories();
+    // fetchFct();
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   countProducts();
-  //
-  //   super.didChangeDependencies();
-  // }
 
   @override
   void dispose() {
@@ -43,7 +38,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   List<ProductModel> productListSearch = [];
   @override
   Widget build(BuildContext context) {
-    final categoriesProvider = Provider.of<CategoriesProvider>(context);
+    final categoriesProvider =
+        Provider.of<CategoriesProvider>(context, listen: true);
     // List<ProductModel> productList =
     //      categoriesProvider.categories
     //     : categoriesProvider.findByCategory(categoryName: passedCategory);
@@ -82,8 +78,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             //     AssetsManager.shoppingCart,
             //   ),
             // ),
-            title: TitlesTextWidget(
-                label: "All Categories ( ${categoriesProvider.quer} )"),
+            title: Consumer<CategoriesProvider>(
+              builder: (context, categoriesProvider, child) => TitlesTextWidget(
+                  label: "All Categories ( ${categoriesProvider.quer} )"),
+            ),
+            // label: "All Categories ( $quer )"),
           ),
           body: categoriesList.isEmpty
               ? Center(

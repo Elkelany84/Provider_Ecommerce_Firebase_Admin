@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/dashboard_buttons_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/dashboard_btn.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class DashboardScreenState extends State<DashboardScreen> {
         Provider.of<ProductsProvider>(context, listen: false);
     final categoryProvider =
         Provider.of<CategoriesProvider>(context, listen: false);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       //fetch many future functions
       // Future.wait({productsProvider.fetchProducts()});
@@ -36,6 +38,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       await categoryProvider.fetchCategories();
       await productsProvider.countProducts();
       await categoryProvider.countCategories();
+      await userProvider.countUsers();
       // await categoryProvider.fetchCategories();
     } catch (e) {
       log(e.toString());

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/my_app_functions.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +39,7 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
 
     List<CategoryModel> categoriesList = categoriesProvider.categories;
     return GestureDetector(
@@ -70,8 +72,8 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
             //     AssetsManager.shoppingCart,
             //   ),
             // ),
-            title: TitlesTextWidget(
-                label: "All Users ( ${categoriesProvider.quer} )"),
+            title:
+                TitlesTextWidget(label: "All Users ( ${userProvider.quer} )"),
           ),
           body: categoriesList.isEmpty
               ? Center(
@@ -107,16 +109,23 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       children: [
-                                        Image.network(document['userImage']),
+                                        Image.network(
+                                          document['userImage'],
+                                          // width: 40,
+                                          // height: 40,
+                                        ),
                                         SizedBox(
                                           width: 20,
                                         ),
-                                        Text(
-                                          document['userName'],
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
+                                        Expanded(
+                                          child: Text(
+                                            document['userName'],
+                                            style: TextStyle(
+                                                overflow: TextOverflow.ellipsis,
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                         Spacer(),
                                         IconButton(
