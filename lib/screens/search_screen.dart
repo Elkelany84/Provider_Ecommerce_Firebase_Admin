@@ -104,7 +104,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           onChanged: (value) {
                             // setState(() {
                             productListSearch = productsProvider.searchQuery(
-                                searchText: controller.text,
+                                // searchText: controller.text,
+                                searchText: value,
                                 passedList: productList);
                             // });
                           },

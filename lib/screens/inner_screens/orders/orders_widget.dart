@@ -4,6 +4,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class OrdersWidgetFree extends StatefulWidget {
   const OrdersWidgetFree({super.key, required this.orderSummary});
@@ -98,7 +99,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                         width: 5,
                       ),
                       SubtitleTextWidget(
-                        label: "${widget.orderSummary.totalProducts}",
+                        label: widget.orderSummary.totalProducts,
                         fontSize: 15,
                         color: Colors.blue,
                       ),
@@ -107,6 +108,26 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const TitleTextWidget(
+                        label: "Order Date: ",
+                        fontSize: 15,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SubtitleTextWidget(
+                        label: timeago
+                            .format(widget.orderSummary.orderDate.toDate()),
+                        fontSize: 15,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  )
 
                   // Row(
                   //   children: [

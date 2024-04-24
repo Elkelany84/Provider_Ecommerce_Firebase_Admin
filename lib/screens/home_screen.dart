@@ -21,10 +21,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Image.asset(AssetsManager.shoppingCart),
         ),
-        title: AppNameTextWidget(
+        title: const AppNameTextWidget(
           label: "Shop Smart",
           fontSize: 40,
         ),
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               // Visibility(
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     itemCount: AppConstants.bannerImages.length,
-                    pagination: SwiperPagination(
+                    pagination: const SwiperPagination(
                       builder: DotSwiperPaginationBuilder(
                           activeColor: Colors.red, color: Colors.white),
                     ),
@@ -65,13 +65,13 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Visibility(
                   visible: productsProvider.getProducts.isNotEmpty,
-                  child: TitleTextWidget(label: "Latest Arrivals")),
-              SizedBox(
+                  child: const TitleTextWidget(label: "Latest Arrivals")),
+              const SizedBox(
                 height: 10,
               ),
               Visibility(
@@ -86,20 +86,20 @@ class HomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return ChangeNotifierProvider.value(
                             value: productsProvider.getProducts[index],
-                            child: LatestArrivalProductWidgets());
+                            child: const LatestArrivalProductWidgets());
                       }),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
-              TitleTextWidget(label: "Categories"),
-              SizedBox(
+              const TitleTextWidget(label: "Categories:"),
+              const SizedBox(
                 height: 10,
               ),
               GridView.count(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 4,
                 children:
                     List.generate(AppConstants.categoriesList.length, (index) {

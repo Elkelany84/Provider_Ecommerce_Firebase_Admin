@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           padding: const EdgeInsets.all(8.0),
           child: Image.asset(AssetsManager.shoppingCart),
         ),
-        title: AppNameTextWidget(
+        title: const AppNameTextWidget(
           label: "Profile Screen",
           fontSize: 22,
         ),
@@ -78,20 +78,20 @@ class _ProfileScreenState extends State<ProfileScreen>
       body: LoadingManager(
         isLoading: _isLoading,
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Visibility(
                 visible: user == null ? true : false,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(18.0),
                   child: TitleTextWidget(
                       label: "Please Login To Have Unlimited Access"),
                 ),
               ),
               userModel == null
-                  ? SizedBox.shrink()
+                  ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
@@ -118,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TitleTextWidget(label: userModel!.userName),
-                              SizedBox(
+                              const SizedBox(
                                 height: 6,
                               ),
                               SubtitleTextWidget(label: userModel!.userEmail)
@@ -130,8 +130,8 @@ class _ProfileScreenState extends State<ProfileScreen>
               const SizedBox(
                 height: 18,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
+              const Padding(
+                padding: EdgeInsets.all(10.0),
                 child: Divider(
                   thickness: 3,
                 ),
@@ -154,7 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Visibility(
@@ -168,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               CustomListTile(
@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       context, ViewedRecentlyScreen.routeName);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Visibility(
@@ -192,17 +192,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                   },
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
+              const Padding(
+                padding: EdgeInsets.all(10.0),
                 child: Divider(
                   thickness: 3,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(14.0),
+              const Padding(
+                padding: EdgeInsets.all(14.0),
                 child: TitleTextWidget(label: "Settings"),
               ),
               SwitchListTile(
@@ -216,7 +216,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   onChanged: (value) {
                     themeProvider.setDarkTheme(value);
                   }),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Center(
@@ -249,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 },
                 label: Text(
                   user == null ? "Login" : "Logout",
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 icon: Icon(user == null ? Icons.login : Icons.logout),
               )
@@ -312,7 +312,7 @@ class CustomListTile extends StatelessWidget {
         imagePath,
         height: 34,
       ),
-      trailing: Icon(IconlyLight.arrowRight2),
+      trailing: const Icon(IconlyLight.arrowRight2),
     );
   }
 }

@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
             home: const RootScreen(),
             routes: {
               RootScreen.routeName: (context) => const RootScreen(),
-              ProductDetails.routeName: (context) => ProductDetails(),
+              ProductDetails.routeName: (context) => const ProductDetails(),
               SearchScreen.routeName: (context) => const SearchScreen(),
               ViewedRecentlyScreen.routeName: (context) =>
                   const ViewedRecentlyScreen(),

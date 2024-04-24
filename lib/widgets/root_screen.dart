@@ -90,7 +90,8 @@ class _RootScreenState extends State<RootScreen> {
     final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: PageView(
-        physics: NeverScrollableScrollPhysics(), //DISABLE SCROLL  OR SWIPE
+        physics:
+            const NeverScrollableScrollPhysics(), //DISABLE SCROLL  OR SWIPE
         controller: controller,
         children: screens,
       ),
@@ -106,26 +107,26 @@ class _RootScreenState extends State<RootScreen> {
           controller.jumpToPage(currentScreen);
         },
         destinations: [
-          NavigationDestination(
+          const NavigationDestination(
             selectedIcon: Icon(IconlyBold.home),
             icon: Icon(IconlyLight.home),
             label: "Home",
           ),
-          NavigationDestination(
+          const NavigationDestination(
             selectedIcon: Icon(IconlyBold.search),
             icon: Icon(IconlyLight.search),
             label: "Search",
           ),
           NavigationDestination(
-            selectedIcon: Icon(IconlyBold.bag2),
+            selectedIcon: const Icon(IconlyBold.bag2),
             icon: Badge(
                 backgroundColor: Colors.blue,
                 textColor: Colors.white,
                 label: Text("${cartProvider.cartItems.length}"),
-                child: Icon(IconlyLight.bag2)),
+                child: const Icon(IconlyLight.bag2)),
             label: "Cart",
           ),
-          NavigationDestination(
+          const NavigationDestination(
             selectedIcon: Icon(IconlyBold.profile),
             icon: Icon(IconlyLight.profile),
             label: "Profile",

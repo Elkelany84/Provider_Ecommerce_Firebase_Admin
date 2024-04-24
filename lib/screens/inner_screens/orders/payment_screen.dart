@@ -358,6 +358,8 @@ class _PaymentScreenState extends State<PaymentScreen>
             "totalPrice": cartProvider.getTotalForPayment(
                 productsProvider: productProvider),
             "totalProducts": cartProvider.getQty(),
+            "paymentMethod": "Cash on Delivery",
+            "orderStatus": "Processing",
             "orderDate": Timestamp.now(),
           }
         ])

@@ -37,6 +37,7 @@ class ProductsProvider with ChangeNotifier {
             .toLowerCase()
             .contains(searchText.toLowerCase()))
         .toList();
+    // notifyListeners();
     return searchList;
   }
 

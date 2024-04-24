@@ -153,7 +153,7 @@ class _PersonalProfileState extends State<PersonalProfile>
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             size: 20,
           ),
@@ -162,36 +162,36 @@ class _PersonalProfileState extends State<PersonalProfile>
         //   padding: EdgeInsets.all(8.0),
         //   child: Image.asset(AssetsManager.shoppingCart),
         // ),
-        title: AppNameTextWidget(
+        title: const AppNameTextWidget(
           label: "Personal Profile",
           fontSize: 30,
         ),
       ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: userModel == null
-            ? SizedBox.shrink()
+            ? const SizedBox.shrink()
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SubtitleTextWidget(
+                    const SubtitleTextWidget(
                       label: "Your Details: ",
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                       textDecoration: TextDecoration.underline,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    SubtitleTextWidget(
+                    const SubtitleTextWidget(
                       label:
                           "You Can Change your Details From Here , Then Press Save. ",
                       fontWeight: FontWeight.normal,
                       fontSize: 18,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Form(
@@ -200,12 +200,12 @@ class _PersonalProfileState extends State<PersonalProfile>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SubtitleTextWidget(
+                          const SubtitleTextWidget(
                             label: "First Name: ",
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           TextFormField(
@@ -215,7 +215,7 @@ class _PersonalProfileState extends State<PersonalProfile>
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
                               hintText: userModel!.userName,
-                              prefixIcon: Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person),
                             ),
                             onFieldSubmitted: (value) {
                               FocusScope.of(context)
@@ -225,15 +225,15 @@ class _PersonalProfileState extends State<PersonalProfile>
                               return MyValidators.displayNamevalidator(value);
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          SubtitleTextWidget(
+                          const SubtitleTextWidget(
                             label: "E-mail: You Can\'t Change Your E-mail ",
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           TextFormField(
@@ -244,18 +244,18 @@ class _PersonalProfileState extends State<PersonalProfile>
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintText: userModel!.userEmail,
-                              prefixIcon: Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          SubtitleTextWidget(
+                          const SubtitleTextWidget(
                             label: "Address: ",
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           TextFormField(
@@ -265,7 +265,7 @@ class _PersonalProfileState extends State<PersonalProfile>
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintText: userModel!.userAddress,
-                              prefixIcon: Icon(Icons.location_city),
+                              prefixIcon: const Icon(Icons.location_city),
                             ),
                             onFieldSubmitted: (value) {
                               FocusScope.of(context)
@@ -275,15 +275,15 @@ class _PersonalProfileState extends State<PersonalProfile>
                               return MyValidators.addressvalidator(value);
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          SubtitleTextWidget(
+                          const SubtitleTextWidget(
                             label: "Phone: ",
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           TextFormField(
@@ -293,7 +293,7 @@ class _PersonalProfileState extends State<PersonalProfile>
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               hintText: userModel!.userPhone,
-                              prefixIcon: Icon(Icons.phone),
+                              prefixIcon: const Icon(Icons.phone),
                             ),
                             onFieldSubmitted: (value) async {
                               await updateUserDetailsFct();
@@ -302,15 +302,15 @@ class _PersonalProfileState extends State<PersonalProfile>
                               return MyValidators.phonevalidator(value);
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          SubtitleTextWidget(
+                          const SubtitleTextWidget(
                             label: "Creation Date: ",
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           TextFormField(
@@ -323,17 +323,17 @@ class _PersonalProfileState extends State<PersonalProfile>
                               hintText:
                                   timeago.format(userModel!.createdAt.toDate()),
                               // hintText: userModel!.createdAt.toString(),
-                              prefixIcon: Icon(Icons.date_range),
+                              prefixIcon: const Icon(Icons.date_range),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.all(12),
+                                padding: const EdgeInsets.all(12),
                                 backgroundColor: Colors.purpleAccent,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -342,14 +342,14 @@ class _PersonalProfileState extends State<PersonalProfile>
                               onPressed: () async {
                                 await updateUserDetailsFct();
                               },
-                              label: Text(
+                              label: const Text(
                                 "Save",
                                 style: TextStyle(fontSize: 20),
                               ),
-                              icon: Icon(IconlyLight.addUser),
+                              icon: const Icon(IconlyLight.addUser),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                         ],
