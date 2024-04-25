@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/theme_data.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/theme_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
@@ -74,6 +75,9 @@ class MyApp extends StatelessWidget {
         }),
         ChangeNotifierProvider(create: (_) {
           return OrderProvider();
+        }),
+        ChangeNotifierProvider(create: (_) {
+          return CategoriesProvider();
         }),
 
         // ChangeNotifierProvider(create: (_) {

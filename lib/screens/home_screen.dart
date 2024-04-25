@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
+import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
@@ -15,6 +16,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<ProductsProvider>(context);
+    final categoriesProvider = Provider.of<CategoriesProvider>(context);
+
     // UserModel? userModel;
     // User? user = FirebaseAuth.instance.currentUser;
     Size size = MediaQuery.of(context).size;

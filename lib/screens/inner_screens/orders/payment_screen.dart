@@ -85,6 +85,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     super.initState();
   }
 
+  int hobby = 1;
   @override
   Widget build(BuildContext context) {
     final productProvider =
@@ -92,13 +93,14 @@ class _PaymentScreenState extends State<PaymentScreen>
     final cartProvider = Provider.of<CartProvider>(context);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+
     return Scaffold(
       bottomSheet: PaymentBottomSheetWidget(function: () async {
         await placeOrderAdvanced(
-          cartProvider: cartProvider,
-          productProvider: productProvider,
-          userProvider: userProvider,
-        );
+            cartProvider: cartProvider,
+            productProvider: productProvider,
+            userProvider: userProvider,
+            hobby: hobby);
       }),
       appBar: AppBar(
         centerTitle: true,
@@ -116,8 +118,8 @@ class _PaymentScreenState extends State<PaymentScreen>
         //   padding: EdgeInsets.all(8.0),
         //   child: Image.asset(AssetsManager.shoppingCart),
         // ),
-        title: const AppNameTextWidget(
-          label: "CheckOut",
+        title: AppNameTextWidget(
+          label: "CheckOut $hobby",
           fontSize: 30,
         ),
       ),
@@ -191,7 +193,16 @@ class _PaymentScreenState extends State<PaymentScreen>
                     const SizedBox(
                       height: 20,
                     ),
-                    const PaymentMethodWidget(),
+                    PaymentMethodWidget(
+                      hobby,
+                      (value) {
+                        hobby = value;
+                        setState(() {
+                          hobby = value;
+                        });
+                        print(hobby);
+                      },
+                    ),
                     // TitleTextWidget(
                     //   label: "Payment On Delivery",
                     //   fontSize: 24,
@@ -254,6 +265,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     required UserProvider userProvider,
     required ProductsProvider productProvider,
     required CartProvider cartProvider,
+    required int hobby,
   }) async {
     final auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
@@ -358,7 +370,8 @@ class _PaymentScreenState extends State<PaymentScreen>
             "totalPrice": cartProvider.getTotalForPayment(
                 productsProvider: productProvider),
             "totalProducts": cartProvider.getQty(),
-            "paymentMethod": "Cash on Delivery",
+            // "paymentMethod": "Cash on Delivery",
+            "paymentMethod": hobby.toString(),
             "orderStatus": "Processing",
             "orderDate": Timestamp.now(),
           }

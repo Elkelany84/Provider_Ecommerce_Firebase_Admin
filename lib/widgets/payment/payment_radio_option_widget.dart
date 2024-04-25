@@ -2,15 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
+// typedef void IntCallback(int id);
+
 class PaymentMethodWidget extends StatefulWidget {
-  const PaymentMethodWidget({super.key});
+  PaymentMethodWidget(
+    this.hobby,
+    this.changedHobby, {
+    super.key,
+  });
+  int hobby;
+  Function(int value) changedHobby;
 
   @override
   State<PaymentMethodWidget> createState() => _PaymentMethodWidgetState();
 }
 
 class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
-  int radioPaymentIndex = 1;
+  ///newHobby
+  int? radioPaymentIndex;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,19 +33,21 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
             onChange: (value) {
               setState(() {
                 radioPaymentIndex = value;
+                widget.changedHobby(radioPaymentIndex!);
               });
             }),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         buildRadioPayment(
             name: "CreditCard On Delivery",
             image: AssetsManager.paymentPos,
             scale: 0.5,
-            value: 3,
+            value: 2,
             onChange: (value) {
               setState(() {
                 radioPaymentIndex = value;
+                widget.changedHobby(radioPaymentIndex!);
               });
             }),
       ],
@@ -66,7 +78,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
                 image,
                 scale: scale,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               TitleTextWidget(

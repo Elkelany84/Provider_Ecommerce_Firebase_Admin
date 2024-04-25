@@ -132,6 +132,8 @@ class OrderProvider extends ChangeNotifier {
                     .get("orderSummary")[index]["totalProducts"]
                     .toString(),
                 sessionId: userDoc.get("orderSummary")[index]["sessionId"],
+                paymentMethod: userDoc.get("paymentMethod")[index]["sessionId"],
+                orderStatus: userDoc.get("orderSummary")[index]["orderStatus"],
                 orderDate: userDoc.get("orderSummary")[index]["orderDate"]));
         // );
       }

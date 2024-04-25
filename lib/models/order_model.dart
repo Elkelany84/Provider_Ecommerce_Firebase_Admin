@@ -11,6 +11,7 @@ class OrdersModelAdvanced with ChangeNotifier {
   final String imageUrl;
   final String quantity;
   final String sessionId;
+
   final Timestamp orderDate;
 
   OrdersModelAdvanced(
@@ -35,6 +36,8 @@ class OrderSummary with ChangeNotifier {
   final String totalProducts;
   final String sessionId;
   final Timestamp orderDate;
+  final String paymentMethod;
+  final String orderStatus;
 
   OrderSummary(
       {
@@ -43,5 +46,7 @@ class OrderSummary with ChangeNotifier {
       required this.totalPrice,
       required this.totalProducts,
       required this.sessionId,
+      required this.paymentMethod,
+      required this.orderStatus,
       required this.orderDate});
 }

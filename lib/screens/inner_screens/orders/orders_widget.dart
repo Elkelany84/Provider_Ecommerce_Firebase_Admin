@@ -127,7 +127,26 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                         color: Colors.blue,
                       ),
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const TitleTextWidget(
+                        label: "Payment Method: ",
+                        fontSize: 15,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SubtitleTextWidget(
+                        label: widget.orderSummary.paymentMethod,
+                        fontSize: 15,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
 
                   // Row(
                   //   children: [
