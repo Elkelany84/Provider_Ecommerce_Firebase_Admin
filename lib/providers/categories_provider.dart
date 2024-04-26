@@ -5,6 +5,7 @@ import 'package:hadi_ecommerce_firebase_admin/models/categories_model.dart';
 class CategoriesProvider extends ChangeNotifier {
   List<CategoriesModel> categories = [];
   List<CategoriesModel> get getCategories => categories;
+  List<CategoriesModel> categoriesList = [];
 
   // Fetch products from firebase
   final categoriesDb = FirebaseFirestore.instance.collection("categories");
@@ -26,6 +27,7 @@ class CategoriesProvider extends ChangeNotifier {
               //     productImage: element.get("productImage"),
               //     productQuantity: "productQuantity")
               );
+          categoriesList.insert(0, CategoriesModel.fromFirestore(element));
         }
       });
       notifyListeners();

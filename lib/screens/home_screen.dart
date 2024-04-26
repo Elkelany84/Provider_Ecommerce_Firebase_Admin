@@ -119,11 +119,13 @@ class HomeScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 4,
-                children:
-                    List.generate(AppConstants.categoriesList.length, (index) {
+                children: List.generate(categoriesProvider.categories.length,
+                    (index) {
                   return CategoryRoundedWidget(
-                    name: AppConstants.categoriesList[index].name,
-                    image: AppConstants.categoriesList[index].image,
+                    name: categoriesProvider.categories[index].name,
+                    image: categoriesProvider.categories[index].image,
+                    // name: AppConstants.categoriesList[index].name,
+                    // image: AppConstants.categoriesList[index].image,
                   );
                 }),
               )

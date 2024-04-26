@@ -14,7 +14,7 @@ class CategoryRoundedWidget extends StatelessWidget {
       },
       child: Column(
         children: [
-          Image.asset(
+          Image.network(
             image,
             height: 50,
             width: 50,
