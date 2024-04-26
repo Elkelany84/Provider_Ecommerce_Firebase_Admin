@@ -19,7 +19,7 @@ class PaymentMethodWidget extends StatefulWidget {
 
 class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
   ///newHobby
-  int? radioPaymentIndex;
+  int? radioPaymentIndex = 1;
 
   @override
   Widget build(BuildContext context) {

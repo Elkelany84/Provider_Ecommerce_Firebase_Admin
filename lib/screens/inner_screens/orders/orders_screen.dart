@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/orders_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/empty_bag.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/order/orders_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 

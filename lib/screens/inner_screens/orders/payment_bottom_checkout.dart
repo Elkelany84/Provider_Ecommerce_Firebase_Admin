@@ -17,7 +17,7 @@ class PaymentBottomSheetWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        border: Border(
+        border: const Border(
           top: BorderSide(width: 1, color: Colors.grey),
         ),
       ),
@@ -53,7 +53,7 @@ class PaymentBottomSheetWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   "Checkout",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/cart_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
@@ -118,8 +119,8 @@ class _PaymentScreenState extends State<PaymentScreen>
         //   padding: EdgeInsets.all(8.0),
         //   child: Image.asset(AssetsManager.shoppingCart),
         // ),
-        title: AppNameTextWidget(
-          label: "CheckOut $hobby",
+        title: const AppNameTextWidget(
+          label: "CheckOut ",
           fontSize: 30,
         ),
       ),
@@ -156,7 +157,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SubtitleTextWidget(
-                              label: orderUserModel!.userAddress * 3,
+                              label: orderUserModel!.userAddress * 2,
                               fontSize: 20, color: Colors.black,
                               // textDecoration: TextDecoration.underline,
                             ),
@@ -170,10 +171,16 @@ class _PaymentScreenState extends State<PaymentScreen>
                                   Navigator.of(context)
                                       .pushNamed(PersonalProfile.routeName);
                                 },
-                                child: const SubtitleTextWidget(
-                                  label: "Edit Address",
-                                  fontStyle: FontStyle.italic,
-                                  textDecoration: TextDecoration.underline,
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    SubtitleTextWidget(
+                                      label: "Edit Address",
+                                      fontStyle: FontStyle.italic,
+                                      textDecoration: TextDecoration.underline,
+                                    ),
+                                    Icon(IconlyLight.location)
+                                  ],
                                 ),
                               ),
                             ),
@@ -200,7 +207,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                         setState(() {
                           hobby = value;
                         });
-                        print(hobby);
+                        // print(hobby);
                       },
                     ),
                     // TitleTextWidget(
