@@ -50,6 +50,7 @@ dependencies:
   uuid: ^4.4.0
   timeago: ^3.6.1
   flutter_iconly: ^1.0.2
+  url_launcher: ^6.0.10
 
 dev_dependencies:
   flutter_test:

@@ -281,9 +281,9 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
-                            onPressed: () async {
-                              await _uploadCategory();
-                              await categoriesProvider.countCategories();
+                            onPressed: () {
+                              _uploadCategory();
+                              // await categoriesProvider.countCategories();
                             },
                             child: const Text(
                               "Add Category",

@@ -100,9 +100,11 @@ class category_widget extends StatelessWidget {
                                       isError: false,
                                       context: context,
                                       subtitle: "Delete Category",
-                                      fct: () {
-                                        categoriesProvider
+                                      fct: () async {
+                                        await categoriesProvider
                                             .deleteCategory(document.id);
+                                        await categoriesProvider
+                                            .countCategories();
                                       });
                                   // categoriesProvider
                                   //     .deleteCategory(document.id);

@@ -11,6 +11,7 @@ import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class PersonalProfile extends StatefulWidget {
   const PersonalProfile({super.key, required this.uid});
@@ -147,6 +148,7 @@ class _PersonalProfileState extends State<PersonalProfile>
 
   @override
   Widget build(BuildContext context) {
+    // Future<void> _launched;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -319,6 +321,24 @@ class _PersonalProfileState extends State<PersonalProfile>
                                   // hintText: userModel!.userPhone,
                                   hintText: snapshot.data!["userPhone"],
                                   prefixIcon: Icon(Icons.phone),
+                                  suffixIcon: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: IconButton(
+                                        onPressed: () async {
+                                          final Uri url = Uri(
+                                              scheme: "tel",
+                                              path:
+                                                  snapshot.data!["userPhone"]);
+                                          if (await canLaunchUrl(url)) {
+                                            await launchUrl(url);
+                                          } else {
+                                            print("can not launch");
+                                          }
+                                        },
+                                        icon: Icon(
+                                          Icons.call,
+                                        )),
+                                  ),
                                 ),
                                 onFieldSubmitted: (value) async {
                                   await updateUserDetailsFct();
