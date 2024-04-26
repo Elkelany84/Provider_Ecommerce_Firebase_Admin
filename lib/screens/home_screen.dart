@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/constants/app_constants.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/assets_manager.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/category_runded_widget.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/products/latest_arrival.dart';
+import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
@@ -96,7 +98,20 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              const TitleTextWidget(label: "Categories:"),
+              Row(
+                children: [
+                  const TitleTextWidget(label: "Categories:"),
+                  const SizedBox(
+                    width: 2,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, CategoriesScreen.routeName);
+                      },
+                      child: const SubtitleTextWidget(label: "Show All"))
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),

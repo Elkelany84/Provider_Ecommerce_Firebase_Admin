@@ -31,7 +31,7 @@ class _ProductWidgetState extends State<ProductWidget> {
 
     Size size = MediaQuery.of(context).size;
     return getCurrentProduct == null
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : Padding(
             padding: const EdgeInsets.all(6.0),
             child: GestureDetector(
@@ -51,7 +51,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       width: double.infinity,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   ),
                   Row(
