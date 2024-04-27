@@ -33,6 +33,91 @@ class _PersonalProfileState extends State<PersonalProfile>
   UserModel? userModel;
   bool _isLoading = true;
 
+// Function to sum values in the array field
+//   Future<void> sumArrayField() async {
+//     var arraySum = 50;
+// // Fetch document from Firestore
+//     DocumentSnapshot document = await FirebaseFirestore.instance
+//         .collection('ordersAdvanced')
+//         .doc('8FDOP1pYDOQc4iQLuBBc5PGXhRd2')
+//         .get();
+//     // Get the array field from the document
+//     List<dynamic> arrayField = document.get('orderSummary')["paymentMethod"];
+//     // Sum the values in the array
+//     for (var value in arrayField) {
+//       // ararySum += value!;
+//       print(value);
+//     }
+
+  num fieldValueSum = 0;
+
+// Function to sum values in a specific field within the array field
+//   Future<void> sumArrayFieldValues() async {
+// // Fetch document from Firestore
+//     DocumentSnapshot document = await FirebaseFirestore.instance
+//         .collection('ordersAdvanced')
+//         .doc('8FDOP1pYDOQc4iQLuBBc5PGXhRd2')
+//         .get();
+//     // Cast the result of document.data() to Map<String, dynamic>
+//     Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
+//     // Extract array field from the document
+//     if (data != null && data.containsKey('orderSummary')) {
+//       List<dynamic> arrayField = data["totalPrice"];
+//       num sum = 0;
+//       List all = [];
+//       for (var obj in arrayField) {
+//         // Assuming each object in the array has a field named 'specific_field'
+//         num fieldValue = obj['totalPrice'];
+//         all.add(fieldValue);
+//         print(all);
+//         // sum += fieldValue;
+//         // print(fieldValue);
+//       }
+//       setState(() {
+//         fieldValueSum = sum;
+//       });
+//     }
+//
+// // Sum values in the specific field within the array field
+//
+// // Update the state with the sum
+//   }
+
+  //very important funcion to sum the totalPrice for specific user
+  num tPurchases = 0;
+  Future<List<dynamic>> fetchSpecificValues(
+      // String documentId, String arrayFieldName
+      ) async {
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await FirebaseFirestore.instance
+            .collection('ordersAdvanced')
+            .doc(widget.uid)
+            .get();
+
+    // Check if the document snapshot actually contains data.
+    if (documentSnapshot.data() != null) {
+      // Use 'as List<dynamic>' to ensure the correct type.
+      List<dynamic> values =
+          List.from(documentSnapshot.data()!["orderSummary"] as List<dynamic>);
+      // print(values);
+      Map mappy = Map.fromIterable(values,
+          key: (item) => item["totalPrice"],
+          value: (item) => item["totalPrice"]);
+      var totalPurchases = mappy.values;
+      var result = totalPurchases.reduce((sum, element) => sum + element);
+      // print(result);
+      // Map<dynamic, dynamic> mapy = Map.from();
+      print(mappy);
+      tPurchases = result;
+      setState(() {});
+      print(tPurchases);
+      return values;
+    } else {
+      // Handle the case where data is not available.
+      return [];
+    }
+  }
+
   Future<void> fetchUserInfo() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -64,11 +149,13 @@ class _PersonalProfileState extends State<PersonalProfile>
   late TextEditingController _addressController;
   late TextEditingController _phoneController;
   late TextEditingController _createdAtController;
+  late TextEditingController _totalPurchasesController;
   late final FocusNode _firstNameFocusNode;
   late final FocusNode _userEmailFocusNode;
   late final FocusNode _addressFocusNode;
   late final FocusNode _phoneFocusNode;
   late final FocusNode _createdAtFocusNode;
+  late final FocusNode _totalPurchasesFocusNode;
   bool isLoading = false;
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
@@ -76,16 +163,19 @@ class _PersonalProfileState extends State<PersonalProfile>
   @override
   void initState() {
     // fetchUserInfo();
+    fetchSpecificValues();
     _firstNameController = TextEditingController();
     _userEmailController = TextEditingController();
     _addressController = TextEditingController();
     _phoneController = TextEditingController();
     _createdAtController = TextEditingController();
+    _totalPurchasesController = TextEditingController();
     _firstNameFocusNode = FocusNode();
     _userEmailFocusNode = FocusNode();
     _addressFocusNode = FocusNode();
     _phoneFocusNode = FocusNode();
     _createdAtFocusNode = FocusNode();
+    _totalPurchasesFocusNode = FocusNode();
     super.initState();
   }
 
@@ -96,11 +186,13 @@ class _PersonalProfileState extends State<PersonalProfile>
     _addressController.dispose();
     _phoneController.dispose();
     _createdAtController.dispose();
+    _totalPurchasesController.dispose();
     _firstNameFocusNode.dispose();
     _userEmailFocusNode.dispose();
     _addressFocusNode.dispose();
     _phoneFocusNode.dispose();
     _createdAtFocusNode.dispose();
+    _totalPurchasesFocusNode.dispose();
     super.dispose();
   }
 
@@ -289,7 +381,7 @@ class _PersonalProfileState extends State<PersonalProfile>
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: InputDecoration(
                                   // hintText: userModel!.userAddress,
-                                  hintText: snapshot.data!["userAddress"],
+                                  hintText: snapshot.data!["userAddress"] * 3,
                                   prefixIcon: Icon(Icons.location_city),
                                 ),
                                 onFieldSubmitted: (value) {
@@ -373,8 +465,40 @@ class _PersonalProfileState extends State<PersonalProfile>
                                   prefixIcon: Icon(Icons.date_range),
                                 ),
                               ),
+
                               SizedBox(
-                                height: 30,
+                                height: 20,
+                              ),
+                              SubtitleTextWidget(
+                                label: "TotalPurchases: ",
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              TextFormField(
+                                readOnly: true,
+                                controller: _totalPurchasesController,
+                                focusNode: _totalPurchasesFocusNode,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  // hintText: userModel!.userAddress,
+                                  hintText: "\$ ${tPurchases.toString()}",
+                                  hintStyle: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  prefixIcon: Icon(Icons.money),
+                                ),
+                                // onFieldSubmitted: (value) {
+                                //   FocusScope.of(context)
+                                //       .requestFocus(_phoneFocusNode);
+                                // },
+                                validator: (value) {
+                                  return MyValidators.addressvalidator(value);
+                                },
                               ),
                               // SizedBox(
                               //   width: double.infinity,
