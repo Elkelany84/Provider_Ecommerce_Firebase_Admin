@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/dashboard_screen.dart';
 
 import 'subtitle_text.dart';
 import 'title_text.dart';
@@ -9,9 +10,10 @@ class EmptyBagWidget extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.subtitle,
+    required this.buttonText,
   });
 
-  final String imagePath, title, subtitle;
+  final String imagePath, title, subtitle, buttonText;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -55,6 +57,17 @@ class EmptyBagWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(DashboardScreen.routeName);
+              },
+              child: Text(buttonText))
         ],
       ),
     );

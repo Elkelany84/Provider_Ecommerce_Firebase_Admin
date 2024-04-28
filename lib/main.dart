@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_copiolt.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -56,6 +58,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) {
           return UserProvider();
         }),
+        ChangeNotifierProvider(create: (_) {
+          return OrderProvider();
+        }),
       ],
       child: Consumer<ThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
@@ -71,6 +76,7 @@ class MyApp extends StatelessWidget {
                 const EditOrUploadProductForm(),
             CategoriesScreen.routeName: (context) => const CategoriesScreen(),
             AllUsersScreen.routeName: (context) => const AllUsersScreen(),
+            OrderStreamScreen.routeName: (context) => const OrderStreamScreen(),
             // PersonalProfile.routeName: (context) => const PersonalProfile(),
           },
         );

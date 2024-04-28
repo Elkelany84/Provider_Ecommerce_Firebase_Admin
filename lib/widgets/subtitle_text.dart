@@ -26,6 +26,7 @@ class SubtitleTextWidget extends StatelessWidget {
         decoration: textDecoration,
         color: color,
         fontStyle: fontStyle,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

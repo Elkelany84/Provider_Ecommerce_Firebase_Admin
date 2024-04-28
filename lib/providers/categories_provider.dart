@@ -18,7 +18,7 @@ class CategoriesProvider extends ChangeNotifier {
     return categories.firstWhere((element) => element.categoryId == categoryId);
   }
 
-  // Fetch products from firebase
+  // Fetch categories from firebase
   final productDb = FirebaseFirestore.instance.collection("categories");
   Future<List<CategoryModel>> fetchCategories() async {
     try {
@@ -69,7 +69,7 @@ class CategoriesProvider extends ChangeNotifier {
     }
   }
 
-  //count products in firebase
+  //count categories in firebase
   final CollectionReference<Map<String, dynamic>> categoryList =
       FirebaseFirestore.instance.collection('categories');
   int? quer;

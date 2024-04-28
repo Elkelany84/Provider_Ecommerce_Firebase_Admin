@@ -16,7 +16,7 @@ class TitlesTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      label,
+      label[0].toUpperCase() + label.substring(1).toLowerCase(),
       maxLines: maxLines,
       // textAlign: TextAlign.justify,
       style: TextStyle(
