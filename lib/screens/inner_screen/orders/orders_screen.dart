@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_copiolt.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -28,42 +29,120 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
         stream: FirebaseFirestore.instance
             .collection("ordersAdvanced")
             .where("orderStatus", isEqualTo: "Processing")
+            .orderBy("orderDate", descending: false)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            var document = snapshot.data!;
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.all(8),
-                    height: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
-                    child: ListTile(
-                      title: Row(
-                        children: [
-                          TitlesTextWidget(
-                            label: "SessionId: ",
-                          ),
-                          Expanded(
-                            child: SubtitleTextWidget(
-                                label: snapshot.data!.docs[index]["sessionId"]),
-                          ),
-                        ],
-                      ),
-                      subtitle: Row(
-                        children: [
-                          TitlesTextWidget(
-                            label: "userId: ",
-                          ),
-                          Expanded(
-                            child: SubtitleTextWidget(
-                                label: snapshot.data!.docs[index]["userId"]),
-                          ),
-                        ],
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrderStreamScreen(
+                                  docName: snapshot.data!.docs[index]
+                                      ["sessionId"],
+                                )),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(8),
+                      height: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "SessionId: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label: snapshot.data!.docs[index]
+                                          ["sessionId"]),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "OrderStatus: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label: snapshot.data!.docs[index]
+                                          ["orderStatus"]),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "TotalProducts: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                    label: snapshot
+                                        .data!.docs[index]["totalProducts"]
+                                        .toString(),
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "TotalPrice: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                    label: snapshot
+                                        .data!.docs[index]["totalPrice"]
+                                        .toString(),
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "PaymentMethod: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                    label: snapshot.data!.docs[index]
+                                        ["paymentMethod"],
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "userId: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label: snapshot.data!.docs[index]
+                                          ["userId"]),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

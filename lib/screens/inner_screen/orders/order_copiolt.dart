@@ -5,13 +5,15 @@ import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 
 class OrderStreamScreen extends StatelessWidget {
-  const OrderStreamScreen({
+  OrderStreamScreen({
     super.key,
+    this.docName,
   });
   // final String arrayField1Name; // The name of the first array field
   // final String arrayField2Name; // The name of the second array field
   // final dynamic matchingValue;
   static const routeName = "/orderStreamScreen";
+  final String? docName;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class OrderStreamScreen extends StatelessWidget {
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('ordersAdvanced')
-            .doc("8FDOP1pYDOQc4iQLuBBc5PGXhRd2")
+            .doc(docName)
             .snapshots(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
