@@ -17,10 +17,10 @@ class EmptyBag extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 70,
           ),
           Image.asset(
@@ -28,7 +28,7 @@ class EmptyBag extends StatelessWidget {
             width: double.infinity,
             height: size.height * 0.35,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TitleTextWidget(
@@ -36,7 +36,7 @@ class EmptyBag extends StatelessWidget {
             fontSize: 25,
             color: Colors.red,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
@@ -45,7 +45,7 @@ class EmptyBag extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(

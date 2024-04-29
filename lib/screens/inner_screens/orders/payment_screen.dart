@@ -267,7 +267,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     );
   }
 
-  //customized function
+  //final professional one
   Future<void> placeOrderAdvanced({
     required UserProvider userProvider,
     required ProductsProvider productProvider,
@@ -277,6 +277,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     final auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final ordersDb = FirebaseFirestore.instance.collection("ordersAdvanced");
+    final usersDb = FirebaseFirestore.instance.collection("users");
 
     if (user == null) {
       return;
@@ -286,67 +287,25 @@ class _PaymentScreenState extends State<PaymentScreen>
       setState(() {
         isLoading = true;
       });
-      //Original working one
-      // cartProvider.cartItems.forEach((key, value) async {
-      //   final getCurrProd = productProvider.findByProdId(value.productId);
-      //   final orderId = const Uuid().v4();
-      //   // print(orderId);
-      //   await createSession();
-      //   await ordersDb.doc(uid).update({
-      //     // await ordersDb.doc(_sessionId).update({
-      //     "userId": uid,
-      //     "orderDate": Timestamp.now(),
-      //     "sessionId": _sessionId,
-      //     "totalPrice": cartProvider.getTotalForPayment(
-      //         productsProvider: productProvider),
-      //     "orderSummary": FieldValue.arrayUnion([
-      //       {
-      //         "orderId": orderId,
-      //         "userId": uid,
-      //         "sessionId": _sessionId,
-      //         // "userName": userProvider.getUserModel!.userName,
-      //         // "productId": value.productId,
-      //         // "productTitle": getCurrProd!.productTitle,
-      //         // "price": double.parse(getCurrProd.productPrice) * value.quantity,
-      //         "totalPrice": cartProvider.getTotalForPayment(
-      //             productsProvider: productProvider),
-      //         "totalProducts": cartProvider.getQty(),
-      //         "orderDate": Timestamp.now(),
-      //       }
-      //     ]),
-      //     "userOrder": FieldValue.arrayUnion([
-      //       {
-      //         "orderId": orderId,
-      //         "userId": uid,
-      //         "sessionId": _sessionId,
-      //         "userName": userProvider.getUserModel!.userName,
-      //         "productId": value.productId,
-      //         "productTitle": getCurrProd!.productTitle,
-      //         "imageUrl": getCurrProd.productImage,
-      //         "price": double.parse(getCurrProd.productPrice) * value.quantity,
-      //         "totalPrice": cartProvider.getTotalForPayment(
-      //             productsProvider: productProvider),
-      //         "quantity": value.quantity,
-      //         "orderDate": Timestamp.now(),
-      //       }
-      //     ])
-      //   });
-      // });
 
-//customized one
       cartProvider.cartItems.forEach((key, value) async {
         final getCurrProd = productProvider.findByProdId(value.productId);
         final orderId = const Uuid().v4();
         // print(orderId);
         await createSession();
-        await ordersDb.doc(uid).update({
+        await ordersDb.doc(_sessionId).set({
           // await ordersDb.doc(_sessionId).update({
-          "userId": uid,
-          "orderDate": Timestamp.now(),
-          "sessionId": _sessionId,
+          "userId": uid, //done
+          "orderDate": Timestamp.now(), //done
+          "totalProducts": cartProvider.getQty(), //done
+          "sessionId": _sessionId, //done
           "totalPrice": cartProvider.getTotalForPayment(
-              productsProvider: productProvider),
-          // "totalProducts": cartProvider.getQty(),
+              productsProvider: productProvider), //done
+          "paymentMethod": hobby.toString() == "1" ? "Cash" : "Visa",
+          "orderStatus": "Processing",
+        });
+
+        await ordersDb.doc(_sessionId).update({
           "userOrder": FieldValue.arrayUnion([
             {
               "orderId": orderId,
@@ -365,25 +324,26 @@ class _PaymentScreenState extends State<PaymentScreen>
           ])
         });
       });
-      await ordersDb.doc(uid).update({
-        "orderSummary": FieldValue.arrayUnion([
-          {
-            "userId": uid,
-            "sessionId": _sessionId,
-            // "userName": userProvider.getUserModel!.userName,
-            // "productId": value.productId,
-            // "productTitle": getCurrProd!.productTitle,
-            // "price": double.parse(getCurrProd.productPrice) * value.quantity,
-            "totalPrice": cartProvider.getTotalForPayment(
-                productsProvider: productProvider),
-            "totalProducts": cartProvider.getQty(),
-            // "paymentMethod": "Cash on Delivery",
-            "paymentMethod": hobby.toString(),
-            "orderStatus": "Processing",
-            "orderDate": Timestamp.now(),
-          }
-        ])
-      });
+      // await ordersDb.doc(uid).update({
+      //   "orderSummary": FieldValue.arrayUnion([
+      //     {
+      //       "userId": uid,
+      //       "sessionId": _sessionId,
+      //       // "userName": userProvider.getUserModel!.userName,
+      //       // "productId": value.productId,
+      //       // "productTitle": getCurrProd!.productTitle,
+      //       // "price": double.parse(getCurrProd.productPrice) * value.quantity,
+      //       "totalPrice": cartProvider.getTotalForPayment(
+      //           productsProvider: productProvider),
+      //       "totalProducts": cartProvider.getQty(),
+      //       // "paymentMethod": "Cash on Delivery",
+      //       "paymentMethod": hobby.toString() == "1" ? "Cash" : "Visa",
+      //       "orderStatus": "Processing",
+      //       "orderDate": Timestamp.now(),
+      //     }
+      //   ])
+      // });
+
       await cartProvider.clearCartFirebase();
       cartProvider.clearCart();
       Navigator.pushNamed(context, PaymentSuccess.routeName);
@@ -396,4 +356,136 @@ class _PaymentScreenState extends State<PaymentScreen>
       });
     }
   }
+
+  //customized function
+//   Future<void> placeOrderAdvanced({
+//     required UserProvider userProvider,
+//     required ProductsProvider productProvider,
+//     required CartProvider cartProvider,
+//     required int hobby,
+//   }) async {
+//     final auth = FirebaseAuth.instance;
+//     final User? user = auth.currentUser;
+//     final ordersDb = FirebaseFirestore.instance.collection("ordersAdvanced");
+//     final usersDb = FirebaseFirestore.instance.collection("users");
+//
+//     if (user == null) {
+//       return;
+//     }
+//     final uid = user.uid;
+//     try {
+//       setState(() {
+//         isLoading = true;
+//       });
+//       //Original working one
+//       // cartProvider.cartItems.forEach((key, value) async {
+//       //   final getCurrProd = productProvider.findByProdId(value.productId);
+//       //   final orderId = const Uuid().v4();
+//       //   // print(orderId);
+//       //   await createSession();
+//       //   await ordersDb.doc(uid).update({
+//       //     // await ordersDb.doc(_sessionId).update({
+//       //     "userId": uid,
+//       //     "orderDate": Timestamp.now(),
+//       //     "sessionId": _sessionId,
+//       //     "totalPrice": cartProvider.getTotalForPayment(
+//       //         productsProvider: productProvider),
+//       //     "orderSummary": FieldValue.arrayUnion([
+//       //       {
+//       //         "orderId": orderId,
+//       //         "userId": uid,
+//       //         "sessionId": _sessionId,
+//       //         // "userName": userProvider.getUserModel!.userName,
+//       //         // "productId": value.productId,
+//       //         // "productTitle": getCurrProd!.productTitle,
+//       //         // "price": double.parse(getCurrProd.productPrice) * value.quantity,
+//       //         "totalPrice": cartProvider.getTotalForPayment(
+//       //             productsProvider: productProvider),
+//       //         "totalProducts": cartProvider.getQty(),
+//       //         "orderDate": Timestamp.now(),
+//       //       }
+//       //     ]),
+//       //     "userOrder": FieldValue.arrayUnion([
+//       //       {
+//       //         "orderId": orderId,
+//       //         "userId": uid,
+//       //         "sessionId": _sessionId,
+//       //         "userName": userProvider.getUserModel!.userName,
+//       //         "productId": value.productId,
+//       //         "productTitle": getCurrProd!.productTitle,
+//       //         "imageUrl": getCurrProd.productImage,
+//       //         "price": double.parse(getCurrProd.productPrice) * value.quantity,
+//       //         "totalPrice": cartProvider.getTotalForPayment(
+//       //             productsProvider: productProvider),
+//       //         "quantity": value.quantity,
+//       //         "orderDate": Timestamp.now(),
+//       //       }
+//       //     ])
+//       //   });
+//       // });
+//
+// //customized one
+//       cartProvider.cartItems.forEach((key, value) async {
+//         final getCurrProd = productProvider.findByProdId(value.productId);
+//         final orderId = const Uuid().v4();
+//         // print(orderId);
+//         await createSession();
+//         await ordersDb.doc(uid).update({
+//           // await ordersDb.doc(_sessionId).update({
+//           "userId": uid,
+//           "orderDate": Timestamp.now(),
+//           "sessionId": _sessionId,
+//           "totalPrice": cartProvider.getTotalForPayment(
+//               productsProvider: productProvider),
+//           // "totalProducts": cartProvider.getQty(),
+//           "userOrder": FieldValue.arrayUnion([
+//             {
+//               "orderId": orderId,
+//               "userId": uid,
+//               "sessionId": _sessionId,
+//               "userName": userProvider.getUserModel!.userName,
+//               "productId": value.productId,
+//               "productTitle": getCurrProd!.productTitle,
+//               "imageUrl": getCurrProd.productImage,
+//               "price": double.parse(getCurrProd.productPrice) * value.quantity,
+//               "totalPrice": cartProvider.getTotalForPayment(
+//                   productsProvider: productProvider),
+//               "quantity": value.quantity,
+//               "orderDate": Timestamp.now(),
+//             }
+//           ])
+//         });
+//       });
+//       await ordersDb.doc(uid).update({
+//         "orderSummary": FieldValue.arrayUnion([
+//           {
+//             "userId": uid,
+//             "sessionId": _sessionId,
+//             // "userName": userProvider.getUserModel!.userName,
+//             // "productId": value.productId,
+//             // "productTitle": getCurrProd!.productTitle,
+//             // "price": double.parse(getCurrProd.productPrice) * value.quantity,
+//             "totalPrice": cartProvider.getTotalForPayment(
+//                 productsProvider: productProvider),
+//             "totalProducts": cartProvider.getQty(),
+//             // "paymentMethod": "Cash on Delivery",
+//             "paymentMethod": hobby.toString() == "1" ? "Cash" : "Visa",
+//             "orderStatus": "Processing",
+//             "orderDate": Timestamp.now(),
+//           }
+//         ])
+//       });
+//       //TODO
+//       await cartProvider.clearCartFirebase();
+//       cartProvider.clearCart();
+//       Navigator.pushNamed(context, PaymentSuccess.routeName);
+//     } catch (error) {
+//       MyAppFunctions.showErrorOrWarningDialog(
+//           context: context, fct: () {}, subTitle: error.toString());
+//     } finally {
+//       setState(() {
+//         isLoading = false;
+//       });
+//     }
+//   }
 }

@@ -22,7 +22,7 @@ class WishListScreen extends StatelessWidget {
         ? Scaffold(
             body: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 EmptyBag(
@@ -58,7 +58,7 @@ class WishListScreen extends StatelessWidget {
                           },
                           subTitle: "Clear Wishlist");
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.delete_forever_rounded,
                       color: Colors.red,
                     ))

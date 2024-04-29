@@ -8,6 +8,8 @@ class UserProvider with ChangeNotifier {
   //getters
   UserModel? get getUserModel => _userModel;
 
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+
   //fetch user info from firestore
   Future<UserModel?> fetchUserInfo() async {
     final auth = FirebaseAuth.instance;

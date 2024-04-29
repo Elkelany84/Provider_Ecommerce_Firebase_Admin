@@ -34,6 +34,7 @@ class GoogleButton extends StatelessWidget {
               "createdAt": Timestamp.now(),
               'userCart': [],
               "userWish": [],
+              "orderSummary": []
             });
           }
         }

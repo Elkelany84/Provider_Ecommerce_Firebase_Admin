@@ -45,10 +45,10 @@ class ImagePickerWidget extends StatelessWidget {
               onTap: () {
                 function();
               },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Icon(
-                  Icons.add_shopping_cart_rounded,
+                  Icons.image,
                   color: Colors.white,
                 ),
               ),

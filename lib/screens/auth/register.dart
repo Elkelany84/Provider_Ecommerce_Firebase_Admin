@@ -103,14 +103,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "userAddress": "",
           "userPhone": "",
           "userCart": [],
-          "userWish": []
+          "userWish": [],
+          "orderSummary": []
         });
 
         //Customize create userOrderProfile in orderAdvanced in FirebaseFirestore
-        await FirebaseFirestore.instance
-            .collection("ordersAdvanced")
-            .doc(uid)
-            .set({"userId": uid, "userOrder": [], "orderSummary": []});
+        // await FirebaseFirestore.instance
+        //     .collection("ordersAdvanced")
+        //     .doc(uid)
+        //     .set({"userId": uid, "userOrder": [], "orderSummary": []});
 
         //SToast Message
         Fluttertoast.showToast(
@@ -170,15 +171,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
-                  AppNameTextWidget(label: "Shop Smart", fontSize: 30),
-                  Align(
+                  const AppNameTextWidget(label: "Shop Smart", fontSize: 30),
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: TitleTextWidget(label: "Welcome !"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   SizedBox(
@@ -189,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             await localImagePicker();
                           },
                           pickedImage: pickedImage)),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Form(
@@ -202,7 +203,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           focusNode: _nameFocusNode,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Enter Your Name",
                             prefixIcon: Icon(Icons.person),
                           ),
@@ -214,7 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return MyValidators.displayNamevalidator(value);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         TextFormField(
@@ -222,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           focusNode: _emailFocusNode,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Email Address",
                             prefixIcon: Icon(IconlyLight.message),
                           ),
@@ -234,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return MyValidators.emailValidator(value);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         TextFormField(
@@ -245,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
                               hintText: "Password",
-                              prefixIcon: Icon(IconlyLight.lock),
+                              prefixIcon: const Icon(IconlyLight.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -264,7 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return MyValidators.passwordValidator(value);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         TextFormField(
@@ -275,7 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
                             hintText: "Repeat Password",
-                            prefixIcon: Icon(IconlyLight.lock),
+                            prefixIcon: const Icon(IconlyLight.lock),
                             suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -296,14 +297,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 password: _repeatPasswordController.text);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               backgroundColor: Colors.purpleAccent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -312,30 +313,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressed: () async {
                               await registerFct();
                             },
-                            label: Text(
+                            label: const Text(
                               "SignUp",
                               style: TextStyle(fontSize: 20),
                             ),
-                            icon: Icon(IconlyLight.addUser),
+                            icon: const Icon(IconlyLight.addUser),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
-                        SubtitleTextWidget(label: "Or Connect Using"),
-                        SizedBox(
+                        const SubtitleTextWidget(label: "Or Connect Using"),
+                        const SizedBox(
                           height: 16,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SubtitleTextWidget(label: "Already User?"),
+                            const SubtitleTextWidget(label: "Already User?"),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushNamed(LoginScreen.routeName);
                               },
-                              child: SubtitleTextWidget(
+                              child: const SubtitleTextWidget(
                                 label: "SignIn?",
                                 fontStyle: FontStyle.italic,
                                 textDecoration: TextDecoration.underline,

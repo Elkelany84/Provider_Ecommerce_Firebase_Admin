@@ -97,17 +97,17 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
-                  AppNameTextWidget(label: "Shop Smart", fontSize: 30),
-                  SizedBox(
+                  const AppNameTextWidget(label: "Shop Smart", fontSize: 30),
+                  const SizedBox(
                     height: 20,
                   ),
-                  Align(
+                  const Align(
                       alignment: Alignment.centerLeft,
                       child: TitleTextWidget(label: "Welcome Back!")),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Form(
@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           focusNode: _emailFocusNode,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Email Address",
                             prefixIcon: Icon(IconlyLight.message),
                           ),
@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             return MyValidators.emailValidator(value);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         TextFormField(
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
                               hintText: "Password",
-                              prefixIcon: Icon(IconlyLight.lock),
+                              prefixIcon: const Icon(IconlyLight.lock),
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -161,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             return MyValidators.passwordValidator(value);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Align(
@@ -171,21 +171,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.of(context)
                                   .pushNamed(ForgotPasswordScreen.routeName);
                             },
-                            child: SubtitleTextWidget(
+                            child: const SubtitleTextWidget(
                               label: "Forgot Password?",
                               fontStyle: FontStyle.italic,
                               textDecoration: TextDecoration.underline,
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               backgroundColor: Colors.purpleAccent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -194,31 +194,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () async {
                               await loginFct();
                             },
-                            label: Text(
+                            label: const Text(
                               "LogIn",
                               style: TextStyle(fontSize: 20),
                             ),
-                            icon: Icon(Icons.logout),
+                            icon: const Icon(Icons.logout),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        SubtitleTextWidget(label: "Or Connect Using"),
-                        SizedBox(
+                        const SubtitleTextWidget(label: "Or Connect Using"),
+                        const SizedBox(
                           height: 30,
                         ),
                         SizedBox(
                           height: kBottomNavigationBarHeight,
                           child: Row(
                             children: [
-                              Expanded(
+                              const Expanded(
                                 flex: 2,
                                 child: SizedBox(
                                     height: kBottomNavigationBarHeight,
                                     child: FittedBox(child: GoogleButton())),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Expanded(
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: kBottomNavigationBarHeight,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       backgroundColor: Colors.purpleAccent,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
@@ -236,14 +236,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       Navigator.of(context)
                                           .pushNamed(RootScreen.routeName);
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       "Guest",
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
                             ],
@@ -252,13 +252,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SubtitleTextWidget(label: "New Here?"),
+                            const SubtitleTextWidget(label: "New Here?"),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushNamed(RegisterScreen.routeName);
                               },
-                              child: SubtitleTextWidget(
+                              child: const SubtitleTextWidget(
                                 label: "SignUp",
                                 fontStyle: FontStyle.italic,
                                 textDecoration: TextDecoration.underline,

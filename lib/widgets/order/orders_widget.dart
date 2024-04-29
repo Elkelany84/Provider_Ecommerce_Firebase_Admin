@@ -16,11 +16,14 @@ class OrdersWidgetFree extends StatefulWidget {
 }
 
 class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
+  bool customIcon = false;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final orderUserProvider =
         Provider.of<OrderProvider>(context, listen: false);
+    final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+
     // final f = DateFormat(' dd-MM-yyyy', 'ar');
     // var v = widget.ordersModelAdvanced.orderDate;
     // var myValue = v;
@@ -48,7 +51,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                     children: [
                       Flexible(
                         child: TitleTextWidget(
-                          label: "OrderId: ${widget.orderSummary.sessionId}",
+                          label: "SessionId: ${widget.orderSummary.sessionId}",
                           // label: widget.ordersModelAdvanced.productTitle,
                           maxLines: 2,
                           fontSize: 15,
@@ -147,7 +150,41 @@ class _OrdersWidgetFreeState extends State<OrdersWidgetFree> {
                       ),
                     ],
                   ),
-
+                  // ExpansionTile(
+                  //   title: const TitleTextWidget(
+                  //     label: "Products: ",
+                  //     fontSize: 15,
+                  //   ),
+                  //   trailing: Icon(customIcon
+                  //       ? Icons.arrow_drop_down_circle
+                  //       : Icons.arrow_drop_up),
+                  //   onExpansionChanged: (bool value) {
+                  //     setState(() {
+                  //       customIcon = value;
+                  //     });
+                  //   },
+                  //   children: [
+                  //     StreamBuilder<QuerySnapshot>(
+                  //       stream: FirebaseFirestore.instance
+                  //           .collection('orderFees')
+                  //           .snapshots(),
+                  //       builder: (context, snapshot) {
+                  //         if (snapshot.hasError) {
+                  //           return Text('Error: ${snapshot.error}');
+                  //         }
+                  //         return SingleChildScrollView(
+                  //             child: SizedBox(
+                  //                 height: 50,
+                  //                 child: ListView(
+                  //                   children: snapshot.data!.docs
+                  //                       .map((DocumentSnapshot document) {
+                  //                     return Text(document["fees"]);
+                  //                   }).toList(),
+                  //                 )));
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
                   // Row(
                   //   children: [
                   //     TitleTextWidget(
