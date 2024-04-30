@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/edit_category_modelsheet.dart';
@@ -50,7 +51,11 @@ class category_widget extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              Image.network(document['categoryImage']),
+                              FancyShimmerImage(
+                                imageUrl: document['categoryImage'],
+                                height: 60,
+                                width: 60,
+                              ),
                               SizedBox(
                                 width: 20,
                               ),

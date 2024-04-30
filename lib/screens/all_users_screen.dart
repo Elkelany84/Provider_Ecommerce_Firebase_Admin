@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/categories_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
@@ -125,10 +126,10 @@ class _AllUsersScreenState extends State<AllUsersScreen> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
                                         children: [
-                                          Image.network(
-                                            document['userImage'],
-                                            // width: 40,
-                                            // height: 40,
+                                          FancyShimmerImage(
+                                            imageUrl: document['userImage'],
+                                            width: 60,
+                                            height: 60,
                                           ),
                                           SizedBox(
                                             width: 20,

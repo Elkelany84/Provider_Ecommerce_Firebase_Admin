@@ -207,14 +207,16 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
     await MyAppFunctions.imagePickerDialog(
         context: context,
         cameraFCT: () async {
-          _pickedImage = await picker.pickImage(source: ImageSource.camera);
+          _pickedImage = await picker.pickImage(
+              source: ImageSource.camera, imageQuality: 85);
           setState(() {
             // widget.categoryImage = _pickedImage as String?;
             widget.categoryImage = null;
           });
         },
         galleryFCT: () async {
-          _pickedImage = await picker.pickImage(source: ImageSource.gallery);
+          _pickedImage = await picker.pickImage(
+              source: ImageSource.gallery, imageQuality: 85);
           setState(() {
             // productNetworkImage = null;
             widget.categoryImage = null;

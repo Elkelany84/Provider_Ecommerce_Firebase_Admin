@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/consts/app_constants.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/consts/validator.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/models/product_model.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider.dart';
@@ -230,13 +229,15 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
     await MyAppFunctions.imagePickerDialog(
         context: context,
         cameraFCT: () async {
-          _pickedImage = await picker.pickImage(source: ImageSource.camera);
+          _pickedImage = await picker.pickImage(
+              source: ImageSource.camera, imageQuality: 85);
           setState(() {
             productNetworkImage = null;
           });
         },
         galleryFCT: () async {
-          _pickedImage = await picker.pickImage(source: ImageSource.gallery);
+          _pickedImage = await picker.pickImage(
+              source: ImageSource.gallery, imageQuality: 85);
           setState(() {
             productNetworkImage = null;
           });
@@ -400,64 +401,53 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                   height: 10,
                 ),
                 //DropDown Widget
-                DropdownButton(
-                    // items: AppConstants.catList,
-                    items: AppConstants.categoriesDropDownList,
-                    value: _categoryValue,
-                    hint: Text("Choose a Category"),
-                    onChanged: (String? value) {
-                      setState(() {
-                        _categoryValue = value;
-                      });
-                    }),
-                //
-                // StreamBuilder<QuerySnapshot>(
-                //     stream: FirebaseFirestore.instance
-                //         .collection("categories")
-                //         .snapshots(),
-                //     builder: (context, snapshot) {
-                //       List<DropdownMenuItem> categoriesDropDownList = [];
-                //       if (!snapshot.hasData) {
-                //         return CircularProgressIndicator();
-                //       } else {
-                //         categoriesDropDownList.clear();
-                //         final categoriesList =
-                //             snapshot.data!.docs.reversed.toList();
-                //
-                //         for (var category in categoriesList) {
-                //           categoriesDropDownList.clear();
-                //           categoriesDropDownList.add(
-                //             DropdownMenuItem(
-                //               value: category.id,
-                //               child: Text("$_categoryValue"),
-                //             ),
-                //           );
-                //           //clients
-                //           // final categoryName = category.get("categoryName");
-                //           // final categoryId = category.get("categoryId");
-                //           // final categoryImage = category.get("categoryImage");
-                //           categoriesDropDownList.add(
-                //             DropdownMenuItem(
-                //               value: category.id,
-                //               child: Text(category["categoryName"]),
-                //             ),
-                //           );
-                //         }
-                //         return DropdownButton(
-                //           items: categoriesDropDownList,
-                //           value: _categoryValue,
-                //           isExpanded: false,
-                //           hint: Text("Choose a Category"),
-                //           onChanged: (value) {
-                //             setState(() {
-                //               _categoryValue = value;
-                //             });
-                //           },
-                //         );
-                //       }
+                // DropdownButton(
+                //     // items: AppConstants.catList,
+                //     items: AppConstants.categoriesDropDownList,
+                //     value: _categoryValue,
+                //     hint: Text("Choose a Category"),
+                //     onChanged: (String? value) {
+                //       setState(() {
+                //         _categoryValue = value;
+                //       });
                 //     }),
+                //
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, right: 12, left: 12),
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('categories')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      } else {
+                        List<DropdownMenuItem> categoryItems = [];
+                        for (var doc in snapshot.data!.docs) {
+                          categoryItems.add(
+                            DropdownMenuItem(
+                              child: Text(doc['categoryName']),
+                              value: doc['categoryName'],
+                            ),
+                          );
+                        }
+
+                        return DropdownButtonFormField(
+                          hint: Text('Select a category'),
+                          value: _categoryValue,
+                          items: categoryItems,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _categoryValue = newValue;
+                            });
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
                 const SizedBox(
-                  height: 25,
+                  height: 35,
                 ),
 
                 Padding(

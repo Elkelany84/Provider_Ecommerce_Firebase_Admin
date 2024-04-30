@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
@@ -98,10 +99,10 @@ class OrderStreamScreen extends StatelessWidget {
                                     height: 70,
                                     width: 70,
                                     child: ClipRRect(
-                                      child: Image.network(
-                                        itemImage,
-                                        height: 70,
-                                        width: 70,
+                                      child: FancyShimmerImage(
+                                        imageUrl: itemImage,
+                                        height: 80,
+                                        width: 60,
                                       ),
                                     ),
                                   ),
