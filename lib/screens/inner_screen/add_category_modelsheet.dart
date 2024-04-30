@@ -172,27 +172,30 @@ class _AddCategoryBottomSheetState extends State<AddCategoryBottomSheet> {
                     ), //Image Picker
                     if (_pickedImage == null) ...[
                       Center(
-                        child: SizedBox(
-                          width: size.width * 0.4 + 10,
-                          height: size.width * 0.4,
-                          child: DottedBorder(
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.image_outlined,
-                                    size: 80,
-                                    color: Colors.blue,
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      localImagePicker();
-                                    },
-                                    child: Text("Pick Category Image"),
-                                  )
-                                ],
+                        child: GestureDetector(
+                          onTap: () {
+                            localImagePicker();
+                          },
+                          child: SizedBox(
+                            width: size.width * 0.4 + 10,
+                            height: size.width * 0.4,
+                            child: DottedBorder(
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.image_outlined,
+                                      size: 80,
+                                      color: Colors.blue,
+                                    ),
+                                    Text(
+                                      "Pick Category Image",
+                                      style: TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

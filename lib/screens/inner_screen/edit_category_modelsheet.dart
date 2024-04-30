@@ -230,168 +230,176 @@ class _EditCategoryBottomSheetState extends State<EditCategoryBottomSheet> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return LoadingManager(
-      isLoading: isLoading,
-      child: Container(
-        height: 435.0,
-        color: Colors.transparent, //could change this to Color(0xFF737373),
-        //so you don't have to change MaterialApp canvasColor
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(12.0),
-                topRight: const Radius.circular(12.0),
+    return SafeArea(
+      child: LoadingManager(
+        isLoading: isLoading,
+        child: Container(
+          // height: 435.0,
+          color: Colors.transparent, //could change this to Color(0xFF737373),
+          //so you don't have to change MaterialApp canvasColor
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(12.0),
+                  topRight: const Radius.circular(12.0),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 8,
-                    ), //Image Picker
-                    //Image Picker
-                    if (isEditing && widget.categoryImage != null) ...[
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            widget.categoryImage!,
-                            height: size.width * 0.4,
-                            alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 100,
+                      ), //Image Picker
+                      //Image Picker
+                      if (isEditing && widget.categoryImage != null) ...[
+                        Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              widget.categoryImage!,
+                              height: size.width * 0.4,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        )
+                      ]
+                      // else if (_pickedImage == null) ...[
+                      //   Center(
+                      //     child: SizedBox(
+                      //       width: size.width * 0.4 + 10,
+                      //       height: size.width * 0.4,
+                      //       child: DottedBorder(
+                      //         child: Center(
+                      //           child: Column(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             crossAxisAlignment: CrossAxisAlignment.center,
+                      //             children: [
+                      //               Icon(
+                      //                 Icons.image_outlined,
+                      //                 size: 80,
+                      //                 color: Colors.blue,
+                      //               ),
+                      //               TextButton(
+                      //                 onPressed: () {
+                      //                   localImagePicker();
+                      //                 },
+                      //                 child: Text("Pick Category Image"),
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   )
+                      // ]
+                      else ...[
+                        Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              File(
+                                _pickedImage!.path,
+                              ),
+                              height: size.width * 0.4,
+                              alignment: Alignment.center,
+                            ),
                           ),
                         ),
-                      )
-                    ]
-                    // else if (_pickedImage == null) ...[
-                    //   Center(
-                    //     child: SizedBox(
-                    //       width: size.width * 0.4 + 10,
-                    //       height: size.width * 0.4,
-                    //       child: DottedBorder(
-                    //         child: Center(
-                    //           child: Column(
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                    //             children: [
-                    //               Icon(
-                    //                 Icons.image_outlined,
-                    //                 size: 80,
-                    //                 color: Colors.blue,
-                    //               ),
-                    //               TextButton(
-                    //                 onPressed: () {
-                    //                   localImagePicker();
-                    //                 },
-                    //                 child: Text("Pick Category Image"),
-                    //               )
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   )
-                    // ]
-                    else ...[
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            File(
-                              _pickedImage!.path,
-                            ),
-                            height: size.width * 0.4,
-                            alignment: Alignment.center,
+                      ],
+                      widget.categoryImage != null
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    localImagePicker();
+                                  },
+                                  child: Text("Pick another Image"),
+                                ),
+                                // TextButton(
+                                //   onPressed: () {
+                                //     removePickedImage();
+                                //   },
+                                //   child: Text(
+                                //     "Remove Image",
+                                //     style: TextStyle(color: Colors.red),
+                                //   ),
+                                // ),
+                              ],
+                            )
+                          : SizedBox(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Category Name: ",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: _titleController,
+                          key: ValueKey("Title"),
+                          maxLength: 80,
+                          maxLines: 1,
+                          minLines: 1,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.newline,
+                          decoration:
+                              InputDecoration(hintText: "Category Name"),
+                          validator: (value) {
+                            return MyValidators.uploadProdTexts(
+                                value: value,
+                                toBeReturnedString:
+                                    "Please Enter Valid Category Name");
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Material(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    // textStyle: TextStyle(color: Colors.white),
+                                    padding: const EdgeInsets.all(10),
+                                    backgroundColor: Colors.blue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                                onPressed: () {
+                                  _editCategory();
+                                },
+                                child: const Text(
+                                  "Edit Category",
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white),
+                                )),
                           ),
                         ),
                       ),
                     ],
-                    widget.categoryImage != null
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  localImagePicker();
-                                },
-                                child: Text("Pick another Image"),
-                              ),
-                              // TextButton(
-                              //   onPressed: () {
-                              //     removePickedImage();
-                              //   },
-                              //   child: Text(
-                              //     "Remove Image",
-                              //     style: TextStyle(color: Colors.red),
-                              //   ),
-                              // ),
-                            ],
-                          )
-                        : SizedBox(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Category Name: ",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        controller: _titleController,
-                        key: ValueKey("Title"),
-                        maxLength: 80,
-                        maxLines: 1,
-                        minLines: 1,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.newline,
-                        decoration: InputDecoration(hintText: "Category Name"),
-                        validator: (value) {
-                          return MyValidators.uploadProdTexts(
-                              value: value,
-                              toBeReturnedString:
-                                  "Please Enter Valid Category Name");
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Material(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                // textStyle: TextStyle(color: Colors.white),
-                                padding: const EdgeInsets.all(10),
-                                backgroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                            onPressed: () {
-                              _editCategory();
-                            },
-                            child: const Text(
-                              "Edit Category",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
-                            )),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

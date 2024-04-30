@@ -49,6 +49,7 @@ class OrderStreamScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
@@ -56,7 +57,7 @@ class OrderStreamScreen extends StatelessWidget {
                             TitlesTextWidget(label: "SessionId: "),
                             Expanded(
                               child: SubtitleTextWidget(
-                                  label: "SessionId: ${document['sessionId']}"),
+                                  label: "${document['sessionId']}"),
                             ),
                           ],
                         ),
@@ -65,7 +66,7 @@ class OrderStreamScreen extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            TitlesTextWidget(label: "OrderStatus: "),
+                            TitlesTextWidget(label: "Order Status: "),
                             SubtitleTextWidget(
                                 label: "${document['orderStatus']}"),
                           ],
@@ -82,7 +83,10 @@ class OrderStreamScreen extends StatelessWidget {
                               var itemName = item['productTitle'];
                               var itemPrice = item['price'].toString();
                               var itemImage = item['imageUrl'];
+                              var itemQty = item['quantity'];
                               return Container(
+                                padding: EdgeInsets.only(top: 7),
+                                margin: EdgeInsets.only(top: 5, bottom: 5),
                                 height: 100,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -91,13 +95,13 @@ class OrderStreamScreen extends StatelessWidget {
                                     // Image.network(itemImage),
                                     ListTile(
                                   leading: SizedBox(
-                                    height: 60,
-                                    width: 60,
+                                    height: 70,
+                                    width: 70,
                                     child: ClipRRect(
                                       child: Image.network(
                                         itemImage,
-                                        height: 60,
-                                        width: 60,
+                                        height: 70,
+                                        width: 70,
                                       ),
                                     ),
                                   ),
@@ -106,9 +110,19 @@ class OrderStreamScreen extends StatelessWidget {
                                       TitlesTextWidget(label: itemName),
                                     ],
                                   ),
-                                  subtitle: TitlesTextWidget(
-                                    label: "\$ $itemPrice",
-                                    color: Colors.blue,
+                                  subtitle: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TitlesTextWidget(
+                                        label: "\$ $itemPrice",
+                                        color: Colors.blue,
+                                      ),
+                                      SubtitleTextWidget(
+                                        label: "Qty: $itemQty",
+                                        color: Colors.blue,
+                                      )
+                                    ],
                                   ),
                                 ),
                               );

@@ -83,7 +83,7 @@ class _PersonalProfileState extends State<PersonalProfile>
 // // Update the state with the sum
 //   }
 
-  //very important funcion to sum the totalPrice for specific user
+  //very important function to sum the totalPrice for specific user
   num tPurchases = 0;
   Future<List<dynamic>> fetchSpecificValues(
       // String documentId, String arrayFieldName

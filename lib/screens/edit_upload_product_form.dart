@@ -259,6 +259,7 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: true,
           bottomSheet: SizedBox(
             height: kBottomNavigationBarHeight + 10,
             child: Material(
@@ -319,236 +320,241 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
               label: isEditing ? "Edit Product" : "Upload a New Product",
             ),
           ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
 
-                  //Image Picker
-                  if (isEditing && productNetworkImage != null) ...[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        productNetworkImage!,
-                        height: size.width * 0.5,
-                        alignment: Alignment.center,
-                      ),
-                    )
-                  ] else if (_pickedImage == null) ...[
-                    SizedBox(
-                      width: size.width * 0.4 + 10,
-                      height: size.width * 0.4,
-                      child: DottedBorder(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.image_outlined,
-                                size: 80,
-                                color: Colors.blue,
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  localImagePicker();
-                                },
-                                child: Text("Pick Product Image"),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  ] else ...[
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.file(
-                          File(
-                            _pickedImage!.path,
-                          ),
-                          height: size.width * 0.4,
-                          alignment: Alignment.center,
-                        ))
-                  ],
-                  _pickedImage != null || productNetworkImage != null
-                      ? Row(
+                //Image Picker
+                if (isEditing && productNetworkImage != null) ...[
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      productNetworkImage!,
+                      height: size.width * 0.5,
+                      alignment: Alignment.center,
+                    ),
+                  )
+                ] else if (_pickedImage == null) ...[
+                  SizedBox(
+                    width: size.width * 0.4 + 10,
+                    height: size.width * 0.4,
+                    child: DottedBorder(
+                      child: Center(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            Icon(
+                              Icons.image_outlined,
+                              size: 80,
+                              color: Colors.blue,
+                            ),
                             TextButton(
                               onPressed: () {
                                 localImagePicker();
                               },
-                              child: Text("Pick another Image"),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                removePickedImage();
-                              },
-                              child: Text(
-                                "Remove Image",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
+                              child: Text("Pick Product Image"),
+                            )
                           ],
-                        )
-                      : SizedBox(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //DropDown Widget
-                  DropdownButton(
-                      // items: categoryProvider.categories,
-                      items: AppConstants.categoriesDropDownList,
-                      value: _categoryValue,
-                      hint: Text("Choose a Category"),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _categoryValue = value;
-                        });
-                      }),
-                  //
-                  // StreamBuilder<QuerySnapshot>(
-                  //     stream: FirebaseFirestore.instance
-                  //         .collection("categories")
-                  //         .snapshots(),
-                  //     builder: (context, snapshot) {
-                  //       List<DropdownMenuItem> categoriesDropDownList = [];
-                  //       if (!snapshot.hasData) {
-                  //         return CircularProgressIndicator();
-                  //       } else {
-                  //         categoriesDropDownList.clear();
-                  //         final categoriesList =
-                  //             snapshot.data!.docs.reversed.toList();
-                  //
-                  //         for (var category in categoriesList) {
-                  //           categoriesDropDownList.clear();
-                  //           categoriesDropDownList.add(
-                  //             DropdownMenuItem(
-                  //               value: category.id,
-                  //               child: Text("$_categoryValue"),
-                  //             ),
-                  //           );
-                  //           //clients
-                  //           // final categoryName = category.get("categoryName");
-                  //           // final categoryId = category.get("categoryId");
-                  //           // final categoryImage = category.get("categoryImage");
-                  //           categoriesDropDownList.add(
-                  //             DropdownMenuItem(
-                  //               value: category.id,
-                  //               child: Text(category["categoryName"]),
-                  //             ),
-                  //           );
-                  //         }
-                  //         return DropdownButton(
-                  //           items: categoriesDropDownList,
-                  //           value: _categoryValue,
-                  //           isExpanded: false,
-                  //           hint: Text("Choose a Category"),
-                  //           onChanged: (value) {
-                  //             setState(() {
-                  //               _categoryValue = value;
-                  //             });
-                  //           },
-                  //         );
-                  //       }
-                  //     }),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                        ),
+                      ),
+                    ),
+                  )
+                ] else ...[
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(
+                          _pickedImage!.path,
+                        ),
+                        height: size.width * 0.4,
+                        alignment: Alignment.center,
+                      ))
+                ],
+                _pickedImage != null || productNetworkImage != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              localImagePicker();
+                            },
+                            child: Text("Pick another Image"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              removePickedImage();
+                            },
+                            child: Text(
+                              "Remove Image",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                const SizedBox(
+                  height: 10,
+                ),
+                //DropDown Widget
+                DropdownButton(
+                    // items: AppConstants.catList,
+                    items: AppConstants.categoriesDropDownList,
+                    value: _categoryValue,
+                    hint: Text("Choose a Category"),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _categoryValue = value;
+                      });
+                    }),
+                //
+                // StreamBuilder<QuerySnapshot>(
+                //     stream: FirebaseFirestore.instance
+                //         .collection("categories")
+                //         .snapshots(),
+                //     builder: (context, snapshot) {
+                //       List<DropdownMenuItem> categoriesDropDownList = [];
+                //       if (!snapshot.hasData) {
+                //         return CircularProgressIndicator();
+                //       } else {
+                //         categoriesDropDownList.clear();
+                //         final categoriesList =
+                //             snapshot.data!.docs.reversed.toList();
+                //
+                //         for (var category in categoriesList) {
+                //           categoriesDropDownList.clear();
+                //           categoriesDropDownList.add(
+                //             DropdownMenuItem(
+                //               value: category.id,
+                //               child: Text("$_categoryValue"),
+                //             ),
+                //           );
+                //           //clients
+                //           // final categoryName = category.get("categoryName");
+                //           // final categoryId = category.get("categoryId");
+                //           // final categoryImage = category.get("categoryImage");
+                //           categoriesDropDownList.add(
+                //             DropdownMenuItem(
+                //               value: category.id,
+                //               child: Text(category["categoryName"]),
+                //             ),
+                //           );
+                //         }
+                //         return DropdownButton(
+                //           items: categoriesDropDownList,
+                //           value: _categoryValue,
+                //           isExpanded: false,
+                //           hint: Text("Choose a Category"),
+                //           onChanged: (value) {
+                //             setState(() {
+                //               _categoryValue = value;
+                //             });
+                //           },
+                //         );
+                //       }
+                //     }),
+                const SizedBox(
+                  height: 25,
+                ),
 
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                    child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: _titleController,
-                              key: ValueKey("Title"),
-                              maxLength: 80,
-                              maxLines: 2,
-                              minLines: 1,
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.newline,
-                              decoration:
-                                  InputDecoration(hintText: "Product Name"),
-                              validator: (value) {
-                                return MyValidators.uploadProdTexts(
-                                    value: value,
-                                    toBeReturnedString:
-                                        "Please Enter Valid Product Name");
-                              },
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: TextFormField(
-                                    controller: _priceController,
-                                    key: ValueKey("Price \$"),
-                                    maxLength: 5,
-                                    maxLines: 1,
-                                    keyboardType: TextInputType.number,
-                                    textInputAction: TextInputAction.next,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d+\.?\d{0,2}'),
-                                      ),
-                                    ],
-                                    decoration: InputDecoration(
-                                      hintText: "Price",
-                                      prefix: SubtitleTextWidget(
-                                        label: "\$",
-                                        color: Colors.blue,
-                                        fontSize: 16,
-                                      ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: _titleController,
+                            key: ValueKey("Title"),
+                            maxLength: 80,
+                            maxLines: 2,
+                            minLines: 1,
+                            keyboardType: TextInputType.multiline,
+                            textInputAction: TextInputAction.newline,
+                            decoration:
+                                InputDecoration(hintText: "Product Name"),
+                            validator: (value) {
+                              return MyValidators.uploadProdTexts(
+                                  value: value,
+                                  toBeReturnedString:
+                                      "Please Enter Valid Product Name");
+                            },
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: TextFormField(
+                                  controller: _priceController,
+                                  key: ValueKey("Price \$"),
+                                  maxLength: 5,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d+\.?\d{0,2}'),
                                     ),
-                                    validator: (value) {
-                                      return MyValidators.uploadProdTexts(
-                                          value: value,
-                                          toBeReturnedString:
-                                              "Price is Missing");
-                                    },
+                                  ],
+                                  decoration: InputDecoration(
+                                    hintText: "Price",
+                                    prefix: SubtitleTextWidget(
+                                      label: "\$",
+                                      color: Colors.blue,
+                                      fontSize: 16,
+                                    ),
                                   ),
+                                  validator: (value) {
+                                    return MyValidators.uploadProdTexts(
+                                        value: value,
+                                        toBeReturnedString: "Price is Missing");
+                                  },
                                 ),
-                                Flexible(
-                                  flex: 1,
-                                  child: TextFormField(
-                                    controller: _quantityController,
-                                    key: ValueKey("Quantity"),
-                                    maxLength: 5,
-                                    maxLines: 1,
-                                    keyboardType: TextInputType.number,
-                                    textInputAction: TextInputAction.next,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                        RegExp("[0-9]"),
-                                      )
-                                    ],
-                                    decoration:
-                                        InputDecoration(hintText: "Quantity"),
-                                    validator: (value) {
-                                      return MyValidators.uploadProdTexts(
-                                          value: value,
-                                          toBeReturnedString:
-                                              "Quantity is Missing");
-                                    },
-                                  ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: TextFormField(
+                                  controller: _quantityController,
+                                  key: ValueKey("Quantity"),
+                                  maxLength: 5,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                      RegExp("[0-9]"),
+                                    )
+                                  ],
+                                  decoration:
+                                      InputDecoration(hintText: "Quantity"),
+                                  validator: (value) {
+                                    return MyValidators.uploadProdTexts(
+                                        value: value,
+                                        toBeReturnedString:
+                                            "Quantity is Missing");
+                                  },
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: TextFormField(
                               controller: _descriptionController,
                               key: ValueKey("Description"),
                               maxLength: 1000,
@@ -566,11 +572,11 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                                         "Description is Missing");
                               },
                             ),
-                          ],
-                        )),
-                  ),
-                ],
-              ),
+                          ),
+                        ],
+                      )),
+                ),
+              ],
             ),
           ),
         ),

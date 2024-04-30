@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_copiolt.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const TitlesTextWidget(label: "Placed Orders"),
+        title: const AppNameTextWidget(label: "Placed Orders"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -33,14 +34,13 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            var document = snapshot.data!;
-
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return InkWell(
+                    // splashColor: Colors.amber,
                     onTap: () {
                       Navigator.push(
                         context,
