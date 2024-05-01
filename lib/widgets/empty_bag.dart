@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 

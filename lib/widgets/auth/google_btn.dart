@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
-import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:ionicons/ionicons.dart';
 
 class GoogleButton extends StatelessWidget {

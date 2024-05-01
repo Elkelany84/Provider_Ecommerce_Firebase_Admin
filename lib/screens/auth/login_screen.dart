@@ -6,10 +6,10 @@ import 'package:hadi_ecommerce_firebase_admin/constants/validator.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/forgot_password.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/auth/register.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/loading_manager.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/auth/google_btn.dart';
-import 'package:hadi_ecommerce_firebase_admin/widgets/root_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 
