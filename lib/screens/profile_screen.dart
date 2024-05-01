@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 child: const Padding(
                   padding: EdgeInsets.all(18.0),
                   child: TitleTextWidget(
-                      label: "Please Login To Have Unlimited Access"),
+                      label: "Please Login To Have Unlimited Access!"),
                 ),
               ),
               userModel == null
