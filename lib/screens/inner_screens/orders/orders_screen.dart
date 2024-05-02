@@ -34,7 +34,7 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("ordersAdvanced")
-            .where("userId", isEqualTo: userProvider.uid)
+            .where("userId", isEqualTo: userProvider.uidd)
             .orderBy("orderDate", descending: true)
             .snapshots(),
         builder: (context, snapshot) {

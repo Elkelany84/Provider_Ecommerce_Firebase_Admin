@@ -8,7 +8,8 @@ class UserProvider with ChangeNotifier {
   //getters
   UserModel? get getUserModel => _userModel;
 
-  String uid = FirebaseAuth.instance.currentUser!.uid;
+  // String? uidd = FirebaseAuth.instance.currentUser!.uid;
+  String? uidd;
 
   //fetch user info from firestore
   Future<UserModel?> fetchUserInfo() async {
@@ -20,6 +21,7 @@ class UserProvider with ChangeNotifier {
       return null;
     }
     String uid = user.uid;
+    uidd = uid;
     try {
       //get user info
       final userDoc =

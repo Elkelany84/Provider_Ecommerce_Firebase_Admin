@@ -53,16 +53,16 @@ class _RootScreenState extends State<RootScreen> {
         Provider.of<CategoriesProvider>(context, listen: false);
 
     try {
-      await categoriesProvider.fetchCategories();
-      await productsProvider.fetchProducts();
-      await userProvider.fetchUserInfo();
-      // Future.wait({
-      //   productsProvider.fetchProducts(),
-      //   categoriesProvider.fetchCategories(),
-      //   userProvider.fetchUserInfo(),
-      //   // orderProvider.getFirebase()
-      //   // orderProvider.fetchOrders()
-      // });
+      // await productsProvider.fetchProducts();
+      // await categoriesProvider.fetchCategories();
+      // await userProvider.fetchUserInfo();
+      Future.wait({
+        productsProvider.fetchProducts(),
+        categoriesProvider.fetchCategories(),
+        userProvider.fetchUserInfo(),
+        // orderProvider.getFirebase()
+        // orderProvider.fetchOrders()
+      });
       Future.wait({
         cartProvider.getCartItemsFromFirebase(),
         wishlistProvider.getWishListItemsFromFirebase(),

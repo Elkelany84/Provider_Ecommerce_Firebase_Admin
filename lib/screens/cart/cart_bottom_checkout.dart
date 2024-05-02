@@ -34,8 +34,7 @@ class CartBottomSheetWidget extends StatelessWidget {
                   children: [
                     TitleTextWidget(
                         label:
-                            "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)" *
-                                10),
+                            "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)"),
                     SubtitleTextWidget(
                       label:
                           "\$ ${cartProvider.getTotal(productsProvider: productsProvider).toStringAsFixed(2)}",

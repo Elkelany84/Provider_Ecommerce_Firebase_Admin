@@ -32,6 +32,8 @@ class GoogleButton extends StatelessWidget {
               "userEmail": authResults.user!.email,
               "userImage": authResults.user!.photoURL,
               "createdAt": Timestamp.now(),
+              "userAddress": "",
+              "userPhone": "",
               'userCart': [],
               "userWish": [],
               "orderSummary": []

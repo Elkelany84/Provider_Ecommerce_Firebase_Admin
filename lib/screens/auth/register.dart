@@ -141,12 +141,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await MyAppFunctions.imagePickerDialog(
         context: context,
         cameraFct: () async {
-          pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
+          pickedImage = await imagePicker.pickImage(
+              source: ImageSource.camera, imageQuality: 85);
           setState(() {});
         },
         galleryFct: () async {
-          pickedImage =
-              await imagePicker.pickImage(source: ImageSource.gallery);
+          pickedImage = await imagePicker.pickImage(
+              source: ImageSource.gallery, imageQuality: 85);
           setState(() {});
         },
         removeFct: () {
@@ -182,14 +183,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                      height: size.width * 0.3,
-                      width: size.width * 0.3,
-                      child: ImagePickerWidget(
-                          function: () async {
-                            await localImagePicker();
-                          },
-                          pickedImage: pickedImage)),
+                  GestureDetector(
+                    onTap: () async {
+                      await localImagePicker();
+                    },
+                    child: SizedBox(
+                        height: size.width * 0.3,
+                        width: size.width * 0.3,
+                        child: ImagePickerWidget(
+                            function: () async {
+                              await localImagePicker();
+                            },
+                            pickedImage: pickedImage)),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -294,7 +300,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           validator: (value) {
                             return MyValidators.repeatPasswordValidator(
                                 value: value,
-                                password: _repeatPasswordController.text);
+                                password: _passwordController.text);
                           },
                         ),
                         const SizedBox(

@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
@@ -14,8 +15,8 @@ class CategoryRoundedWidget extends StatelessWidget {
       },
       child: Column(
         children: [
-          Image.network(
-            image,
+          FancyShimmerImage(
+            imageUrl: image,
             height: 50,
             width: 50,
           ),

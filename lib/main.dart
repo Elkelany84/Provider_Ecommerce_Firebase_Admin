@@ -19,8 +19,8 @@ import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/payme
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/product_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/viewed_recently.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/wishlist.dart';
-import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_admin/screens/root_screen.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/order_provider.dart';
