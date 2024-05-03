@@ -163,7 +163,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 arguments: getCurrentProduct.productCategory);
                           },
                           child: SubtitleTextWidget(
-                              label: "In ${getCurrentProduct.productCategory}"),
+                            label: "In ${getCurrentProduct.productCategory}",
+                            color: Colors.blue,
+                          ),
                         )
                       ],
                     ),
@@ -173,7 +175,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: SubtitleTextWidget(
-                        label: getCurrentProduct.productDescription * 10,
+                        label: getCurrentProduct.productDescription,
+                        textOverflow: TextOverflow.visible,
                       ),
                     ),
                   ],

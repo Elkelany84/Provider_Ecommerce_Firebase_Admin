@@ -62,6 +62,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                         child: TitleTextWidget(
                           label: getCurrentProduct.productTitle,
                           maxLines: 2,
+                          fontSize: 18,
                         ),
                       ),
                       Flexible(

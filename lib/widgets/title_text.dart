@@ -6,13 +6,15 @@ class TitleTextWidget extends StatelessWidget {
       required this.label,
       this.fontSize = 20,
       this.color,
-      this.maxLines});
+      this.maxLines,
+      this.overflow});
 
   final String label;
   final double fontSize;
 
   final Color? color;
   final int? maxLines;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
