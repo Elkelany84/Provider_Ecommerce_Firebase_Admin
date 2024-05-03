@@ -344,7 +344,7 @@ class _PersonalProfileState extends State<PersonalProfile>
                                 height: 20,
                               ),
                               SubtitleTextWidget(
-                                label: "E-mail: You Can\'t Change Your E-mail ",
+                                label: "E-mail: ",
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),

@@ -342,24 +342,29 @@ class _EditOrUploadProductFormState extends State<EditOrUploadProductForm> {
                   SizedBox(
                     width: size.width * 0.4 + 10,
                     height: size.width * 0.4,
-                    child: DottedBorder(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.image_outlined,
-                              size: 80,
-                              color: Colors.blue,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                localImagePicker();
-                              },
-                              child: Text("Pick Product Image"),
-                            )
-                          ],
+                    child: GestureDetector(
+                      onTap: () {
+                        localImagePicker();
+                      },
+                      child: DottedBorder(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.image_outlined,
+                                size: 80,
+                                color: Colors.blue,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  localImagePicker();
+                                },
+                                child: Text("Pick Product Image"),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

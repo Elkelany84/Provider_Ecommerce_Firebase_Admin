@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/categories_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/edit_upload_product_form.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_screen.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_screen_completed.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/orders_screen_processing.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/search_screen.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/services/assets_manager.dart';
 
@@ -44,11 +45,17 @@ class DashboardButtonsModel {
               Navigator.pushNamed(context, SearchScreen.routeName);
             }),
         DashboardButtonsModel(
-            text: "View Orders",
-            imagePath: AssetsManager.order,
+            text: "All Users",
+            imagePath: AssetsManager.allUsers,
             onPressed: () {
-              Navigator.pushNamed(context, OrdersScreenFree.routeName);
+              Navigator.pushNamed(context, AllUsersScreen.routeName);
             }),
+        // DashboardButtonsModel(
+        //     text: "Add Category",
+        //     imagePath: AssetsManager.addCategory,
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, AddCategoryDashboard.routeName);
+        //     }),
         DashboardButtonsModel(
             text: "View Categories",
             imagePath: AssetsManager.categories,
@@ -56,10 +63,16 @@ class DashboardButtonsModel {
               Navigator.pushNamed(context, CategoriesScreen.routeName);
             }),
         DashboardButtonsModel(
-            text: "All Users",
-            imagePath: AssetsManager.allUsers,
+            text: "Processing Orders",
+            imagePath: AssetsManager.order,
             onPressed: () {
-              Navigator.pushNamed(context, AllUsersScreen.routeName);
+              Navigator.pushNamed(context, OrdersScreenFree.routeName);
+            }),
+        DashboardButtonsModel(
+            text: "Completed Orders",
+            imagePath: AssetsManager.orderCompleted,
+            onPressed: () {
+              Navigator.pushNamed(context, OrdersScreenCompleted.routeName);
             }),
       ];
 }

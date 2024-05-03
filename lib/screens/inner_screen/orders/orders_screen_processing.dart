@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_copiolt.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_details.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/widgets/title_text.dart';
 import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class OrdersScreenFree extends StatefulWidget {
   const OrdersScreenFree({super.key});
@@ -21,6 +22,16 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
   @override
   Widget build(BuildContext context) {
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
+    Color _getTextColor(String textValue) {
+      // Define your logic to return different colors based on textValue
+      if (textValue == 'Visa') {
+        return Colors.red;
+      } else if (textValue == 'Cash') {
+        return Colors.green;
+      }
+      // Add more conditions as needed
+      return Colors.black; // Default color
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -48,12 +59,13 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                             builder: (context) => OrderStreamScreen(
                                   docName: snapshot.data!.docs[index]
                                       ["sessionId"],
+                                  userId: snapshot.data!.docs[index]["userId"],
                                 )),
                       );
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      height: 200,
+                      height: 195,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey)),
@@ -70,6 +82,19 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                                   child: SubtitleTextWidget(
                                       label: snapshot.data!.docs[index]
                                           ["sessionId"]),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                TitlesTextWidget(
+                                  label: "OrderDate: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label: timeago.format(snapshot
+                                          .data!.docs[index]["orderDate"]
+                                          .toDate())),
                                 ),
                               ],
                             ),
@@ -124,23 +149,27 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                                   child: SubtitleTextWidget(
                                     label: snapshot.data!.docs[index]
                                         ["paymentMethod"],
-                                    color: Colors.blue,
+                                    color: _getTextColor(snapshot
+                                        .data!.docs[index]["paymentMethod"]),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                TitlesTextWidget(
-                                  label: "userId: ",
-                                ),
-                                Expanded(
-                                  child: SubtitleTextWidget(
-                                      label: snapshot.data!.docs[index]
-                                          ["userId"]),
-                                ),
-                              ],
-                            ),
+
+                            // Row(
+                            //   children: [
+                            //     TitlesTextWidget(
+                            //       label: "userId: ",
+                            //     ),
+                            //     Expanded(
+                            //       child: SubtitleTextWidget(
+                            //           label: snapshot.data!.docs[index]
+                            //               ["userId"]),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

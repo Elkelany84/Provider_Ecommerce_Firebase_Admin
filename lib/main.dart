@@ -7,7 +7,8 @@ import 'package:hadi_ecommerce_firebase_adminpanel/providers/categories_provider
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/providers/user_provider.dart';
 import 'package:hadi_ecommerce_firebase_adminpanel/screens/all_users_screen.dart';
-import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_copiolt.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/add_category_dashboard.dart';
+import 'package:hadi_ecommerce_firebase_adminpanel/screens/inner_screen/orders/order_details.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -16,7 +17,8 @@ import 'providers/theme_provider.dart';
 import 'screens/categories_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/edit_upload_product_form.dart';
-import 'screens/inner_screen/orders/orders_screen.dart';
+import 'screens/inner_screen/orders/order_screen_completed.dart';
+import 'screens/inner_screen/orders/orders_screen_processing.dart';
 import 'screens/search_screen.dart';
 
 void main() async {
@@ -77,6 +79,9 @@ class MyApp extends StatelessWidget {
             CategoriesScreen.routeName: (context) => const CategoriesScreen(),
             AllUsersScreen.routeName: (context) => const AllUsersScreen(),
             OrderStreamScreen.routeName: (context) => OrderStreamScreen(),
+            OrdersScreenCompleted.routeName: (context) =>
+                OrdersScreenCompleted(),
+            AddCategoryDashboard.routeName: (context) => AddCategoryDashboard(),
             // PersonalProfile.routeName: (context) => const PersonalProfile(),
           },
         );

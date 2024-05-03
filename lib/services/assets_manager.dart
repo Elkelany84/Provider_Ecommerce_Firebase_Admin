@@ -12,6 +12,7 @@ class AssetsManager {
 
   // Categories path
   static String categories = "$categoriesImagesPath/categories.png";
+  static String addCategory = "$categoriesImagesPath/addcategory.png";
   static String mobiles = "$categoriesImagesPath/mobiles.png";
   static String fashion = "$categoriesImagesPath/fashion.png";
   static String watch = "$categoriesImagesPath/watch.png";
@@ -22,5 +23,7 @@ class AssetsManager {
   static String pc = "$categoriesImagesPath/pc.png";
 
   static String order = "$dashboardImagesPath/order.png";
+  static String orderCompleted = "$dashboardImagesPath/orderCompleted.png";
+
   static String cloud = "$dashboardImagesPath/cloud.png";
 }
