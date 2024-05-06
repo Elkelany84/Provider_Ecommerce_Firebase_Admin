@@ -27,7 +27,7 @@ class CartWidget extends StatelessWidget {
 
     Size size = MediaQuery.of(context).size;
     return getCurrentProduct == null
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : FittedBox(
             child: IntrinsicWidth(
               child: Padding(
@@ -43,7 +43,7 @@ class CartWidget extends StatelessWidget {
                         width: size.width * 0.3,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     IntrinsicWidth(
@@ -71,7 +71,7 @@ class CartWidget extends StatelessWidget {
                                       // cartProvider.removeFromCart(
                                       //     getCurrentProduct.productId);
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.clear,
                                       color: Colors.red,
                                     ),
@@ -91,12 +91,12 @@ class CartWidget extends StatelessWidget {
                                 color: Colors.blue,
                               ),
                               OutlinedButton.icon(
-                                icon: Icon(IconlyLight.arrowDown2),
+                                icon: const Icon(IconlyLight.arrowDown2),
                                 onPressed: () async {
                                   await showModalBottomSheet(
                                       backgroundColor: Theme.of(context)
                                           .scaffoldBackgroundColor,
-                                      shape: RoundedRectangleBorder(
+                                      shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(30),
                                           topLeft: Radius.circular(30),
@@ -111,7 +111,7 @@ class CartWidget extends StatelessWidget {
                                 },
                                 label: Text("Qty: ${cartModel.quantity}"),
                                 style: OutlinedButton.styleFrom(
-                                  side: BorderSide(width: 1),
+                                  side: const BorderSide(width: 1),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),

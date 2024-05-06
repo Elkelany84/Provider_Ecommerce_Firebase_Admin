@@ -27,7 +27,7 @@ class Styles {
                 width: 1, color: isDarkTheme ? Colors.white : Colors.black),
             borderRadius: BorderRadius.circular(8)),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             width: 1,
             color: Colors.transparent,
           ),

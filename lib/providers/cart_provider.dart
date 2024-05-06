@@ -7,7 +7,7 @@ import 'package:hadi_ecommerce_firebase_admin/providers/products_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:uuid/uuid.dart';
 
-var uuid = Uuid();
+var uuid = const Uuid();
 
 class CartProvider with ChangeNotifier {
   final Map<String, CartModel> _cartItems = {};

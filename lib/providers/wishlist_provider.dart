@@ -6,7 +6,7 @@ import 'package:hadi_ecommerce_firebase_admin/models/wishlist_model.dart';
 import 'package:hadi_ecommerce_firebase_admin/services/myapp_functions.dart';
 import 'package:uuid/uuid.dart';
 
-var uuid = Uuid();
+var uuid = const Uuid();
 
 class WishlistProvider with ChangeNotifier {
   final Map<String, WishListModel> _wishlistItems = {};

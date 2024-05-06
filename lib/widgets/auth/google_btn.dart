@@ -101,6 +101,7 @@ class GoogleButton extends StatelessWidget {
           "createdAt": Timestamp.now(),
           'userCart': [],
           "userWish": [],
+          "orderSummary": [],
         });
       }
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -129,7 +130,7 @@ class GoogleButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         elevation: 1,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -141,11 +142,11 @@ class GoogleButton extends StatelessWidget {
         //     .googleSignSignIn(context: context);
         // await _googleSignSignIn(context: context);
       },
-      label: Text(
+      label: const Text(
         "SignIn With Google",
         style: TextStyle(fontSize: 20, color: Colors.black),
       ),
-      icon: Icon(
+      icon: const Icon(
         Ionicons.logo_google,
         color: Colors.red,
       ),

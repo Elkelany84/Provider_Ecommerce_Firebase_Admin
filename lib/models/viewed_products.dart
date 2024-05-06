@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:uuid/uuid.dart';
 
-var uuid = Uuid();
+var uuid = const Uuid();
 
 class ViewedProdModel with ChangeNotifier {
   final String viewedProdId, productId;

@@ -24,7 +24,7 @@ class MyAppFunctions {
                   height: 60,
                   width: 60,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 SubtitleTextWidget(
@@ -32,7 +32,7 @@ class MyAppFunctions {
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Row(
@@ -44,7 +44,7 @@ class MyAppFunctions {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: SubtitleTextWidget(
+                        child: const SubtitleTextWidget(
                           label: "Cancel",
                           color: Colors.green,
                         ),
@@ -55,7 +55,7 @@ class MyAppFunctions {
                         fct();
                         Navigator.pop(context);
                       },
-                      child: SubtitleTextWidget(
+                      child: const SubtitleTextWidget(
                         label: "Ok",
                         color: Colors.red,
                       ),
@@ -82,7 +82,7 @@ class MyAppFunctions {
               borderRadius: BorderRadius.circular(16),
             ),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            title: Center(
+            title: const Center(
               child: TitleTextWidget(
                 label: "Choose Option",
               ),
@@ -97,8 +97,8 @@ class MyAppFunctions {
                         Navigator.pop(context);
                       }
                     },
-                    icon: Icon(Icons.camera),
-                    label: Text("Camera"),
+                    icon: const Icon(Icons.camera),
+                    label: const Text("Camera"),
                   ),
                   TextButton.icon(
                     onPressed: () {
@@ -107,8 +107,8 @@ class MyAppFunctions {
                         Navigator.pop(context);
                       }
                     },
-                    icon: Icon(Icons.browse_gallery),
-                    label: Text("Gallery"),
+                    icon: const Icon(Icons.browse_gallery),
+                    label: const Text("Gallery"),
                   ),
                   TextButton.icon(
                     onPressed: () {
@@ -117,8 +117,8 @@ class MyAppFunctions {
                         Navigator.pop(context);
                       }
                     },
-                    icon: Icon(Icons.remove_circle_outline),
-                    label: Text("Remove"),
+                    icon: const Icon(Icons.remove_circle_outline),
+                    label: const Text("Remove"),
                   ),
                 ],
               ),

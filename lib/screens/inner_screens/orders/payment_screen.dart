@@ -16,6 +16,7 @@ import 'package:hadi_ecommerce_firebase_admin/widgets/payment/payment_radio_opti
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 import 'package:uuid/uuid.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -80,7 +81,8 @@ class _PaymentScreenState extends State<PaymentScreen>
 
   @override
   void initState() {
-    _sessionId = const Uuid().v4();
+    // _sessionId = const Uuid().v4();
+    _sessionId = randomAlphaNumeric(6);
     print(_sessionId);
     fetchUserInfo();
     super.initState();

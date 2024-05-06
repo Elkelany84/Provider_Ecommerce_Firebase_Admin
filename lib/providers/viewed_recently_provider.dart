@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/viewed_products.dart';
 import 'package:uuid/uuid.dart';
 
-var uuid = Uuid();
+var uuid = const Uuid();
 
 class ViewedProdProvider with ChangeNotifier {
   final Map<String, ViewedProdModel> _viewedProdsItems = {};

@@ -15,7 +15,7 @@ class LoadingManager extends StatelessWidget {
           Container(
             color: Colors.black.withOpacity(0.7),
           ),
-          Center(
+          const Center(
             child: CircularProgressIndicator(),
           )
         ]

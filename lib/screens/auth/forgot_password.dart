@@ -44,7 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: AppNameTextWidget(
+        title: const AppNameTextWidget(
           label: "Shop Smart",
           fontSize: 22,
         ),
@@ -54,10 +54,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           FocusScope.of(context).unfocus();
         },
         child: ListView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 24),
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Image.asset(
@@ -65,18 +65,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               width: size.width * 0.6,
               height: size.width * 0.6,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            TitleTextWidget(
+            const TitleTextWidget(
               label: "Forget Password",
               fontSize: 22,
             ),
-            SubtitleTextWidget(
+            const SubtitleTextWidget(
               label: "Enter your email to get reset link",
               fontSize: 14,
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Form(
@@ -90,22 +90,22 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       decoration: InputDecoration(
                           hintText: "Enter Your Email Address",
                           prefixIcon: Container(
-                            padding: EdgeInsets.all(8),
-                            child: Icon(IconlyLight.message),
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(IconlyLight.message),
                           ),
                           filled: true),
                       validator: (value) {
                         MyValidators.emailValidator(value);
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -113,8 +113,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         onPressed: () {
                           forgetPassFct();
                         },
-                        icon: Icon(IconlyLight.send),
-                        label: Text(
+                        icon: const Icon(IconlyLight.send),
+                        label: const Text(
                           "Request Link",
                           style: TextStyle(fontSize: 20),
                         ),
