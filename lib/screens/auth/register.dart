@@ -104,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "userPhone": "",
           "userCart": [],
           "userWish": [],
-          "orderSummary": []
+          "orderSummary": [],
         });
 
         //Customize create userOrderProfile in orderAdvanced in FirebaseFirestore

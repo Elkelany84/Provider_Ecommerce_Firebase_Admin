@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/order_provider.dart';
 import 'package:hadi_ecommerce_firebase_admin/providers/user_provider.dart';
+import 'package:hadi_ecommerce_firebase_admin/screens/inner_screens/orders/order_details.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/app_name_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/subtitle_text.dart';
 import 'package:hadi_ecommerce_firebase_admin/widgets/title_text.dart';
@@ -44,116 +45,150 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
               child: ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.all(8),
-                    height: 220,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const TitleTextWidget(
-                                label: "OrderDate: ",
-                              ),
-                              Expanded(
-                                child: SubtitleTextWidget(
-                                  label: timeago.format(
-                                    snapshot.data!.docs[index]["orderDate"]
-                                        .toDate(),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrderStreamScreen(
+                                  docName: snapshot.data!.docs[index]
+                                      ["sessionId"],
+                                  // userId: snapshot.data!.docs[index]["userId"],
+                                )),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(8),
+                      height: 255,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "OrderDate: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                    label: timeago.format(
+                                      snapshot.data!.docs[index]["orderDate"]
+                                          .toDate(),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              const TitleTextWidget(
-                                label: "SessionId: ",
-                              ),
-                              Expanded(
-                                child: SubtitleTextWidget(
-                                  label: snapshot.data!.docs[index]
-                                      ["sessionId"],
-                                  textOverflow: TextOverflow.ellipsis,
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "SessionId: ",
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              const TitleTextWidget(
-                                label: "OrderStatus: ",
-                              ),
-                              Expanded(
-                                child: SubtitleTextWidget(
-                                  label: snapshot.data!.docs[index]
-                                      ["orderStatus"],
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              const TitleTextWidget(
-                                label: "TotalProducts: ",
-                              ),
-                              Expanded(
-                                child: SubtitleTextWidget(
-                                    label: snapshot
-                                        .data!.docs[index]["totalProducts"]
-                                        .toString(),
-                                    color: Colors.blue),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              const TitleTextWidget(
-                                label: "TotalPrice: ",
-                              ),
-                              Expanded(
-                                child: SubtitleTextWidget(
-                                    label:
-                                        "\$ ${snapshot.data!.docs[index]["totalPrice"].toString()}",
-                                    color: Colors.blue),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              const TitleTextWidget(
-                                label: "PaymentMethod: ",
-                              ),
-                              Expanded(
-                                child: SubtitleTextWidget(
+                                Expanded(
+                                  child: SubtitleTextWidget(
                                     label: snapshot.data!.docs[index]
-                                        ["paymentMethod"],
-                                    color: Colors.blue),
-                              ),
-                            ],
-                          ),
-                        ],
+                                        ["sessionId"],
+                                    textOverflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "OrderStatus: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                    label: snapshot.data!.docs[index]
+                                        ["orderStatus"],
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "TotalProducts: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label: snapshot
+                                          .data!.docs[index]["totalProducts"]
+                                          .toString(),
+                                      color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "TotalPrice: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label:
+                                          "\$ ${snapshot.data!.docs[index]["totalPrice"].toString()}",
+                                      color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "PaymentMethod: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                      label: snapshot.data!.docs[index]
+                                          ["paymentMethod"],
+                                      color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                const TitleTextWidget(
+                                  label: "Shipping Date: ",
+                                ),
+                                Expanded(
+                                  child: SubtitleTextWidget(
+                                    label: snapshot
+                                        .data!.docs[index]["shippingDate"]
+                                        .toDate()
+                                        .toString()
+                                        .substring(0, 10),
+                                    color: Colors.blue,
+                                    textOverflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

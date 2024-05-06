@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:hadi_ecommerce_firebase_admin/models/order_user_model.dart';
@@ -89,6 +90,9 @@ class _PaymentScreenState extends State<PaymentScreen>
   }
 
   int hobby = 1;
+  DateTime dateTime = DateTime.now(); // 获取当前时间
+  String defaultTimeString = "Choose Delivery Time";
+
   @override
   Widget build(BuildContext context) {
     final productProvider =
@@ -96,7 +100,7 @@ class _PaymentScreenState extends State<PaymentScreen>
     final cartProvider = Provider.of<CartProvider>(context);
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final orderProvider = Provider.of<OrderProvider>(context, listen: false);
-
+    // DateTime? maximumDate = dateTime;.add(const Duration(days: 7))
     return Scaffold(
       bottomSheet: PaymentBottomSheetWidget(function: () async {
         await placeOrderAdvanced(
@@ -244,6 +248,65 @@ class _PaymentScreenState extends State<PaymentScreen>
                     //   ),
                     // ),
                     const TitleTextWidget(
+                      label: "Delivery Date : ",
+                      fontSize: 24,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    SizedBox(
+                      height: kBottomNavigationBarHeight,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(12),
+                          backgroundColor: Colors.purpleAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          showCupertinoModalPopup(
+                              context: context,
+                              builder: (context) {
+                                return SizedBox(
+                                  height: 250, width: double.infinity,
+                                  // width: double.infinity,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: CupertinoDatePicker(
+                                      backgroundColor: Colors.white,
+                                      onDateTimeChanged: (DateTime newTime) {
+                                        setState(() {
+                                          dateTime = newTime;
+                                          // print(dateTime);
+                                          defaultTimeString =
+                                              "${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}";
+                                        });
+                                      },
+                                      initialDateTime: dateTime,
+                                      maximumDate: dateTime.add(
+                                        const Duration(days: 20),
+                                      ),
+                                      use24hFormat: true,
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                        child: Text(
+                          defaultTimeString,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const TitleTextWidget(
                       label: "Order Summary : ",
                       fontSize: 24,
                     ),
@@ -305,6 +368,7 @@ class _PaymentScreenState extends State<PaymentScreen>
               productsProvider: productProvider), //done
           "paymentMethod": hobby.toString() == "1" ? "Cash" : "Visa",
           "orderStatus": "Processing",
+          "shippingDate": dateTime,
         });
 
         await ordersDb.doc(_sessionId).update({
@@ -322,6 +386,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                   productsProvider: productProvider),
               "quantity": value.quantity,
               "orderDate": Timestamp.now(),
+              "shippingDate": dateTime,
             }
           ])
         });

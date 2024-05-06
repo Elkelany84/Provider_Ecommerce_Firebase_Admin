@@ -99,6 +99,8 @@ class GoogleButton extends StatelessWidget {
           "userEmail": result.user!.email,
           "userImage": result.user!.photoURL,
           "createdAt": Timestamp.now(),
+          "userAddress": "",
+          "userPhone": "",
           'userCart': [],
           "userWish": [],
           "orderSummary": [],
