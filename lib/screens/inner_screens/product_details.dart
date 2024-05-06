@@ -31,6 +31,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final getCurrentProduct = productsProvider.findByProdId(productId);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      // bottomSheet: const RootScreen(),
       appBar: AppBar(
         centerTitle: true,
         // automaticallyImplyLeading: false,
@@ -59,12 +60,15 @@ class _ProductDetailsState extends State<ProductDetails> {
             : SingleChildScrollView(
                 child: Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: FancyShimmerImage(
-                        imageUrl: getCurrentProduct.productImage,
-                        height: size.height * 0.38,
-                        width: double.infinity,
+                    Hero(
+                      tag: getCurrentProduct.productImage,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: FancyShimmerImage(
+                          imageUrl: getCurrentProduct.productImage,
+                          height: size.height * 0.38,
+                          width: double.infinity,
+                        ),
                       ),
                     ),
                     const SizedBox(

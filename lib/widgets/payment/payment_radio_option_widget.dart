@@ -83,7 +83,7 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
               ),
               TitleTextWidget(
                 label: name,
-                fontSize: 20,
+                fontSize: 18,
                 color: Colors.black,
               )
             ],

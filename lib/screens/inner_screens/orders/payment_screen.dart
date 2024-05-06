@@ -134,19 +134,19 @@ class _PaymentScreenState extends State<PaymentScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     const TitleTextWidget(
                       label: "Shipping to : ",
                       fontSize: 24,
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 10,
                     ),
 
                     Container(
                       width: double.infinity,
-                      height: 160,
+                      height: 140,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.grey.shade100),
@@ -157,7 +157,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SubtitleTextWidget(
-                              label: orderUserModel!.userAddress * 2,
+                              label: orderUserModel!.userAddress,
                               fontSize: 20, color: Colors.black,
                               // textDecoration: TextDecoration.underline,
                             ),
@@ -190,7 +190,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                     ),
                     // DeliveryContainerWidget(),
                     const SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
 
                     const TitleTextWidget(
@@ -198,7 +198,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                       fontSize: 24,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     PaymentMethodWidget(
                       hobby,
@@ -216,7 +216,7 @@ class _PaymentScreenState extends State<PaymentScreen>
                     // ),
                     //Total Button
                     const SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
                     // Center(
                     //   child: SizedBox(
@@ -246,15 +246,15 @@ class _PaymentScreenState extends State<PaymentScreen>
                       fontSize: 24,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     TitleTextWidget(
                       label:
-                          "\$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
+                          "Total Price: \$ ${cartProvider.getTotal(productsProvider: productProvider).toStringAsFixed(2)}",
                       fontSize: 18,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     const TitleTextWidget(
                       label: "Delivery Fees : \$ 10 ",

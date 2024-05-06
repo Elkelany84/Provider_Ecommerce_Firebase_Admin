@@ -80,8 +80,10 @@ class _OrdersScreenFreeState extends State<OrdersScreenFree> {
                               ),
                               Expanded(
                                 child: SubtitleTextWidget(
-                                    label: snapshot.data!.docs[index]
-                                        ["sessionId"]),
+                                  label: snapshot.data!.docs[index]
+                                      ["sessionId"],
+                                  textOverflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ],
                           ),

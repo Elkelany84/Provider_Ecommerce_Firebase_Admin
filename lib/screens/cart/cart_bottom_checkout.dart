@@ -33,8 +33,10 @@ class CartBottomSheetWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TitleTextWidget(
-                        label:
-                            "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)"),
+                      label:
+                          "Total (${cartProvider.cartItems.length} Products / ${cartProvider.getQty()} Items)",
+                      fontSize: 17,
+                    ),
                     SubtitleTextWidget(
                       label:
                           "\$ ${cartProvider.getTotal(productsProvider: productsProvider).toStringAsFixed(2)}",

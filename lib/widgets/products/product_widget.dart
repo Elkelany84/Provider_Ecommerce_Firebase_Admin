@@ -38,17 +38,20 @@ class _ProductWidgetState extends State<ProductWidget> {
               onTap: () async {
                 viewedProdProvider.addViewedProd(
                     productId: getCurrentProduct.productId);
-                await Navigator.pushNamed(context, ProductDetails.routeName,
+                await Navigator.of(context).pushNamed(ProductDetails.routeName,
                     arguments: getCurrentProduct.productId);
               },
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: FancyShimmerImage(
-                      imageUrl: getCurrentProduct.productImage,
-                      height: size.height * 0.22,
-                      width: double.infinity,
+                  Hero(
+                    tag: getCurrentProduct.productImage,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: FancyShimmerImage(
+                        imageUrl: getCurrentProduct.productImage,
+                        height: size.height * 0.22,
+                        width: double.infinity,
+                      ),
                     ),
                   ),
                   const SizedBox(

@@ -33,22 +33,25 @@ class LatestArrivalProductWidgets extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: FancyShimmerImage(
-                    imageUrl: productModel.productImage,
-                    height: size.height * 0.12,
-                    width: size.width * 0.25,
+                child: Hero(
+                  tag: productModel.productImage,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: FancyShimmerImage(
+                      imageUrl: productModel.productImage,
+                      height: size.height * 0.12,
+                      width: size.width * 0.25,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Flexible(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -56,7 +59,7 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     FittedBox(
@@ -104,7 +107,7 @@ class LatestArrivalProductWidgets extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     FittedBox(

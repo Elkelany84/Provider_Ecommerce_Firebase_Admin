@@ -14,7 +14,7 @@ class QuantityBottomSheetWidget extends StatelessWidget {
     //YOU CAN'T PUT LISTVIEW.BUILDER DIRECTLY IN COLUMN unless you wrap the column with singlechild
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
@@ -23,7 +23,7 @@ class QuantityBottomSheetWidget extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12), color: Colors.grey),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Expanded(
